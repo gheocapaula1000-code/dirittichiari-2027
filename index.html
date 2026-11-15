@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DirittiChiari 2027 - Stima Aiuti PA</title>
+<meta name="theme-color" content="#0d6efd">
+<style>
+body { font-family: system-ui, -apple-system, sans-serif; max-width: 800px; margin: 0 auto; padding: 20px; background: #f8f9fa; color: #212529; }
+.card { background: white; border-radius: 12px; padding: 24px; margin-bottom: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+h1 { color: #0d6efd; }
+.step { display: none; }
+.step.active { display: block; }
+button { background: #0d6efd; color: white; border: none; padding: 12px 24px; border-radius: 8px; font-size: 16px; cursor: pointer; margin: 5px; }
+button.secondary { background: #6c757d; }
+input, select { width: 100%; padding: 12px; margin: 8px 0; border: 1px solid #ced4da; border-radius: 6px; font-size: 16px; box-sizing: border-box; }
+.progress { height: 8px; background: #e9ecef; border-radius: 4px; margin-bottom: 20px; }
+.progress-bar { height: 100%; background: #0d6efd; width: 0%; transition: width 0.3s; border-radius: 4px; }
+.result-box { background: #e7f3ff; border-left: 4px solid #0d6efd; padding: 16px; margin: 16px 0; }
+.disclaimer { font-size: 0.85em; color: #6c757d; margin-top: 20px; }
+.benefit { padding: 12px; border-bottom: 1px solid #eee; }
+</style>
+</head>
+<body>
+<div class="card">
+<h1>DirittiChiari 2027</h1>
+<p>Stima orientativa dei tuoi diritti ad aiuti dalle PA e di quanto ti rimane per vivere. Basato su regole 2027.</p>
+<div class="progress"><div class="progress-bar" id="progress"></div></div>
+</div>
+
+<div id="step1" class="step active">
+<div class="card">
+<h2>1. Nucleo familiare</h2>
+<label>Numero componenti del nucleo:</label>
+<input type="number" id="nucleo" value="1" min="1" max="10">
+<label>Numero di minori (under 18):</label>
+<input type="number" id="minori" value="0" min="0">
+<label>Presenza di disabilità o non autosufficienza?</label>
+<select id="disabilita"><option value="no">No</option><option value="si">Sì</option></select>
+<button onclick="nextStep(2)">Avanti</button>
+</div>
+</div>
+
+<div id="step2" class="step">
+<div class="card">
+<h2>2. Redditi 2025 (per ISEE ordinario)</h2>
+<label>Reddito annuo totale del nucleo (2025) €:</label>
+<input type="number" id="reddito2025" value="15000" min="0">
+<button onclick="nextStep(1)" class="secondary">Indietro</button>
+<button onclick="nextStep(3)">Avanti</button>
+</div>
+</div>
+
+<div id="step3" class="step">
+<div class="card">
+<h2>3. Spese fisse attuali (residuo pratico)</h2>
+<label>Affitto o rata mutuo mensile €:</label>
+<input type="number" id="affitto" value="500" min="0">
+<label>Bollette + altre spese fisse mensili €:</label>
+<input type="number" id="bollette" value="200" min="0">
+<label>Trasporti per lavoro mensili €:</label>
+<input type="number" id="trasporti" value="100" min="0">
+<button onclick="nextStep(2)" class="secondary">Indietro</button>
+<button onclick="nextStep(4)">Avanti</button>
+</div>
+</div>
+
+<div id="step4" class="step">
+<div class="card">
+<h2>4. Patrimonio al 31/12/2025</h2>
+<label>Valore IMU prima casa (netto mutuo) €:</label>
+<input type="number" id="casa" value="0" min="0">
+<label>Giacenze conti e patrimonio mobiliare €:</label>
+<input type="number" id="mobiliare" value="5000" min="0">
+<button onclick="nextStep(3)" class="secondary">Indietro</button>
+<button onclick="nextStep(5)">Avanti</button>
+</div>
+</div>
+
+<div id="step5" class="step">
+<div class="card">
+<h2>5. ISEE Corrente (opzionale)</h2>
+<label>La situazione è peggiorata dopo il 2025?</label>
+<select id="corrente" onchange="toggleCorrente()">
+<option value="no">No</option>
+<option value="si">Sì (perdita lavoro, calo >25%, ecc.)</option>
+</select>
+<div id="correnteFields" style="display:none;">
+<label>Reddito annuo attuale (ultimi 12 mesi) €:</label>
+<input type="number" id="redditoAttuale" value="10000" min="0">
+</div>
+<button onclick="nextStep(4)" class="secondary">Indietro</button>
+<button onclick="calcola()">Calcola</button>
+</div>
+</div>
+
+<div id="step6" class="step">
+<div class="card" id="results"></div>
+<div class="card">
+<h2>Consigli legali per ottimizzare</h2>
+<ul>
+<li>Documenta bene il contratto di locazione registrato e il mutuo residuo.</li>
+<li>Sfrutta la franchigia maggiorata sulla prima casa (91.500 € / 120.000 €) per Assegno Unico, ADI, ecc.</li>
+<li>Se il reddito è calato >25% o hai perso il lavoro → valuta l'ISEE corrente dopo aver presentato l'ordinario.</li>
+<li>Non omettere patrimonio o componenti del nucleo: è illegale.</li>
+<li>Le bollette e i trasporti contano solo per il tuo residuo reale, non per l'ISEE.</li>
+</ul>
+<p class="disclaimer"><strong>Disclaimer:</strong> Questa è una stima orientativa basata sulle regole note a novembre 2026. I valori ufficiali si ottengono solo presentando la DSU a INPS o CAF. Non sostituisce una consulenza professionale.</p>
+<button onclick="nextStep(5)" class="secondary">Modifica</button>
+</div>
+</div>
+
+<script>
+function nextStep(n) {
+document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
+document.getElementById('step'+n).classList.add('active');
+document.getElementById('progress').style.width = ((n-1)*20) + '%';
+}
+function toggleCorrente() {
+document.getElementById('correnteFields').style.display = document.getElementById('corrente').value === 'si' ? 'block' : 'none';
+}
+function calcola() {
+const nucleo = +document.getElementById('nucleo').value;
+const reddito2025 = +document.getElementById('reddito2025').value;
+const affitto = +document.getElementById('affitto').value;
+const bollette = +document.getElementById('bollette').value;
+const trasporti = +document.getElementById('trasporti').value;
+const casa = +document.getElementById('casa').value;
+const mobiliare = +document.getElementById('mobiliare').value;
+const corrente = document.getElementById('corrente').value === 'si';
+const redditoAttuale = corrente ? +document.getElementById('redditoAttuale').value : reddito2025;
+
+const residuo = (redditoAttuale / 12) - affitto - bollette - trasporti;
+const scala = 1 + (nucleo-1)*0.5;
+const patrimonioNetto = Math.max(0, casa - 91500) * 0.67 + mobiliare * 0.2;
+const ise = reddito2025 + patrimonioNetto;
+const iseeOrdinario = Math.round(ise / scala);
+const iseeSpeciale = Math.round(ise / (scala * 1.1));
+const iseeCorrente = corrente ? Math.round((redditoAttuale + patrimonioNetto) / scala) : null;
+
+let benefici = [];
+if (iseeSpeciale <= 10140) benefici.push('Assegno di Inclusione (ADI) - possibile');
+if (iseeSpeciale <= 17468) benefici.push('Assegno Unico - importo massimo o elevato');
+if (iseeSpeciale <= 8230) benefici.push('Carta Acquisti / Carta Dedicata a Te');
+if (residuo < 500) benefici.push('Possibili contributi affitto o bonus bollette regionali');
+
+let html = `<h2>Risultati</h2>
+<div class="result-box"><strong>Ti rimangono circa ${Math.max(0, Math.round(residuo))} € al mese per vivere</strong></div>
+<p>ISEE ordinario stimato: <strong>${iseeOrdinario} €</strong></p>
+<p>ISEE speciale (prestazioni familiari) stimato: <strong>${iseeSpeciale} €</strong></p>`;
+if (corrente) html += `<p>ISEE corrente stimato: <strong>${iseeCorrente} €</strong> (da verificare al CAF)</p>`;
+html += `<h3>Benefici potenziali</h3>` + benefici.map(b => `<div class="benefit">${b}</div>`).join('');
+document.getElementById('results').innerHTML = html;
+nextStep(6);
+}
+</script>
+</body>
+</html>
