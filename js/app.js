@@ -4,7 +4,7 @@
  */
 (function () {
   'use strict';
-  const APP_VERSION = '1.1.0';             // tenere allineato con VERSION in sw.js
+  const APP_VERSION = '1.2.0';             // tenere allineato con VERSION in sw.js
   const STORE_KEY = 'dc2027:dati';
   const STEP_KEY = 'dc2027:passo';
   const CHECK_KEY = 'dc2027:checklist';
@@ -15,6 +15,81 @@
   const eur = (x) => D.fmtEuro(Math.round(Number(x) || 0));
   const eur2 = (x) => D.fmtEuro(x, 2);
   const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+
+  const SITE = 'https://dirittiok.com/';
+  const SEO = {
+    '': {
+      title: 'DirittiChiari 2027 · Stima ISEE, residuo per vivere e aiuti',
+      desc: 'Stima orientativa dell\'ISEE 2027, di quanto ti resta per vivere e degli aiuti pubblici. Gratis, senza registrazione. I calcoli restano sul tuo telefono.',
+      url: SITE
+    },
+    stima: {
+      title: 'Stima ISEE 2027 · DirittiChiari',
+      desc: 'Percorso guidato in 5 passi per stimare l\'ISEE ordinario, familiare e corrente, con redditi 2025 e patrimonio al 31/12/2025.',
+      url: SITE + '#/stima'
+    },
+    risultati: {
+      title: 'Risultati della stima ISEE · DirittiChiari',
+      desc: 'Vedi la stima del tuo ISEE 2027, il residuo mensile per vivere e gli aiuti pubblici da valutare, con le fonti di ogni soglia.',
+      url: SITE + '#/risultati'
+    },
+    consigli: {
+      title: 'Come ottimizzare legalmente l\'ISEE · DirittiChiari',
+      desc: 'Cosa conta davvero nell\'ISEE, le scelte permesse che possono abbassarlo e cosa non fare mai. Spiegato con calma, prima del CAF.',
+      url: SITE + '#/consigli'
+    },
+    documenti: {
+      title: 'Documenti per la DSU 2027 · DirittiChiari',
+      desc: 'Checklist dei documenti per la DSU 2027, da spuntare e stampare prima di andare al CAF o sul portale ISEE dell\'INPS.',
+      url: SITE + '#/documenti'
+    },
+    diritti: {
+      title: 'Diritti e aiuti pubblici legati all\'ISEE · DirittiChiari',
+      desc: 'Assegno di Inclusione, Assegno Unico, bonus sociali e altri aiuti legati all\'ISEE, con le soglie e le fonti ufficiali.',
+      url: SITE + '#/diritti'
+    },
+    fonti: {
+      title: 'Fonti e regole usate · DirittiChiari',
+      desc: 'Regole e fonti ufficiali usate da DirittiChiari per la stima ISEE 2027, con lo stato di ogni valore.',
+      url: SITE + '#/fonti'
+    },
+    contatti: {
+      title: 'Contatti · DirittiChiari 2027',
+      desc: 'Scrivi a DirittiChiari: ti rispondiamo via email. Dal modulo partono solo le informazioni che inserisci tu, non i dati della stima.',
+      url: SITE + '#/contatti'
+    },
+    privacy: {
+      title: 'Privacy · DirittiChiari 2027',
+      desc: 'Come trattiamo i dati su DirittiChiari 2027: i calcoli restano sul tuo dispositivo. Il modulo contatti serve solo per risponderti.',
+      url: SITE + '#/privacy'
+    }
+  };
+  function setMeta(key, value, attr) {
+    attr = attr || 'name';
+    let el = document.querySelector('meta[' + attr + '="' + key + '"]');
+    if (!el) { el = document.createElement('meta'); el.setAttribute(attr, key); document.head.appendChild(el); }
+    el.setAttribute('content', value);
+  }
+  function setLinkRel(rel, href) {
+    let el = document.querySelector('link[rel="' + rel + '"]');
+    if (!el) { el = document.createElement('link'); el.setAttribute('rel', rel); document.head.appendChild(el); }
+    el.setAttribute('href', href);
+  }
+  function applySeo(route) {
+    const s = SEO[route] || SEO[''];
+    document.title = s.title;
+    document.documentElement.lang = 'it';
+    setMeta('description', s.desc);
+    setMeta('og:title', s.title, 'property');
+    setMeta('og:description', s.desc, 'property');
+    setMeta('og:url', s.url, 'property');
+    setMeta('og:image', SITE + 'og-image.png', 'property');
+    setMeta('twitter:title', s.title);
+    setMeta('twitter:description', s.desc);
+    setMeta('twitter:image', SITE + 'og-image.png');
+    setLinkRel('canonical', s.url === SITE ? SITE : s.url);
+  }
+
 
   /* ---------------- Dati locali ---------------- */
   function load() {
@@ -140,6 +215,7 @@
     applyPct();
     if (r === 'documenti') bindChecklist();
     if (r === 'contatti') bindContatti();
+    applySeo(r);
     window.scrollTo(0, 0);
   }
 
@@ -174,7 +250,8 @@
           <li><strong>Affitto</strong>: il canone del contratto registrato, fino a 7.000 € l'anno.</li>
         </ul>
         <p class="small muted">Lo prevede il DPCM 159/2013 (artt. 4 e 5): si guarda al secondo anno prima della DSU.</p>
-      </section>`;
+      </section>
+      <p class="small">Una domanda su DirittiChiari? <a href="#/contatti">Scrivici dal modulo contatti</a>.</p>`;
   }
 
   /* -------- Wizard -------- */

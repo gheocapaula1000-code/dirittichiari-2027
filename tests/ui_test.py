@@ -54,6 +54,13 @@ def run_flow(browser, width):
     page.goto(BASE + '/#/')
     page.wait_for_selector('h1')
     check('ISEE 2027' in page.inner_text('h1'), f'{tag}: titolo home')
+    check(page.locator('h1').count() == 1, f'{tag}: un solo h1 in home ({page.locator("h1").count()})')
+    check('DirittiChiari 2027' in page.title(), f'{tag}: title home {page.title()!r}')
+    canon = page.locator('link[rel="canonical"]').get_attribute('href') or ''
+    check(canon.startswith('https://dirittiok.com/'), f'{tag}: canonical {canon!r}')
+    og = page.locator('meta[property="og:image"]').get_attribute('content') or ''
+    check(og.endswith('/og-image.png') or 'og-image.png' in og, f'{tag}: og:image {og!r}')
+    check(page.locator('a.skip[href="#app"]').count() == 1, f'{tag}: skip link')
     check(page.locator('.disclaimer').count() == 1, f'{tag}: disclaimer home ({page.locator(".disclaimer").count()}) {page.url}')
     check('Alcuni importi 2027 sono ancora stime.' in page.inner_text('.disclaimer'), f'{tag}: testo disclaimer')
     check(not page.is_visible('#update-banner'), f'{tag}: banner visibile alla prima visita')
@@ -126,8 +133,10 @@ def run_flow(browser, width):
         page.goto(BASE + '/#/' + r); page.wait_for_selector('h1')
         no_hscroll(page, f'{tag} {r}'); nav_visible(page, f'{tag} {r}')
         check(page.locator('.disclaimer').count() >= 1, f'{tag}: disclaimer in {r}')
+        check(page.locator('h1').count() == 1, f'{tag}: un solo h1 in {r} ({page.locator("h1").count()})')
     # modulo contatti
     page.goto(BASE + '/#/contatti'); page.wait_for_selector('form.mc-form, form:has(textarea[name=message])')
+    check('Contatti' in page.title(), f'{tag}: title contatti {page.title()!r}')
     form = page.locator('form').filter(has=page.locator('textarea[name=message]')).first
     check(form.locator('input[name=name]').count() == 1, f'{tag}: campo nome')
     check(form.locator('input[name=email]').count() == 1, f'{tag}: campo email')
@@ -159,6 +168,12 @@ def run_flow(browser, width):
     page.goto(BASE + '/#/risultati'); page.wait_for_selector('h1')
     check(page.locator('.big-result').count() == 0, f'{tag}: risultati ancora presenti dopo la cancellazione')
     check(not errors, f'{tag}: errori JS {errors}')
+    # robots e sitemap solo una volta per browser (prima larghezza)
+    if width == 320:
+        r = page.request.get(BASE + '/robots.txt')
+        check(r.ok and 'Sitemap: https://dirittiok.com/sitemap.xml' in r.text(), f'{tag}: robots.txt {r.status} {r.text()[:120]!r}')
+        s = page.request.get(BASE + '/sitemap.xml')
+        check(s.ok and 'https://dirittiok.com/' in s.text() and 'lovable.app' not in s.text() and 'netlify' not in s.text(), f'{tag}: sitemap.xml')
     ctx.close()
 
 def sw_and_banner(browser, base_dir):

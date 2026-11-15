@@ -1,6 +1,6 @@
 # DirittiChiari 2027
 
-Online: https://dirittichiari-2027-kfyt.netlify.app (Netlify, piano gratuito)
+Online: https://dirittiok.com (Lovable). Copia di riserva: https://dirittichiari-2027-kfyt.netlify.app
 
 PWA statica (HTML, CSS e JavaScript, nessuna build) per stimare:
 - **ISEE ordinario 2027** (redditi 2025, patrimonio al 31/12/2025)
@@ -20,6 +20,7 @@ Un servizio di **Pi.Gi Service** · info@pigiservice.com
 - `js/modulo-contatti.js`, `css/modulo-contatti.css` — modulo contatti (invio a info@pigiservice.com)
 - `css/app.css` — stile mobile-first e stampa
 - `sw.js`, `manifest.webmanifest`, `icons/` — PWA
+- `robots.txt`, `sitemap.xml`, `og-image.png` — SEO (URL canoniche su dirittiok.com)
 - `docs/FONTI.md` — fonti ufficiali e stato di ogni valore
 - `tests/` — test dei calcoli (Node) e dell'interfaccia (Playwright)
 
