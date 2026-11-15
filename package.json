@@ -1,0 +1,12 @@
+{
+  "name": "dirittichiari-2027",
+  "version": "1.0.0",
+  "private": true,
+  "description": "PWA statica: stima ISEE 2027, residuo per vivere e diritti PA. Nessuna build.",
+  "scripts": {
+    "test": "node --test tests/*.test.js",
+    "test:ui": "python3 tests/ui_test.py",
+    "serve": "python3 -m http.server 4321"
+  },
+  "license": "UNLICENSED"
+}
