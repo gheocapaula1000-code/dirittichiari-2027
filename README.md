@@ -9,7 +9,7 @@ PWA statica (HTML, CSS e JavaScript, nessuna build) per stimare:
 - **Residuo per vivere** (entrate nette mensili − spese fisse)
 - aiuti pubblici collegati, consigli di ottimizzazione legale e checklist DSU stampabile.
 
-Tutto gira sul dispositivo: nessuna registrazione, nessun pagamento, nessun tracciamento, nessuna IA. I dati restano in `localStorage` e si cancellano con "Cancella i miei dati".
+I calcoli girano sul dispositivo: nessuna registrazione, nessun pagamento, nessun tracciamento, nessuna IA. I dati della stima restano in `localStorage` e si cancellano con "Cancella i miei dati". Il modulo contatti invia soltanto quello che la persona scrive, a info@pigiservice.com, per ricevere una risposta.
 
 Un servizio di **Pi.Gi Service** · info@pigiservice.com
 
@@ -17,6 +17,7 @@ Un servizio di **Pi.Gi Service** · info@pigiservice.com
 - `index.html` — guscio dell'app e navigazione in basso
 - `js/rules.js` — **tutte le regole e le soglie** (blocco `RULES`) e le funzioni di calcolo
 - `js/app.js` — router, wizard, risultati, pull-to-refresh, service worker e banner di aggiornamento
+- `js/modulo-contatti.js`, `css/modulo-contatti.css` — modulo contatti (invio a info@pigiservice.com)
 - `css/app.css` — stile mobile-first e stampa
 - `sw.js`, `manifest.webmanifest`, `icons/` — PWA
 - `docs/FONTI.md` — fonti ufficiali e stato di ogni valore

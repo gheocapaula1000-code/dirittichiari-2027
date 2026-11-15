@@ -1,9 +1,9 @@
 /* DirittiChiari 2027 — service worker.
  * Strategia: rete prima (contenuti sempre aggiornati), cache come riserva offline.
  * Il nuovo SW resta in attesa finché l'utente non tocca "Aggiorna" nel banner. */
-const VERSION = '1.0.0'; // tenere allineato con APP_VERSION in js/app.js
+const VERSION = '1.1.0'; // tenere allineato con APP_VERSION in js/app.js
 const CACHE = 'dc2027-' + VERSION;
-const SHELL = ['./', 'index.html', 'css/app.css?v=1.0.0', 'js/rules.js?v=1.0.0', 'js/app.js?v=1.0.0', 'manifest.webmanifest',
+const SHELL = ['./', 'index.html', 'css/app.css?v=1.1.0', 'css/modulo-contatti.css?v=1.1.0', 'js/rules.js?v=1.1.0', 'js/modulo-contatti.js?v=1.1.0', 'js/app.js?v=1.1.0', 'manifest.webmanifest',
   'icons/icon-192.png', 'icons/icon-512.png', 'icons/favicon.svg', 'icons/apple-touch-icon.png'];
 
 self.addEventListener('install', (e) => {

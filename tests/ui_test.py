@@ -122,10 +122,21 @@ def run_flow(browser, width):
     no_hscroll(page, f'{tag} risultati'); nav_visible(page, f'{tag} risultati')
     check(page.locator('[data-action=print]').count() == 1, f'{tag}: pulsante stampa')
     # Pagine secondarie
-    for r in ['consigli', 'documenti', 'diritti', 'fonti']:
+    for r in ['consigli', 'documenti', 'diritti', 'fonti', 'contatti', 'privacy']:
         page.goto(BASE + '/#/' + r); page.wait_for_selector('h1')
         no_hscroll(page, f'{tag} {r}'); nav_visible(page, f'{tag} {r}')
         check(page.locator('.disclaimer').count() >= 1, f'{tag}: disclaimer in {r}')
+    # modulo contatti
+    page.goto(BASE + '/#/contatti'); page.wait_for_selector('form.mc-form, form:has(textarea[name=message])')
+    form = page.locator('form').filter(has=page.locator('textarea[name=message]')).first
+    check(form.locator('input[name=name]').count() == 1, f'{tag}: campo nome')
+    check(form.locator('input[name=email]').count() == 1, f'{tag}: campo email')
+    check(form.locator('textarea[name=message]').count() == 1, f'{tag}: campo messaggio')
+    check(form.locator('input[type=checkbox]').count() >= 1, f'{tag}: consenso privacy')
+    check(page.locator('input[name=sito_web]').count() == 1, f'{tag}: honeypot assente')
+    check(page.locator('footer a[href="#/contatti"]').count() == 1, f'{tag}: link contatti nel footer')
+    check(page.locator('footer a[href="#/privacy"]').count() == 1, f'{tag}: link privacy nel footer')
+    no_hscroll(page, f'{tag} form-contatti'); nav_visible(page, f'{tag} form-contatti')
     # checklist persistente
     page.goto(BASE + '/#/documenti'); page.wait_for_selector('input[data-doc]')
     page.locator('input[data-doc]').first.check()
@@ -167,7 +178,7 @@ def sw_and_banner(browser, base_dir):
     # pubblica una "nuova versione" nella copia temporanea
     sw = os.path.join(base_dir, 'sw.js')
     src = open(sw).read()
-    open(sw, 'w').write(src.replace("const VERSION = '1.0.0'", "const VERSION = '9.9.9-test'"))
+    open(sw, 'w').write(re.sub(r"const VERSION = '[^']+'", "const VERSION = '9.9.9-test'", src, count=1))
     try:
         page.reload(); page.wait_for_selector('h1')
         try:

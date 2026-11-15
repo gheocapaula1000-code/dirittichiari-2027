@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>DirittiChiari 2027 · Stima ISEE, residuo per vivere e aiuti</title>
-<meta name="description" content="Stima orientativa dell'ISEE 2027 (ordinario, per prestazioni familiari e corrente), di quanto ti resta per vivere ogni mese e degli aiuti pubblici a cui puoi avere diritto. Gratis, senza registrazione, i dati restano sul tuo telefono.">
+<meta name="description" content="Stima orientativa dell'ISEE 2027 (ordinario, per prestazioni familiari e corrente), di quanto ti resta per vivere ogni mese e degli aiuti pubblici a cui puoi avere diritto. Gratis, senza registrazione. I calcoli restano sul tuo telefono; dal modulo contatti partono solo le parole che scrivi tu.">
 <meta name="theme-color" content="#0e5a8a">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" href="icons/favicon.svg" type="image/svg+xml">
@@ -16,7 +16,8 @@
 <meta property="og:title" content="DirittiChiari 2027">
 <meta property="og:description" content="Stima orientativa di ISEE 2027, residuo per vivere e aiuti pubblici. Gratis e senza registrazione.">
 <meta property="og:type" content="website">
-<link rel="stylesheet" href="css/app.css?v=1.0.0">
+<link rel="stylesheet" href="css/app.css?v=1.1.0">
+<link rel="stylesheet" href="css/modulo-contatti.css?v=1.1.0">
 </head>
 <body>
 <div class="ptr" id="ptr" aria-hidden="true">↓ Tira per aggiornare</div>
@@ -34,8 +35,8 @@
 
 <footer class="site">
   <p>DirittiChiari 2027 è un servizio di <strong>Pi.Gi Service</strong> · <a href="mailto:info@pigiservice.com">info@pigiservice.com</a></p>
-  <p class="small">Stima indicativa, non sostituisce la DSU, l'attestazione INPS, il CAF o una consulenza. Nessuna registrazione, nessun tracciamento: i dati restano solo su questo dispositivo.</p>
-  <p class="small no-print"><a href="#/fonti">Fonti e regole usate</a> · <button type="button" class="btn btn-danger" data-action="clear">Cancella i miei dati</button></p>
+  <p class="small">Stima indicativa, non sostituisce la DSU, l'attestazione INPS, il CAF o una consulenza. Nessuna registrazione, nessun tracciamento: i calcoli e i dati della stima restano solo su questo dispositivo. Dal modulo contatti partono soltanto le informazioni che scrivi tu, per ricevere una risposta.</p>
+  <p class="small no-print"><a href="#/fonti">Fonti e regole usate</a> · <a href="#/contatti">Contatti</a> · <a href="#/privacy">Privacy</a> · <button type="button" class="btn btn-danger" data-action="clear">Cancella i miei dati</button></p>
   <p class="small muted" id="version-label"></p>
 </footer>
 
@@ -55,7 +56,8 @@
   <button type="button" class="btn btn-ghost" id="update-dismiss">Più tardi</button>
 </div>
 
-<script src="js/rules.js?v=1.0.0"></script>
-<script src="js/app.js?v=1.0.0"></script>
+<script src="js/rules.js?v=1.1.0"></script>
+<script src="js/modulo-contatti.js?v=1.1.0"></script>
+<script src="js/app.js?v=1.1.0"></script>
 </body>
 </html>

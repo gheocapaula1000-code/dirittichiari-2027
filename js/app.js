@@ -1,10 +1,10 @@
 /*!
  * DirittiChiari 2027 — interfaccia (router a hash, wizard, risultati, PWA).
- * Nessuna chiamata di rete per i dati: tutto resta in localStorage su questo dispositivo.
+ * I calcoli restano in localStorage su questo dispositivo. L'unica chiamata di rete è il modulo contatti, con le parole scritte dalla persona.
  */
 (function () {
   'use strict';
-  const APP_VERSION = '1.0.0';             // tenere allineato con VERSION in sw.js
+  const APP_VERSION = '1.1.0';             // tenere allineato con VERSION in sw.js
   const STORE_KEY = 'dc2027:dati';
   const STEP_KEY = 'dc2027:passo';
   const CHECK_KEY = 'dc2027:checklist';
@@ -125,7 +125,7 @@
   ];
 
   /* ---------------- Router ---------------- */
-  const ROUTES = { '': viewHome, stima: viewStima, risultati: viewRisultati, consigli: viewConsigli, documenti: viewDocumenti, diritti: viewDiritti, fonti: viewFonti };
+  const ROUTES = { '': viewHome, stima: viewStima, risultati: viewRisultati, consigli: viewConsigli, documenti: viewDocumenti, diritti: viewDiritti, fonti: viewFonti, contatti: viewContatti, privacy: viewPrivacy };
   function route() { return (location.hash.replace(/^#\/?/, '').split('?')[0] || '').toLowerCase(); }
   function render() {
     const r = route();
@@ -139,6 +139,7 @@
     if (r === 'stima') bindWizard();
     applyPct();
     if (r === 'documenti') bindChecklist();
+    if (r === 'contatti') bindContatti();
     window.scrollTo(0, 0);
   }
 
@@ -151,7 +152,7 @@
       <section class="card hero">
         <h1>Capisci il tuo ISEE 2027 prima di andare al CAF</h1>
         <p>In 5 passi stimi l'ISEE ordinario, quello per le prestazioni familiari e l'eventuale ISEE corrente, scopri quanto ti resta ogni mese per vivere e quali aiuti puoi chiedere.</p>
-        <p class="muted">Gratis, senza registrazione, facile da utilizzare. I dati restano solo sul tuo telefono.</p>
+        <p class="muted">Gratis, senza registrazione, facile da utilizzare. I calcoli restano solo sul tuo telefono. Se ci scrivi dal modulo contatti, partono soltanto le informazioni che inserisci tu.</p>
         <div class="btn-row">
           <a class="btn btn-primary" href="#/stima">${ripresa ? 'Riprendi la stima' : 'Inizia la stima'}</a>
           ${ripresa ? '<a class="btn btn-ghost" href="#/risultati">Vedi i risultati</a>' : ''}
@@ -229,7 +230,7 @@
           </div>
         </form>
       </section>
-      <p class="small muted">I dati vengono salvati solo su questo dispositivo mentre scrivi.</p>`;
+      <p class="small muted">I dati della stima vengono salvati solo su questo dispositivo mentre scrivi.</p>`;
   }
 
   /** Legge i campi visibili del passo corrente e li salva. */
@@ -562,6 +563,42 @@
         <li>L'importo dell'Assegno Unico è una stima lineare dell'importo base, senza maggiorazioni.</li>
       </ul></section>
       <section class="card"><h2>Elenco delle fonti</h2><ul class="tips small">${Object.values(R.fonti).map((x) => `<li><a href="${x.url}" target="_blank" rel="noopener">${esc(x.titolo)}</a></li>`).join('')}</ul></section>`;
+  }
+
+
+  /* -------- Contatti e privacy -------- */
+  function viewContatti() {
+    return `
+      <section class="card">
+        <h1>Contatti</h1>
+        <p>Una domanda su DirittiChiari? Scrivici: ti rispondiamo via email.</p>
+        <p class="small muted">I calcoli della stima restano sul tuo dispositivo. Da questo modulo partono soltanto le informazioni che scrivi tu, e le usiamo solo per risponderti. Non viene mai inviato nessun dato del percorso ISEE.</p>
+        <div data-modulo-contatti data-privacy="#/privacy" data-titolo="h2">
+          <p>Per usare il modulo serve JavaScript. In alternativa scrivi a <a href="mailto:info@pigiservice.com">info@pigiservice.com</a>.</p>
+        </div>
+      </section>
+      ${DISCLAIMER}`;
+  }
+  function bindContatti() {
+    const box = document.querySelector('[data-modulo-contatti]');
+    if (box && typeof window.montaModuloContatti === 'function' && !box.querySelector('form')) {
+      window.montaModuloContatti(box, 1);
+    }
+  }
+  function viewPrivacy() {
+    return `
+      <section class="card">
+        <h1>Privacy</h1>
+        <p>DirittiChiari 2027 è un servizio di <strong>Pi.Gi Service di Gheoca Paula</strong> (titolare del trattamento). Per qualsiasi domanda: <a href="mailto:info@pigiservice.com">info@pigiservice.com</a>.</p>
+        <h2>I calcoli restano sul tuo dispositivo</h2>
+        <p>La stima ISEE, il residuo per vivere, gli aiuti e la checklist si calcolano e si salvano solo su questo telefono o computer, in locale. Non li inviamo a nessun server, non chiediamo una registrazione, non facciamo tracciamento e non usiamo intelligenza artificiale.</p>
+        <p>Puoi cancellare tutto in qualsiasi momento con «Cancella i miei dati», in fondo alla pagina.</p>
+        <h2>Modulo contatti</h2>
+        <p>Se ci scrivi dal <a href="#/contatti">modulo contatti</a>, inviamo soltanto quello che inserisci tu: nome, email, eventuale telefono o attività, il messaggio, il consenso e la pagina da cui scrivi. Questi dati servono solo per risponderti. Non viene mai incluso nessun dato della stima ISEE o del percorso guidato.</p>
+        <p>Il messaggio arriva a <a href="mailto:info@pigiservice.com">info@pigiservice.com</a>. Lo conserviamo il tempo necessario per darti una risposta e per eventuali obblighi di legge.</p>
+        <p class="small muted">Aggiornata il 15 novembre 2026.</p>
+      </section>
+      ${DISCLAIMER}`;
   }
 
   /* ---------------- Azioni globali ---------------- */

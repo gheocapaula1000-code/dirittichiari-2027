@@ -1,0 +1,27 @@
+/* Modulo contatti Pi.Gi Service. Colori dal sito tramite variabili --mc-*. */
+.mc { --mc-accent: #0e5a8a; --mc-accent-ink: #fff; --mc-field: #fff; --mc-field-ink: inherit; --mc-line: rgba(0,0,0,.2); --mc-muted: rgba(0,0,0,.62); --mc-radius: 12px; --mc-bad: #b42318; --mc-ok: #166534; margin: 8px 0 24px; }
+.mc [hidden] { display: none !important; }
+.mc-t { margin: 0 0 6px; }
+.mc-intro { margin: 0 0 16px; color: var(--mc-muted); }
+.mc-form { display: grid; gap: 16px; }
+.mc-l { display: block; font-weight: 600; margin: 0 0 6px; }
+.mc-opz { font-weight: 400; color: var(--mc-muted); }
+.mc-i { display: block; width: 100%; box-sizing: border-box; min-height: 52px; padding: 12px 14px; font: inherit; font-size: 17px; line-height: 1.4; color: var(--mc-field-ink); background: var(--mc-field); border: 1.5px solid var(--mc-line); border-radius: var(--mc-radius); }
+textarea.mc-i { min-height: 140px; resize: vertical; }
+.mc-i:focus-visible, .mc-cb:focus-visible, .mc-b:focus-visible, .mc-b2:focus-visible { outline: 3px solid var(--mc-accent); outline-offset: 2px; }
+.mc-i[aria-invalid="true"], .mc-cb[aria-invalid="true"] { border-color: var(--mc-bad); }
+.mc-h { margin: 6px 0 0; font-size: 14px; color: var(--mc-muted); }
+.mc-e { margin: 6px 0 0; font-size: 15px; color: var(--mc-bad); }
+.mc-c { display: flex; gap: 12px; align-items: flex-start; line-height: 1.45; cursor: pointer; }
+.mc-c a { text-decoration: underline; font-weight: 600; color: inherit; }
+.mc-cb { width: 24px; height: 24px; min-width: 24px; margin: 1px 0 0; accent-color: var(--mc-accent); }
+.mc-hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+.mc-err { border: 1.5px solid var(--mc-bad); color: var(--mc-bad); border-radius: var(--mc-radius); padding: 12px 14px; outline: none; }
+.mc-err a, .mc-alt a { color: inherit; font-weight: 700; }
+.mc-b { min-height: 56px; width: 100%; padding: 14px 18px; font: inherit; font-size: 18px; font-weight: 700; border-radius: var(--mc-radius); border: 0; background: var(--mc-accent); color: var(--mc-accent-ink); cursor: pointer; }
+.mc-b[disabled] { opacity: .75; cursor: progress; }
+.mc-alt { margin: 0; font-size: 15px; color: var(--mc-muted); text-align: center; }
+.mc-ok { border: 2px solid var(--mc-ok); border-radius: var(--mc-radius); padding: 18px 16px; outline: none; }
+.mc-ok p { margin: 0 0 12px; }
+.mc-ok-t { font-weight: 700; font-size: 19px; color: var(--mc-ok); }
+.mc-b2 { min-height: 48px; padding: 10px 16px; font: inherit; font-weight: 600; border-radius: var(--mc-radius); border: 1.5px solid var(--mc-accent); background: transparent; color: inherit; cursor: pointer; }
