@@ -1,6 +1,6 @@
 {
   "name": "dirittichiari-2027",
-  "version": "1.5.0",
+  "version": "1.5.1",
   "private": true,
   "description": "PWA DirittiOk: aiuti pubblici in Italia, residuo per vivere e stima ISEE. Pagine generate con npm run build (it, en, bn).",
   "scripts": {

@@ -4,7 +4,7 @@
  */
 (function () {
   'use strict';
-  const APP_VERSION = window.DC_VERSION || '1.5.0'; // unica fonte: js/version.js
+  const APP_VERSION = window.DC_VERSION || '1.5.1'; // unica fonte: js/version.js
   const STORE_KEY = 'dc2027:dati';
   const STEP_KEY = 'dc2027:passo';
   const CHECK_KEY = 'dc2027:checklist';
@@ -268,6 +268,7 @@
       const L = a.getAttribute('hreflang') || a.getAttribute('lang') || 'it';
       const path = stripLangPath(location.pathname);
       a.setAttribute('href', I.langPath(path === '/' ? '/' : path, L));
+      a.setAttribute('data-no-spa', '');
       if (L === lang()) a.setAttribute('aria-current', 'true'); else a.removeAttribute('aria-current');
     });
     const label = document.getElementById('version-label');
@@ -695,6 +696,9 @@
     const a = ev.target.closest('a[href]');
     if (!a || ev.defaultPrevented || ev.metaKey || ev.ctrlKey || ev.shiftKey || ev.altKey) return;
     if (a.target && a.target !== '_self') return;
+    // Cambio lingua (switcher, 404, link tra / /en /bn): navigazione completa.
+    // pathFromRoute() riprefisserebbe con la lingua corrente e /en tornerebbe /.
+    if (a.hasAttribute('data-no-spa') || a.closest('.lang-switch')) return;
     const href = a.getAttribute('href');
     if (!href || href.startsWith('mailto:') || href.startsWith('tel:')) return;
     if (href.startsWith('#') && !href.startsWith('#/')) return;
@@ -702,6 +706,7 @@
     try {
       const u = new URL(href, location.origin);
       if (u.origin !== location.origin) return;
+      if (I.langFromPath(u.pathname) !== lang()) return;
       if (href.startsWith('#/')) {
         const r = href.slice(2).split('?')[0].toLowerCase();
         path = pathFromRoute(Object.prototype.hasOwnProperty.call(SLUG_BY_ROUTE, r) ? r : '') + u.search;

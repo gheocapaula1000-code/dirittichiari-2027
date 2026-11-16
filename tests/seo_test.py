@@ -48,7 +48,7 @@ def main():
         check('<html lang="it"' in html, 'home lang=it')
         check('I tuoi aiuti in Italia' in html and '<h1>I tuoi aiuti in Italia</h1>' in html, 'home ha H1 landing nel grezzo')
         check('rel="canonical" href="https://dirittiok.com/"' in html, 'home canonical')
-        check('1.5.0' in html, 'versione 1.5.0 nella home')
+        check('1.5.1' in html, 'versione 1.5.1 nella home')
         check('hreflang="en"' in html and 'hreflang="bn"' in html and 'hreflang="x-default"' in html, 'home ha hreflang it/en/bn/x-default')
         check('Scopri i tuoi aiuti' in html and 'Installa l' + "'" + 'app' in html, 'home ha CTA e Installa l app')
         check('lang="it"' in html, 'home lang=it')
@@ -113,7 +113,7 @@ def main():
         check('window.DC_PAGES' in data, 'pages-data.js presente')
         check('#lovable-badge' in open(os.path.join(ROOT, 'css/app.css'), encoding='utf-8').read(), 'CSS nasconde il badge')
         ver = open(os.path.join(ROOT, 'js/version.js'), encoding='utf-8').read()
-        check('DC_VERSION = "1.5.0"' in ver, 'versione unica 1.5.0')
+        check('DC_VERSION = "1.5.1"' in ver, 'versione unica 1.5.1')
 
         # lingue
         for lp, hrefl, h1 in (('/en', 'en', 'Your benefits in Italy'), ('/bn', 'bn', 'ইতালিতে আপনার সরকারি সহায়তা')):

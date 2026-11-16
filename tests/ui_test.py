@@ -400,6 +400,68 @@ def lang_pages(browser, width, langs=None, estimator=False, form_check=False, de
     ctx.close()
 
 
+
+# H1 attesi per la regressione del selettore lingua (stato vuoto su /risultati).
+SWITCH_H1 = {
+    'it': {
+        '/': 'I tuoi aiuti in Italia',
+        '/stima': 'Calcolo ISEE 2027: simulatore online gratuito',
+        '/risultati': 'Risultati',
+    },
+    'en': {
+        '/': 'Your benefits in Italy',
+        '/stima': 'ISEE 2027 calculator: free online estimate',
+        '/risultati': 'Results',
+    },
+    'bn': {
+        '/': 'ইতালিতে আপনার সরকারি সহায়তা',
+        '/stima': 'ISEE 2027 হিসাব: বিনা খরচে অনলাইন ক্যালকুলেটর',
+        '/risultati': 'ফলাফল',
+    },
+}
+
+def switch_url(code, slug):
+    pre = '' if code == 'it' else '/' + code
+    if slug in ('', '/'):
+        return pre or '/'
+    return pre + slug
+
+def lang_switcher(browser):
+    """Clic su IT/EN/বাংলা in home, stima e risultati: URL e H1 devono cambiare lingua."""
+    name = browser.browser_type.name
+    tag = f'{name}-switch'
+    print('▶', tag)
+    ctx = browser.new_context(viewport={'width': 390, 'height': 844}, has_touch=True, is_mobile=True)
+    page = ctx.new_page()
+    errors = []
+    page.on('pageerror', lambda e: errors.append(str(e)))
+    for start in ('/', '/stima', '/risultati'):
+        page.goto(BASE + start)
+        page.wait_for_selector('h1')
+        page.wait_for_selector('.lang-switch a[hreflang]')
+        for code in ('en', 'bn', 'it'):
+            loc = page.locator(f'.lang-switch a[hreflang="{code}"]')
+            check(loc.count() == 1, f'{tag} {start}->{code}: link switcher assente')
+            loc.first.click()
+            page.wait_for_selector('h1')
+            # attende che l'URL abbia il prefisso lingua (navigazione completa)
+            want = switch_url(code, start)
+            # poll breve: la navigazione completa può richiedere un attimo
+            ok = poll(page, f'() => document.documentElement.lang === "{code}"', 8)
+            got = page.evaluate('() => location.pathname.replace(/\\/+$/, "") || "/"')
+            rec_path = got
+            want_norm = want.rstrip('/') or '/'
+            rec_norm = rec_path.rstrip('/') or '/'
+            check(rec_norm == want_norm, f'{tag} {start}->{code}: URL {page.url} atteso {want}')
+            check(page.evaluate('() => document.documentElement.lang') == code, f'{tag} {start}->{code}: lang {page.evaluate("() => document.documentElement.lang")}')
+            h1 = page.inner_text('h1')
+            expect = SWITCH_H1[code][start]
+            check(expect in h1, f'{tag} {start}->{code}: H1 {h1!r} atteso {expect!r}')
+            current = page.locator('.lang-switch a[aria-current="true"]')
+            check(current.count() == 1 and current.get_attribute('hreflang') == code, f'{tag} {start}->{code}: aria-current {current.get_attribute("hreflang") if current.count() else None}')
+    check(not errors, f'{tag}: errori JS {errors}')
+    ctx.close()
+
 def sw_and_banner(browser, base_dir):
     """Prima visita: niente banner. Nuova versione pubblicata: banner una sola volta."""
     tag = f'{browser.browser_type.name} SW'
@@ -461,6 +523,7 @@ def main():
                 lang_pages(b, 390, langs=('en', 'bn'), estimator=True, form_check=True)
                 lang_pages(b, 440, langs=('en', 'bn'))
                 lang_pages(b, 1280, langs=('it', 'en', 'bn'), desktop=True)
+                lang_switcher(b)
                 sw_and_banner(b, site)
                 install_and_i18n(b)
                 b.close()

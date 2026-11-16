@@ -1,8 +1,8 @@
-/* dc-version:1.5.0 */
+/* dc-version:1.5.1 */
 /* DirittiChiari 2027 — service worker.
  * Navigazioni: rete prima, con attesa di 3,5 s, poi cache.
  * Asset con ?v=: prima la cache. L'installazione fallisce se manca un file del guscio. */
-const VERSION = '1.5.0';
+const VERSION = '1.5.1';
 const CACHE = 'dc2027-' + VERSION;
 const IT_PAGES = ['/', '/stima', '/risultati', '/ottimizzazione', '/checklist-dsu', '/diritti-pa', '/fonti', '/metodo', '/contatti', '/privacy'];
 const PAGES = IT_PAGES.concat(

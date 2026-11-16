@@ -14,7 +14,7 @@ from i18n_lib import (
 )
 
 ROOT = Path(__file__).resolve().parent.parent
-VERSION = "1.5.0"
+VERSION = "1.5.1"
 SITE = "https://dirittiok.com"
 ORG_ID = SITE + "/#organizzazione"
 SITE_ID = SITE + "/#website"
@@ -559,7 +559,7 @@ def switcher_html(m, lang, p):
         path = p["path"] or "/"
         url = href(L, path)
         cur = ' aria-current="true"' if L == lang else ""
-        items.append(f'<a href="{url}" lang="{L}" hreflang="{L}"{cur}>{tv(m, short)}</a>')
+        items.append(f'<a href="{url}" lang="{L}" hreflang="{L}" data-no-spa{cur}>{tv(m, short)}</a>')
     return f'<nav class="lang-switch" aria-label="{tv(m, "chrome.lang_label")}">{"".join(items)}</nav>'
 
 
