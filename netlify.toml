@@ -107,6 +107,11 @@
   to = "/privacy"
   status = 301
   force = true
+[[redirects]]
+  from = "/pages/isee-assegno-unico.html"
+  to = "/isee-assegno-unico"
+  status = 301
+  force = true
 
 [[redirects]]
   from = "/stima/"
@@ -153,6 +158,11 @@
   to = "/privacy"
   status = 301
   force = true
+[[redirects]]
+  from = "/isee-assegno-unico/"
+  to = "/isee-assegno-unico"
+  status = 301
+  force = true
 
 [[redirects]]
   from = "/stima"
@@ -189,6 +199,10 @@
 [[redirects]]
   from = "/privacy"
   to = "/pages/privacy.html"
+  status = 200
+[[redirects]]
+  from = "/isee-assegno-unico"
+  to = "/pages/isee-assegno-unico.html"
   status = 200
 
 [[redirects]]
@@ -353,6 +367,20 @@
   from = "/en/privacy"
   to = "/en/privacy.html"
   status = 200
+[[redirects]]
+  from = "/en/isee-assegno-unico.html"
+  to = "/en/isee-assegno-unico"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/en/isee-assegno-unico/"
+  to = "/en/isee-assegno-unico"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/en/isee-assegno-unico"
+  to = "/en/isee-assegno-unico.html"
+  status = 200
 
 [[redirects]]
   from = "/en"
@@ -492,6 +520,20 @@
 [[redirects]]
   from = "/bn/privacy"
   to = "/bn/privacy.html"
+  status = 200
+[[redirects]]
+  from = "/bn/isee-assegno-unico.html"
+  to = "/bn/isee-assegno-unico"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/bn/isee-assegno-unico/"
+  to = "/bn/isee-assegno-unico"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/bn/isee-assegno-unico"
+  to = "/bn/isee-assegno-unico.html"
   status = 200
 
 [[redirects]]

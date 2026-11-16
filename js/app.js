@@ -4,7 +4,7 @@
  */
 (function () {
   'use strict';
-  const APP_VERSION = window.DC_VERSION || '1.5.1'; // unica fonte: js/version.js
+  const APP_VERSION = window.DC_VERSION || '1.5.2'; // unica fonte: js/version.js
   const STORE_KEY = 'dc2027:dati';
   const STEP_KEY = 'dc2027:passo';
   const CHECK_KEY = 'dc2027:checklist';
@@ -24,8 +24,8 @@
   function t(key, params) { return I.t(key, params); }
   function rich(key, params) { return I.rich(key, params); }
   function u(path) { return I.langPath(path); }
-  const SLUG_BY_ROUTE = { '': '', stima: 'stima', risultati: 'risultati', consigli: 'ottimizzazione', documenti: 'checklist-dsu', diritti: 'diritti-pa', fonti: 'fonti', metodo: 'metodo', contatti: 'contatti', privacy: 'privacy' };
-  const ROUTE_BY_SLUG = { '': '', stima: 'stima', risultati: 'risultati', ottimizzazione: 'consigli', 'checklist-dsu': 'documenti', 'diritti-pa': 'diritti', fonti: 'fonti', metodo: 'metodo', contatti: 'contatti', privacy: 'privacy' };
+  const SLUG_BY_ROUTE = { '': '', stima: 'stima', risultati: 'risultati', consigli: 'ottimizzazione', documenti: 'checklist-dsu', diritti: 'diritti-pa', auu: 'isee-assegno-unico', fonti: 'fonti', metodo: 'metodo', contatti: 'contatti', privacy: 'privacy' };
+  const ROUTE_BY_SLUG = { '': '', stima: 'stima', risultati: 'risultati', ottimizzazione: 'consigli', 'checklist-dsu': 'documenti', 'diritti-pa': 'diritti', 'isee-assegno-unico': 'auu', fonti: 'fonti', metodo: 'metodo', contatti: 'contatti', privacy: 'privacy' };
   function stripLangPath(pathname) {
     let pth = (pathname || '/').replace(/\/index\.html$/i, '/');
     const m = pth.match(/^\/(en|bn)(?=\/|$)/);
@@ -86,12 +86,17 @@
     if (!el) { el = document.createElement('link'); el.setAttribute('rel', rel); document.head.appendChild(el); }
     el.setAttribute('href', href);
   }
+  function setDocumentLang() {
+    document.documentElement.lang = lang() === 'it' ? 'it' : lang();
+    document.documentElement.dir = 'ltr';
+    var cl = document.querySelector('meta[http-equiv="Content-Language"]');
+    if (cl) cl.setAttribute('content', document.documentElement.lang);
+  }
   function applySeo(route) {
     const s = pageSeo(route);
     if (!s) return;
     document.title = s.title;
-    document.documentElement.lang = lang() === 'it' ? 'it' : lang();
-    document.documentElement.dir = 'ltr';
+    setDocumentLang();
     document.body.classList.toggle('page-home', route === '');
     setMeta('description', s.desc);
     setMeta('og:title', s.title, 'property');
@@ -247,11 +252,10 @@
 
 
   /* ---------------- Router ---------------- */
-  const ROUTES = { '': viewHome, stima: viewStima, risultati: viewRisultati, consigli: viewConsigli, documenti: viewDocumenti, diritti: viewDiritti, fonti: viewFonti, metodo: viewMetodo, contatti: viewContatti, privacy: viewPrivacy };
+  const ROUTES = { '': viewHome, stima: viewStima, risultati: viewRisultati, consigli: viewConsigli, documenti: viewDocumenti, diritti: viewDiritti, auu: viewAuu, fonti: viewFonti, metodo: viewMetodo, contatti: viewContatti, privacy: viewPrivacy };
   function syncChrome() {
     I.setLang(I.langFromPath(location.pathname));
-    document.documentElement.lang = lang() === 'it' ? 'it' : lang();
-    document.documentElement.dir = 'ltr';
+    setDocumentLang();
     document.querySelectorAll('[data-route]').forEach((a) => {
       a.setAttribute('href', pathFromRoute(a.getAttribute('data-route') || ''));
     });
@@ -263,7 +267,7 @@
       a.innerHTML = (ico ? ico.outerHTML : '') + t(key);
     });
     const brand = document.querySelector('.brand-name');
-    if (brand) brand.innerHTML = esc(t('brand.name')) + '<span class="brand-sub">' + esc(t('brand.tagline')) + '</span>';
+    if (brand) brand.innerHTML = '<span class="notranslate" translate="no">' + esc(t('brand.name')) + '</span><span class="brand-sub">' + esc(t('brand.tagline')) + '</span>';
     document.querySelectorAll('.lang-switch a').forEach((a) => {
       const L = a.getAttribute('hreflang') || a.getAttribute('lang') || 'it';
       const path = stripLangPath(location.pathname);
@@ -300,6 +304,7 @@
     applyPct();
     if (r === 'documenti') bindChecklist();
     if (r === 'contatti') bindContatti();
+    if (I.protectIn) I.protectIn(document.body);
     applySeo(r);
     window.scrollTo(0, 0);
   }
@@ -433,7 +438,7 @@
       const d = readForm();
       const errors = validate(d);
       if (Object.keys(errors).length) {
-        $app.innerHTML = viewStima(errors); bindWizard(); applyPct();
+        $app.innerHTML = viewStima(errors); bindWizard(); applyPct(); if (I.protectIn) I.protectIn($app);
         const first = document.querySelector('.field .error');
         if (first) { const inp = first.closest('.field').querySelector('input'); if (inp) inp.focus(); }
         announce(t('wizard.err_fields'));
@@ -457,7 +462,7 @@
   /** Elenco dei campi visibili nel passo corrente, per capire se serve ridisegnare. */
   function visibleIds(d) { return STEPS[currentStep()].campi.filter((f) => !f.show || f.show(d)).map((f) => f.id).join(','); }
   function rerenderStep(focusName) {
-    $app.innerHTML = viewStima(); bindWizard(); applyPct();
+    $app.innerHTML = viewStima(); bindWizard(); applyPct(); if (I.protectIn) I.protectIn($app);
     if (!focusName) return;
     const el = document.querySelector(`input[name="${focusName}"]:checked`);
     if (el) el.focus();
@@ -643,11 +648,17 @@
       <section class="card"><h2>${esc(t('diritti.h2_auu'))}</h2>
         <p>${rich('diritti.p_auu1')}</p>
         <p>${rich('diritti.p_auu2')}</p>
+        <p>${rich('diritti.auu_more')}</p>
         <p><strong>${esc(t('faq.quale_q'))}</strong> ${rich('faq.quale_a')}</p>
         <a class="btn btn-primary btn-block" href="${u('/stima')}">${esc(t('diritti.cta_stima'))}</a></section>
       <section class="card"><h2>${esc(t('diritti.h2_manovra'))}</h2>
         <p>${rich('diritti.p_manovra')}</p>
         <p class="small">${rich('diritti.manovra_fonte')}</p></section>`;
+  }
+
+  function viewAuu() {
+    const s = pageSeo('auu');
+    return (s && s.main) || '';
   }
 
   /* -------- Fonti -------- */

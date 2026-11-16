@@ -21,6 +21,7 @@ SLUG_BY_ROUTE = {
     "consigli": "ottimizzazione",
     "documenti": "checklist-dsu",
     "diritti": "diritti-pa",
+    "auu": "isee-assegno-unico",
     "fonti": "fonti",
     "metodo": "metodo",
     "contatti": "contatti",
@@ -101,6 +102,84 @@ def rich(text: str, lang: str = "it", **params) -> str:
     s = _LINK_RE.sub(link, s)
     s = _BOLD_RE.sub(r"<strong>\1</strong>", s)
     return s
+
+
+
+# Nomi propri e termini ufficiali che Chrome non deve tradurre (non usare notranslate globale).
+PROPER_NOUNS = (
+    "Assegno Unico e Universale",
+    "Assegno Unico",
+    "Carta «Dedicata a te»",
+    'Carta "Dedicata a te"',
+    "DirittiChiari",
+    "DirittiOk",
+    "Pi.Gi Service",
+    "NASpI",
+    "ARERA",
+    "INPS",
+    "ISEE",
+    "DSU",
+    "ADI",
+    "SFL",
+    "CAF",
+    "AUU",
+    "IMU",
+    "TARI",
+    "MEF",
+    "SPID",
+    "CIE",
+    "CNS",
+)
+
+_NOUN_RE = re.compile(
+    r"(?<!\w)(" + "|".join(re.escape(term) for term in PROPER_NOUNS) + r")(?!\w)"
+)
+_TAG_SPLIT = re.compile(r"(<[^>]+>)")
+_SKIP_TAGS = frozenset({"script", "style", "title", "textarea"})
+
+
+def _wrap_noun(m):
+    return f'<span class="notranslate" translate="no">{m.group(1)}</span>'
+
+
+def protect_proper_nouns(html: str) -> str:
+    """Avvolge i termini ufficiali in span notranslate, senza toccare script/title/attributi."""
+    if not html:
+        return html
+    parts = _TAG_SPLIT.split(html)
+    out = []
+    skip = None
+    for part in parts:
+        if part.startswith("<"):
+            m = re.match(r"</?([a-zA-Z0-9:-]+)", part)
+            name = m.group(1).lower() if m else ""
+            if part.startswith("</") and skip == name:
+                skip = None
+            elif (
+                not part.startswith("</")
+                and name in _SKIP_TAGS
+                and not part.endswith("/>")
+            ):
+                skip = name
+            out.append(part)
+            continue
+        if skip:
+            out.append(part)
+            continue
+        prev = out[-1] if out else ""
+        if (
+            prev.startswith("<")
+            and not prev.startswith("</")
+            and (
+                'translate="no"' in prev
+                or "translate='no'" in prev
+                or re.search(r"\bnotranslate\b", prev)
+            )
+        ):
+            out.append(part)
+            continue
+        out.append(_NOUN_RE.sub(_wrap_noun, part))
+    return "".join(out)
 
 
 def page_url(lang: str, path: str, site="https://dirittiok.com") -> str:

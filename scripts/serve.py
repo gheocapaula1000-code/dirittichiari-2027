@@ -17,6 +17,7 @@ IT_PAGES = {
     '/ottimizzazione': 'pages/ottimizzazione.html',
     '/checklist-dsu': 'pages/checklist-dsu.html',
     '/diritti-pa': 'pages/diritti-pa.html',
+    '/isee-assegno-unico': 'pages/isee-assegno-unico.html',
     '/fonti': 'pages/fonti.html',
     '/metodo': 'pages/metodo.html',
     '/contatti': 'pages/contatti.html',

@@ -135,7 +135,7 @@ def run_flow(browser, width):
     no_hscroll(page, f'{tag} risultati'); nav_visible(page, f'{tag} risultati')
     check(page.locator('[data-action=print]').count() == 1, f'{tag}: pulsante stampa')
     # Pagine secondarie
-    slugs = {'consigli': 'ottimizzazione', 'documenti': 'checklist-dsu', 'diritti': 'diritti-pa', 'fonti': 'fonti', 'metodo': 'metodo', 'contatti': 'contatti', 'privacy': 'privacy'}
+    slugs = {'consigli': 'ottimizzazione', 'documenti': 'checklist-dsu', 'diritti': 'diritti-pa', 'auu': 'isee-assegno-unico', 'fonti': 'fonti', 'metodo': 'metodo', 'contatti': 'contatti', 'privacy': 'privacy'}
     for r, slug in slugs.items():
         page.goto(BASE + '/' + slug); page.wait_for_selector('h1')
         check(page.url.rstrip('/').endswith('/' + slug), f'{tag}: url {r} {page.url}')
@@ -195,7 +195,8 @@ def run_flow(browser, width):
         check(s.ok and 'https://dirittiok.com/contatti' in s.text() and 'https://dirittiok.com/metodo' in s.text() and '/risultati' not in s.text() and '#/' not in s.text() and 'index.html' not in s.text() and 'lovable.app' not in s.text() and 'netlify' not in s.text(), f'{tag}: sitemap.xml')
         # HTML statico, 301, 404, noindex (una volta per browser)
         raw = page.request.get(BASE + '/stima')
-        check(raw.ok and 'Simulatore ISEE 2027' in raw.text() and 'https://dirittiok.com/stima' in raw.text() and 'Calcolo ISEE 2027: simulatore online gratuito' in raw.text(), f'{tag}: HTML statico /stima')
+        raw_plain = re.sub(r'<[^>]+>', '', raw.text())
+        check(raw.ok and 'Simulatore ISEE 2027' in raw.text() and 'https://dirittiok.com/stima' in raw.text() and 'Calcolo ISEE 2027: simulatore online gratuito' in raw_plain, f'{tag}: HTML statico /stima')
         ris = page.request.get(BASE + '/risultati')
         check(ris.ok and 'noindex,follow' in ris.text(), f'{tag}: /risultati noindex')
         try:
@@ -309,7 +310,7 @@ LANGS = {
     'en': {'prefix': '/en', 'h1': 'Your benefits in Italy', 'residuo': '1,180'},
     'bn': {'prefix': '/bn', 'h1': 'ইতালিতে আপনার সরকারি সহায়তা', 'residuo': '1,180'},
 }
-PAGES = ['', '/stima', '/ottimizzazione', '/checklist-dsu', '/diritti-pa', '/fonti', '/metodo', '/contatti', '/privacy', '/risultati']
+PAGES = ['', '/stima', '/ottimizzazione', '/checklist-dsu', '/diritti-pa', '/isee-assegno-unico', '/fonti', '/metodo', '/contatti', '/privacy', '/risultati']
 
 def lang_pages(browser, width, langs=None, estimator=False, form_check=False, desktop=False):
     """Pagine IT/EN/BN: overflow, barra in basso, H1, stime e form (validazione, niente invio reale)."""

@@ -9,6 +9,7 @@ import fonti from "../../public/pwa/bn/fonti.html?raw";
 import metodo from "../../public/pwa/bn/metodo.html?raw";
 import contatti from "../../public/pwa/bn/contatti.html?raw";
 import privacy from "../../public/pwa/bn/privacy.html?raw";
+import auu from "../../public/pwa/bn/isee-assegno-unico.html?raw";
 import notFound from "../../public/pwa/bn/404.html?raw";
 
 const PAGES: Record<string, string> = {
@@ -21,6 +22,7 @@ const PAGES: Record<string, string> = {
   metodo,
   contatti,
   privacy,
+  "isee-assegno-unico": auu,
 };
 
 export const Route = createFileRoute("/bn/$slug")({

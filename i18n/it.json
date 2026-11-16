@@ -511,6 +511,18 @@
     "seo_desc": {
       "value": "Scopri bonus e aiuti pubblici in Italia (ADI, Assegno Unico, bonus sociali), quanto ti resta al mese e la stima ISEE 2027. Gratis, dati sul tuo telefono.",
       "note": "Meta description, 120-160 caratteri. ADI e ISEE restano."
+    },
+    "card_auu_title": {
+      "value": "ISEE e Assegno Unico",
+      "note": "Titolo della card in home che porta alla nuova guida. Termini ufficiali in italiano."
+    },
+    "card_auu_text": {
+      "value": "Quale ISEE si usa, come cambia l'importo mensile e cosa succede se non presenti la DSU.",
+      "note": "Testo della card. ISEE e DSU restano in italiano."
+    },
+    "card_auu_cta": {
+      "value": "Leggi la guida",
+      "note": "CTA della card. Tono caldo e chiaro, non usare 'semplice' da sola."
     }
   },
   "faq": {
@@ -545,6 +557,38 @@
     },
     "quale_a": {
       "value": "Dal 2026 l'INPS calcola anche l'ISEE per prestazioni familiari e inclusione (L. 199/2025), più favorevole per chi ha casa di proprietà o almeno 2 figli. Si usa solo per ADI, Supporto formazione e lavoro, Assegno Unico, bonus nido e bonus nuovi nati. Per tutto il resto vale l'ISEE ordinario."
+    },
+    "auu_quale_q": {
+      "value": "Quale ISEE si usa per l'Assegno Unico?",
+      "note": "FAQ visibile, identica al FAQPage JSON-LD. Termini ufficiali in italiano."
+    },
+    "auu_quale_a": {
+      "value": "Si usa l'ISEE per prestazioni familiari e inclusione (L. 199/2025), non l'ISEE ordinario. L'INPS lo calcola in automatico dal 2026. Si guarda al netto dell'Assegno Unico già percepito. Lo stesso indicatore vale, al netto dell'Assegno Unico, anche per il bonus nido e il bonus nuovi nati. Per i bonus sociali e molti altri aiuti resta l'ISEE ordinario.",
+      "note": "Allineata al testo in pagina. L. 199/2025 e i termini ufficiali restano in italiano."
+    },
+    "auu_senza_q": {
+      "value": "Cosa succede se non presento l'ISEE?",
+      "note": "FAQ visibile = JSON-LD."
+    },
+    "auu_senza_a": {
+      "value": "L'Assegno Unico può essere riconosciuto anche senza ISEE, ma con l'importo minimo ({min_importo} al mese per figlio minorenne, valore 2026). Per un importo più alto serve un ISEE valido, oltre agli altri requisiti previsti dalla legge.",
+      "note": "Conservare {min_importo}. Non promettere il diritto."
+    },
+    "auu_2027_q": {
+      "value": "Gli importi 2027 sono già ufficiali?",
+      "note": "FAQ visibile = JSON-LD."
+    },
+    "auu_2027_a": {
+      "value": "No. Gli importi e le soglie di questa pagina sono quelli della Circolare INPS n. 7/2026 (valori 2026). I valori 2027 vengono rivalutati con l'inflazione a inizio anno. Finché l'INPS non li pubblica, vanno considerati stime.",
+      "note": "Circolare INPS n. 7/2026 resta riconoscibile. Il 2027 è stima."
+    },
+    "auu_figli_q": {
+      "value": "L'importo è uguale per ogni figlio?",
+      "note": "FAQ visibile = JSON-LD."
+    },
+    "auu_figli_a": {
+      "value": "L'importo base (da {min_importo} a {full} al mese, valori 2026) si calcola per ogni figlio minorenne. Per i figli maggiorenni a carico, fino a 21 anni e in presenza dei requisiti INPS (studio o formazione, tirocinio o lavoro, disoccupazione registrata presso i servizi per l'impiego, oppure servizio civile universale, con reddito complessivo sotto {income_21} all'anno), l'assegno può spettare in misura diversa. Possono aggiungersi maggiorazioni previste dall'INPS, tra cui quella per i figli successivi al secondo (dal terzo figlio in poi). Questa pagina e il simulatore indicano l'importo base, senza maggiorazioni.",
+      "note": "Conservare {min_importo}, {full} e {income_21}. Non inventare importi delle maggiorazioni."
     }
   },
   "seo": {
@@ -646,6 +690,18 @@
     },
     "notfound_h1": {
       "value": "Pagina non trovata"
+    },
+    "auu_title": {
+      "value": "ISEE e Assegno Unico 2027: soglie e importi · DirittiOk",
+      "note": "Title SEO, 50-60 caratteri già contato (55). Non tradurre il nome DirittiOk. Conservare la struttura 'tema · DirittiOk'."
+    },
+    "auu_desc": {
+      "value": "Come l'ISEE cambia l'importo mensile dell'Assegno Unico: soglie e valori 2026 dell'INPS, cosa succede senza ISEE e come leggere le stime per il 2027.",
+      "note": "Meta description, 120-160 caratteri (questa stringa IT è 149). Termini ISEE, Assegno Unico, INPS restano in italiano. Non promettere un diritto. I valori 2027 sono stime."
+    },
+    "auu_h1": {
+      "value": "ISEE e Assegno Unico: come cambia l'importo mensile",
+      "note": "H1 della pagina. ISEE e Assegno Unico restano in italiano."
     }
   },
   "wizard": {
@@ -1475,6 +1531,10 @@
     },
     "manovra_fonte": {
       "value": "[Fonte ufficiale: scheda A.C. 3174 sul sito del Senato](https://www.senato.it/leggi-e-documenti/disegni-di-legge/scheda-ddl?did=60577)."
+    },
+    "auu_more": {
+      "value": "Per una spiegazione più ampia, con soglie, importi e cosa succede senza ISEE, leggi [ISEE e Assegno Unico](/isee-assegno-unico).",
+      "note": "Link interno. Conservare il markdown [etichetta](/isee-assegno-unico): lo slug URL non si traduce."
     }
   },
   "fonti": {
@@ -1537,6 +1597,10 @@
     "src_portaleIsee": {
       "value": "INPS, Portale unico ISEE",
       "note": "Titolo ufficiale di un documento o di una scheda istituzionale italiana. Lasciare il titolo in italiano; si può aggiungere una breve spiegazione nella lingua di arrivo."
+    },
+    "auu_page": {
+      "value": "Abbiamo raccolto soglie, importi e quale ISEE si usa nella pagina [ISEE e Assegno Unico](/isee-assegno-unico).",
+      "note": "Link interno da /fonti. Conservare il markdown e lo slug /isee-assegno-unico."
     }
   },
   "metodo": {
@@ -1706,6 +1770,88 @@
     },
     "crumb_risultati": {
       "value": "Risultati"
+    },
+    "crumb_auu": {
+      "value": "ISEE e Assegno Unico",
+      "note": "Etichetta breve del breadcrumb, più corta dell'H1. Termini ufficiali in italiano."
+    }
+  },
+  "auu": {
+    "lead": {
+      "value": "L'Assegno Unico e Universale (AUU) è il contributo mensile dell'INPS (Istituto nazionale della previdenza sociale) per i figli a carico, fino al compimento dei 21 anni se valgono i requisiti previsti. Questa pagina spiega come l'ISEE (indicatore della situazione economica equivalente) incide sull'importo mensile, con le soglie e i valori già pubblicati dall'INPS. Non sostituisce la domanda all'INPS e non riconosce un diritto: restano necessari la DSU, quando serve, e gli altri requisiti di legge.",
+      "note": "Lead. Termini ufficiali in italiano (Assegno Unico e Universale, AUU, INPS, ISEE, DSU). Si può lasciare una breve spiegazione tra parentesi, come in italiano. Non promettere un diritto."
+    },
+    "h2_what": {
+      "value": "Cos'è l'Assegno Unico",
+      "note": "H2. Assegno Unico resta in italiano."
+    },
+    "p_what": {
+      "value": "L'Assegno Unico e Universale è una prestazione dell'INPS per i figli a carico. Spetta, se hai i requisiti, anche a chi non presenta un ISEE: in quel caso l'importo è quello minimo. Per i figli minorenni a carico l'assegno è dovuto secondo le regole INPS (per i nuovi nati, secondo l'INPS, decorre dal settimo mese di gravidanza). Per i figli maggiorenni a carico può spettare fino al compimento dei 21 anni se il figlio ha un reddito complessivo inferiore a {income_21} all'anno e si trova in almeno una di queste situazioni: frequenta un corso di formazione scolastica o professionale oppure un corso di laurea; svolge un tirocinio o un'attività lavorativa; è registrato come disoccupato e in cerca di lavoro presso i servizi pubblici per l'impiego; oppure svolge il servizio civile universale. Per i figli con disabilità a carico non c'è un limite di età. L'importo pieno e le maggiorazioni dipendono dall'ISEE e da altre condizioni. La domanda si presenta all'INPS: questa pagina e il simulatore non fanno domanda al posto tuo.",
+      "note": "Requisiti 18-21 e soglia di reddito da scheda ufficiale INPS AUU (reddito complessivo inferiore a 8.000 € annui). Conservare {income_21}. Non promettere il diritto."
+    },
+    "h2_isee": {
+      "value": "Quale ISEE si usa",
+      "note": "H2. ISEE resta in italiano."
+    },
+    "p_isee1": {
+      "value": "Per l'Assegno Unico non si usa l'ISEE ordinario. Si usa l'**ISEE per prestazioni familiari e inclusione** (L. 199/2025), calcolato in automatico dall'INPS dal 2026. In genere è più favorevole se hai casa di proprietà o almeno due figli: la franchigia sulla casa è più alta ({franchigia}, oppure {franchigia_metro} nei capoluoghi delle città metropolitane) e ci sono maggiorazioni diverse sulla scala di equivalenza.",
+      "note": "Conservare **grassetto markdown** e i placeholder {franchigia} e {franchigia_metro} (91.500 € e 120.000 €, formattati in locale in build: EN/BN con 91,500 € / 120,000 €). 'ISEE per prestazioni familiari e inclusione' e L. 199/2025 restano in italiano."
+    },
+    "p_isee2": {
+      "value": "Un esempio, senza importi inventati: nella stessa famiglia, con lo stesso reddito e la stessa casa di proprietà, l'ISEE ordinario e l'ISEE per prestazioni familiari possono essere diversi: il secondo è in genere più basso. L'Assegno Unico guarda questo secondo indicatore, **al netto dell'Assegno Unico già percepito**, così l'importo dell'anno precedente non riduce da solo quello nuovo. Lo stesso ISEE, al netto dell'Assegno Unico, vale anche per il bonus asilo nido e il bonus nuovi nati. Per i bonus sociali, la Carta «Dedicata a te» e molti servizi comunali resta l'ISEE ordinario.",
+      "note": "Esempio qualitativo su UNA famiglia con due ISEE diversi (ordinario vs prestazioni familiari), senza inventare un importo mensile. Conservare **grassetto**. 'Carta «Dedicata a te»' è nome ufficiale."
+    },
+    "h2_amounts": {
+      "value": "Soglie e importi (valori 2026)",
+      "note": "H2. I valori della pagina sono 2026; il 2027 è stima."
+    },
+    "p_amounts": {
+      "value": "Gli importi sotto arrivano dalla Circolare INPS n. 7 del 30/01/2026. Sono valori 2026. Quelli del 2027 vengono rivalutati con l'inflazione a inizio anno: finché l'INPS non pubblica i nuovi numeri, vanno letti come stime.",
+      "note": "Citazione della Circolare INPS n. 7 del 30/01/2026: numero e data restano com'è. Sottolineare che il 2027 è stima."
+    },
+    "li_full": {
+      "value": "Importo base pieno: **{full} al mese** per ogni figlio minorenne, se l'ISEE per prestazioni familiari (al netto dell'Assegno Unico) è fino a **{min_isee}**.",
+      "note": "Conservare **grassetto** e i placeholder {full} (203,80 €) e {min_isee} (17.468,51 €), formattati in locale in build."
+    },
+    "li_min": {
+      "value": "Importo base minimo: **{min_importo} al mese** per ogni figlio minorenne, da un ISEE pari o superiore a **{max_isee}**.",
+      "note": "Conservare **grassetto** e i placeholder {min_importo} (58,30 €) e {max_isee} (46.582,71 €)."
+    },
+    "li_mid": {
+      "value": "Tra queste due soglie l'importo base scende in modo proporzionale, senza salti. Sono importi base, **senza maggiorazioni**. Secondo l'INPS le maggiorazioni possono spettare, tra le altre ipotesi, per i figli successivi al secondo (dal terzo figlio in poi), per i nuclei con quattro o più figli, per i figli sotto l'anno di età, per i figli tra uno e tre anni nei nuclei con tre o più figli (con ISEE fino alla soglia massima), per la disabilità, per le madri con meno di 21 anni e quando entrambi i genitori hanno un reddito da lavoro. Gli importi di queste maggiorazioni dipendono dall'ISEE e dalle regole INPS: non li ricalcoliamo qui nel dettaglio.",
+      "note": "Maggiorazioni elencate dalla scheda ufficiale INPS AUU, senza inventare gli importi. Conservare **grassetto**. 'dal terzo figlio in poi' = figli successivi al secondo."
+    },
+    "p_amounts_note": {
+      "value": "Non riportiamo esempi con importi intermedi inventati: per una stima sul tuo nucleo puoi usare il calcolatore, sempre a titolo orientativo.",
+      "note": "Tono chiaro: la stima è orientativa, non un diritto."
+    },
+    "h2_without": {
+      "value": "Cosa succede senza un ISEE",
+      "note": "H2. ISEE resta in italiano."
+    },
+    "p_without": {
+      "value": "Se non presenti la DSU (dichiarazione sostitutiva unica) e quindi non hai un ISEE valido, l'Assegno Unico può comunque essere riconosciuto, ma in misura minima ({min_importo} al mese per figlio minorenne, valore 2026). Presentare l'ISEE non è obbligatorio per ottenere l'assegno minimo; serve se vuoi far valere un importo più alto, quando ne hai diritto secondo le regole INPS.",
+      "note": "Conservare {min_importo}. DSU e ISEE restano in italiano (breve spiegazione di DSU ammessa). Non promettere il diritto: 'può essere riconosciuto' se ci sono i requisiti."
+    },
+    "h2_cta": {
+      "value": "Stima il tuo ISEE 2027",
+      "note": "H2 della sezione CTA verso /stima."
+    },
+    "p_cta": {
+      "value": "Con la stima di DirittiOk vedi, in modo orientativo, l'ISEE ordinario, quello per le prestazioni familiari e quanto ti resta al mese. I valori ufficiali si ottengono solo con la DSU presentata all'INPS o a un CAF (centro di assistenza fiscale).",
+      "note": "Non tradurre DirittiOk. CAF, DSU, INPS, ISEE restano in italiano (breve spiegazione di CAF ammessa). La stima è orientativa."
+    },
+    "cta": {
+      "value": "Calcola la stima ISEE",
+      "note": "Bottone verso /stima."
+    },
+    "see_also": {
+      "value": "Vedi anche gli [altri aiuti con ISEE](/diritti-pa), le [fonti usate](/fonti) e il [metodo di verifica](/metodo).",
+      "note": "Link interni: conservare gli slug /diritti-pa, /fonti, /metodo. Si possono tradurre solo le etichette tra parentesi quadre."
+    },
+    "source": {
+      "value": "Fonte: [INPS, Circolare n. 7 del 30/01/2026 (Assegno Unico 2026)]({url}) e, per l'ISEE per prestazioni familiari, [INPS, Messaggio n. 102 del 12/01/2026]({url2}).",
+      "note": "Conservare i placeholder {url} e {url2} e i riferimenti Circolare n. 7 del 30/01/2026 e Messaggio n. 102 del 12/01/2026. Termini ufficiali in italiano."
     }
   }
 }

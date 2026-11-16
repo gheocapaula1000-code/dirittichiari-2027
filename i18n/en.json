@@ -264,19 +264,19 @@
       "note": "Passo 1 della guida Android (menu del browser), non iOS."
     },
     "android_step1_body": {
-      "value": "They are at the top right of the Chrome bar. On some phones the menu is just called “Menu”."
+      "value": "They are at the top right of the Chrome bar. On some phones the menu is just called «Menu»."
     },
     "android_step2_title": {
-      "value": "Choose “Install app”"
+      "value": "Choose «Install app» («Installa app» in Italian)"
     },
     "android_step2_body": {
-      "value": "It may also say “Add to Home screen” or “Install DirittiOk”. If you don’t see it, scroll the menu."
+      "value": "It may also say «Add to Home screen» («Aggiungi alla schermata Home» in Italian) or «Install DirittiOk». If you cannot see it, scroll down the menu."
     },
     "android_step3_title": {
-      "value": "Confirm with “Install”"
+      "value": "Confirm with «Install» («Installa» in Italian)"
     },
     "android_step3_body": {
-      "value": "That’s it: DirittiOk is on your Home screen, like your other apps."
+      "value": "Done: DirittiOk is on your Home Screen, like your other apps."
     },
     "got_it": {
       "value": "Got it"
@@ -436,7 +436,7 @@
       "value": "Know your rights"
     },
     "card_consigli_title": {
-      "value": "Legal tips"
+      "value": "Know your options"
     },
     "card_consigli_text": {
       "value": "What really counts in the ISEE, the choices that are allowed and what you must never do."
@@ -509,8 +509,20 @@
       "note": "Title della home, circa 50-60 caratteri. DirittiOk e ISEE restano."
     },
     "seo_desc": {
-      "value": "Find bonuses and public benefits in Italy (ADI, Assegno Unico, bill discounts), see what you have left each month and estimate your ISEE 2027. Free, private.",
+      "value": "Find bonuses and public benefits in Italy (ADI, Assegno Unico, bill discounts), see what's left each month and estimate ISEE 2027. Free, data on your phone.",
       "note": "Meta description, 120-160 caratteri. ADI e ISEE restano."
+    },
+    "card_auu_title": {
+      "value": "ISEE and Assegno Unico",
+      "note": "Titolo della card in home che porta alla nuova guida. Termini ufficiali in italiano."
+    },
+    "card_auu_text": {
+      "value": "Which ISEE is used, how the monthly amount changes and what happens if you do not submit the DSU (the ISEE declaration).",
+      "note": "Testo della card. ISEE e DSU restano in italiano."
+    },
+    "card_auu_cta": {
+      "value": "Read the guide",
+      "note": "CTA della card. Tono caldo e chiaro, non usare 'semplice' da sola."
     }
   },
   "faq": {
@@ -545,6 +557,38 @@
     },
     "quale_a": {
       "value": "Since 2026, INPS also calculates the ISEE for family and inclusion benefits (L. 199/2025). It is more favourable if you own your home or have at least 2 children. It is used only for ADI, Supporto per la formazione e il lavoro (training and work support), Assegno Unico, bonus nido and bonus nuovi nati. For everything else, the standard ISEE applies."
+    },
+    "auu_quale_q": {
+      "value": "Which ISEE is used for the Assegno Unico?",
+      "note": "FAQ visibile, identica al FAQPage JSON-LD. Termini ufficiali in italiano."
+    },
+    "auu_quale_a": {
+      "value": "It is the ISEE per prestazioni familiari e inclusione (ISEE for family and inclusion benefits, L. 199/2025), not the standard ISEE. INPS has calculated it automatically since 2026. It is taken minus any Assegno Unico already received. The same indicator, minus the Assegno Unico, is also used for the bonus nido and the bonus nuovi nati. For the bonus sociali and many other benefits, the standard ISEE still applies.",
+      "note": "Allineata al testo in pagina. L. 199/2025 e i termini ufficiali restano in italiano."
+    },
+    "auu_senza_q": {
+      "value": "What happens if I do not submit an ISEE?",
+      "note": "FAQ visibile = JSON-LD."
+    },
+    "auu_senza_a": {
+      "value": "The Assegno Unico can be granted even without an ISEE, but at the minimum amount ({min_importo} a month for each child under 18, 2026 value). For a higher amount you need a valid ISEE, as well as the other requirements set by law.",
+      "note": "Conservare {min_importo}. Non promettere il diritto."
+    },
+    "auu_2027_q": {
+      "value": "Are the 2027 amounts already official?",
+      "note": "FAQ visibile = JSON-LD."
+    },
+    "auu_2027_a": {
+      "value": "No. The amounts and limits on this page are those of the Circolare INPS n. 7/2026 (2026 values). The 2027 values are raised in line with inflation at the start of the year. Until INPS publishes them, please treat them as estimates.",
+      "note": "Circolare INPS n. 7/2026 resta riconoscibile. Il 2027 è stima."
+    },
+    "auu_figli_q": {
+      "value": "Is the amount the same for each child?",
+      "note": "FAQ visibile = JSON-LD."
+    },
+    "auu_figli_a": {
+      "value": "The basic amount (from {min_importo} to {full} a month, 2026 values) is calculated for each child under 18. For dependent children aged 18 or over, it can be paid until they turn 21 if they meet the INPS conditions (study or training, an internship or work, registered unemployment with the public employment services, or universal civil service, with total income under {income_21} a year); the amount may be different. INPS supplements may be added, including for children after the second (from the third child onwards). This page and the calculator show the basic amount, without supplements.",
+      "note": "Keep {min_importo}, {full} and {income_21}. Do not invent supplement amounts."
     }
   },
   "seo": {
@@ -646,6 +690,18 @@
     },
     "notfound_h1": {
       "value": "Page not found"
+    },
+    "auu_title": {
+      "value": "ISEE and Assegno Unico 2027: limits and amounts · DirittiOk",
+      "note": "Title SEO, 50-60 caratteri già contato (55). Non tradurre il nome DirittiOk. Conservare la struttura 'tema · DirittiOk'."
+    },
+    "auu_desc": {
+      "value": "How the ISEE changes the monthly Assegno Unico amount: INPS 2026 limits and values, what happens without an ISEE and how to read the 2027 estimates.",
+      "note": "Meta description, 120-160 caratteri (questa stringa IT è 149). Termini ISEE, Assegno Unico, INPS restano in italiano. Non promettere un diritto. I valori 2027 sono stime."
+    },
+    "auu_h1": {
+      "value": "ISEE and Assegno Unico: how the monthly amount changes",
+      "note": "H1 della pagina. ISEE e Assegno Unico restano in italiano."
     }
   },
   "wizard": {
@@ -854,7 +910,7 @@
       "value": "Cadastral income (rendita catastale, from the visura catastale)"
     },
     "s4_rendita_help": {
-      "value": "For homes (category A, except A/10): income × 1.05 × 160."
+      "value": "For homes (category A, except A/10): cadastral income × 1.05 × 160."
     },
     "s4_rendita_btn": {
       "value": "Use this value"
@@ -1210,7 +1266,7 @@
       "value": "From {min} to {max} a month for each child under 18"
     },
     "auu_importo": {
-      "value": "About {amount} a month for each child under 18 (basic amount, without extra increases)",
+      "value": "About {amount} a month for each child under 18 (basic amount, without supplements)",
       "note": "Testo di /risultati con l'importo calcolato. {amount} è già formattato nella lingua."
     },
     "bonus_nome": {
@@ -1459,7 +1515,7 @@
       "note": "H2 richiesto; la FAQ visibile deve usare lo stesso testo della domanda faq.quale_q oppure questa sezione deve contenere la risposta."
     },
     "p_auu1": {
-      "value": "For the Assegno Unico, the **ISEE for family and inclusion benefits** is used, not the standard ISEE. It is the indicator set by L. 199/2025 and it is usually more favourable if you own your home or have at least two children. Without the Assegno Unico already received, it is also used for the bonus nido and the bonus nuovi nati."
+      "value": "For the Assegno Unico, the **ISEE for family and inclusion benefits** is used, not the standard ISEE. It is the indicator set by L. 199/2025 and it is usually more favourable if you own your home or have at least two children. It is also used, minus any Assegno Unico already received, for the bonus nido and the bonus nuovi nati."
     },
     "p_auu2": {
       "value": "Since 2026, INPS calculates this ISEE automatically. It is used only for ADI, Supporto per la formazione e il lavoro, Assegno Unico, bonus nido and bonus nuovi nati. For everything else (bonus sociali, Carta «Dedicata a te», many local council services), the standard ISEE applies."
@@ -1475,6 +1531,10 @@
     },
     "manovra_fonte": {
       "value": "[Official source: A.C. 3174 page on the Senate website](https://www.senato.it/leggi-e-documenti/disegni-di-legge/scheda-ddl?did=60577)."
+    },
+    "auu_more": {
+      "value": "For a fuller explanation, with limits, amounts and what happens without an ISEE, read [ISEE and Assegno Unico](/isee-assegno-unico).",
+      "note": "Link interno. Conservare il markdown [etichetta](/isee-assegno-unico): lo slug URL non si traduce."
     }
   },
   "fonti": {
@@ -1537,6 +1597,10 @@
     "src_portaleIsee": {
       "value": "INPS, Portale unico ISEE (official ISEE website)",
       "note": "Titolo ufficiale di un documento o di una scheda istituzionale italiana. Lasciare il titolo in italiano; si può aggiungere una breve spiegazione nella lingua di arrivo."
+    },
+    "auu_page": {
+      "value": "We have put together the limits, the amounts and which ISEE is used on the page [ISEE and Assegno Unico](/isee-assegno-unico).",
+      "note": "Link interno da /fonti. Conservare il markdown e lo slug /isee-assegno-unico."
     }
   },
   "metodo": {
@@ -1651,7 +1715,7 @@
       "value": "Please write a message of at least a few words."
     },
     "err_consenso": {
-      "value": "To send your message, please accept the privacy notice."
+      "value": "To send your message, please tick the box to agree to the use of your data."
     },
     "err_troppi": {
       "value": "You have sent several messages in a short time. Please try again in a few minutes."
@@ -1706,6 +1770,88 @@
     },
     "crumb_risultati": {
       "value": "Results"
+    },
+    "crumb_auu": {
+      "value": "ISEE and Assegno Unico",
+      "note": "Etichetta breve del breadcrumb, più corta dell'H1. Termini ufficiali in italiano."
+    }
+  },
+  "auu": {
+    "lead": {
+      "value": "The Assegno Unico e Universale (AUU) is the monthly payment from INPS (Istituto nazionale della previdenza sociale, Italy's national social security institute) for dependent children, until they turn 21 if the required conditions are met. This page explains how the ISEE (the official measure of a household's financial situation) affects the monthly amount, using the limits and values already published by INPS. It does not replace your application to INPS and it does not grant any entitlement: you still need the DSU (the ISEE declaration), when required, and the other requirements set by law.",
+      "note": "Lead. Termini ufficiali in italiano (Assegno Unico e Universale, AUU, INPS, ISEE, DSU). Si può lasciare una breve spiegazione tra parentesi, come in italiano. Non promettere un diritto."
+    },
+    "h2_what": {
+      "value": "What the Assegno Unico is",
+      "note": "H2. Assegno Unico resta in italiano."
+    },
+    "p_what": {
+      "value": "The Assegno Unico e Universale is an INPS benefit for dependent children. If you meet the requirements, you can get it even without an ISEE: in that case you get the minimum amount. For dependent children under 18, the allowance is due under INPS rules (for newborns, according to INPS, it starts from the seventh month of pregnancy). For dependent children aged 18 or over, it can be paid until they turn 21 if the child's total income is under {income_21} a year and they are in at least one of these situations: they are in school or vocational training, or on a degree course; they are doing an internship or working; they are registered as unemployed and looking for work with the public employment services; or they are doing universal civil service (servizio civile universale). For dependent children with a disability there is no age limit. The full amount and the supplements depend on the ISEE and on other conditions. You apply to INPS: this page and the calculator do not apply on your behalf.",
+      "note": "18-21 requirements and {income_21} from the official INPS AUU page. Keep official terms."
+    },
+    "h2_isee": {
+      "value": "Which ISEE is used",
+      "note": "H2. ISEE resta in italiano."
+    },
+    "p_isee1": {
+      "value": "The standard ISEE is not used for the Assegno Unico. What is used is the **ISEE per prestazioni familiari e inclusione** (ISEE for family and inclusion benefits, L. 199/2025), which INPS has calculated automatically since 2026. It is usually more favourable if you own your home or have at least two children: the home allowance is higher ({franchigia}, or {franchigia_metro} in the main cities of metropolitan areas) and the extra points on the equivalence scale are different.",
+      "note": "Conservare **grassetto markdown** e i placeholder {franchigia} e {franchigia_metro} (91.500 € e 120.000 €, formattati in locale in build: EN/BN con 91,500 € / 120,000 €). 'ISEE per prestazioni familiari e inclusione' e L. 199/2025 restano in italiano."
+    },
+    "p_isee2": {
+      "value": "An example, without made-up amounts: in the same family, with the same income and the same home they own, the standard ISEE and the ISEE for family benefits can be different: the second one is usually lower. The Assegno Unico looks at this second indicator, **minus any Assegno Unico already received**, so last year's payments do not on their own reduce the new amount. The same ISEE, minus the Assegno Unico, is also used for the bonus asilo nido (daycare bonus) and the bonus nuovi nati (newborn bonus). For the bonus sociali (bill discounts), the Carta «Dedicata a te» and many local council services, the standard ISEE still applies.",
+      "note": "Qualitative example about ONE family with two different ISEE values. Keep official terms and **bold**."
+    },
+    "h2_amounts": {
+      "value": "Limits and amounts (2026 values)",
+      "note": "H2. I valori della pagina sono 2026; il 2027 è stima."
+    },
+    "p_amounts": {
+      "value": "The amounts below come from the Circolare INPS n. 7 del 30/01/2026 (INPS circular). They are 2026 values. The 2027 values are raised in line with inflation at the start of the year: until INPS publishes the new figures, please read them as estimates.",
+      "note": "Citazione della Circolare INPS n. 7 del 30/01/2026: numero e data restano com'è. Sottolineare che il 2027 è stima."
+    },
+    "li_full": {
+      "value": "Full basic amount: **{full} a month** for each child under 18, if the ISEE for family benefits (minus the Assegno Unico) is up to **{min_isee}**.",
+      "note": "Conservare **grassetto** e i placeholder {full} (203,80 €) e {min_isee} (17.468,51 €), formattati in locale in build."
+    },
+    "li_min": {
+      "value": "Minimum basic amount: **{min_importo} a month** for each child under 18, with an ISEE of **{max_isee}** or more.",
+      "note": "Conservare **grassetto** e i placeholder {min_importo} (58,30 €) e {max_isee} (46.582,71 €)."
+    },
+    "li_mid": {
+      "value": "Between these two limits, the basic amount goes down gradually, with no sudden jumps. These are basic amounts, **without supplements**. According to INPS, supplements may apply, among other cases, for children after the second (from the third child onwards), for households with four or more children, for children under one, for children aged one to three in households with three or more children (with an ISEE up to the maximum limit), for disability, for mothers under 21, and when both parents have employment income. The amounts of these supplements depend on the ISEE and on INPS rules: we do not recalculate them in detail here.",
+      "note": "Supplements listed on the official INPS AUU page, without invented amounts. Keep **bold**."
+    },
+    "p_amounts_note": {
+      "value": "We do not give examples with made-up amounts in between: for an estimate for your household you can use the calculator, which always gives only a rough guide.",
+      "note": "Tono chiaro: la stima è orientativa, non un diritto."
+    },
+    "h2_without": {
+      "value": "What happens without an ISEE",
+      "note": "H2. ISEE resta in italiano."
+    },
+    "p_without": {
+      "value": "If you do not submit the DSU (dichiarazione sostitutiva unica, the ISEE declaration) and so you do not have a valid ISEE, the Assegno Unico can still be granted, but at the minimum amount ({min_importo} a month for each child under 18, 2026 value). You do not have to submit an ISEE to get the minimum amount; you need one if you want a higher amount, when you qualify for it under INPS rules.",
+      "note": "Conservare {min_importo}. DSU e ISEE restano in italiano (breve spiegazione di DSU ammessa). Non promettere il diritto: 'può essere riconosciuto' se ci sono i requisiti."
+    },
+    "h2_cta": {
+      "value": "Estimate your ISEE 2027",
+      "note": "H2 della sezione CTA verso /stima."
+    },
+    "p_cta": {
+      "value": "With the DirittiOk estimate you get a rough idea of your standard ISEE, your ISEE for family benefits and how much you have left each month. Official values come only from the DSU submitted to INPS or a CAF (centro di assistenza fiscale, tax assistance centre).",
+      "note": "Non tradurre DirittiOk. CAF, DSU, INPS, ISEE restano in italiano (breve spiegazione di CAF ammessa). La stima è orientativa."
+    },
+    "cta": {
+      "value": "Estimate your ISEE",
+      "note": "Bottone verso /stima."
+    },
+    "see_also": {
+      "value": "See also the [other benefits linked to the ISEE](/diritti-pa), the [sources used](/fonti) and [how we check the values](/metodo).",
+      "note": "Link interni: conservare gli slug /diritti-pa, /fonti, /metodo. Si possono tradurre solo le etichette tra parentesi quadre."
+    },
+    "source": {
+      "value": "Source: [INPS, Circolare n. 7 del 30/01/2026 (Assegno Unico 2026)]({url}) and, for the ISEE for family benefits, [INPS, Messaggio n. 102 del 12/01/2026]({url2}).",
+      "note": "Conservare i placeholder {url} e {url2} e i riferimenti Circolare n. 7 del 30/01/2026 e Messaggio n. 102 del 12/01/2026. Termini ufficiali in italiano."
     }
   }
 }

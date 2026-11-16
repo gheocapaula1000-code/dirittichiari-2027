@@ -46,9 +46,14 @@ def main():
         check('location' not in hdr, f'GET / senza Location ({hdr.get("location")})')
         html = body.decode('utf-8', 'replace')
         check('<html lang="it"' in html, 'home lang=it')
+        check('http-equiv="Content-Language" content="it"' in html, 'home Content-Language=it')
+        check(not re.search(r'<html[^>]*translate="no"', html) and not re.search(r'<html[^>]*notranslate', html), 'html senza notranslate globale')
+        check(not re.search(r'<body[^>]*translate="no"', html) and not re.search(r'<body[^>]*notranslate', html), 'body senza notranslate globale')
+        check('class="lang-switch notranslate" translate="no"' in html, 'selettore lingua notranslate')
+        check('class="notranslate" translate="no">DirittiOk</span>' in html, 'nome del brand notranslate')
         check('I tuoi aiuti in Italia' in html and '<h1>I tuoi aiuti in Italia</h1>' in html, 'home ha H1 landing nel grezzo')
         check('rel="canonical" href="https://dirittiok.com/"' in html, 'home canonical')
-        check('1.5.1' in html, 'versione 1.5.1 nella home')
+        check('1.5.2' in html, 'versione 1.5.2 nella home')
         check('hreflang="en"' in html and 'hreflang="bn"' in html and 'hreflang="x-default"' in html, 'home ha hreflang it/en/bn/x-default')
         check('Scopri i tuoi aiuti' in html and 'Installa l' + "'" + 'app' in html, 'home ha CTA e Installa l app')
         check('lang="it"' in html, 'home lang=it')
@@ -58,6 +63,7 @@ def main():
             '/ottimizzazione': ("Come abbassare l'ISEE in modo legale", 'https://dirittiok.com/ottimizzazione', "Come abbassare l'ISEE in modo legale"),
             '/checklist-dsu': ('Documenti ISEE 2027 per la DSU', 'https://dirittiok.com/checklist-dsu', 'Documenti necessari per la DSU'),
             '/diritti-pa': ('Bonus e aiuti con ISEE 2027', 'https://dirittiok.com/diritti-pa', 'Bonus ISEE 2027'),
+            '/isee-assegno-unico': ('ISEE e Assegno Unico 2027: soglie e importi · DirittiOk', 'https://dirittiok.com/isee-assegno-unico', "ISEE e Assegno Unico: come cambia l'importo mensile"),
             '/fonti': ('Fonti e regole usate', 'https://dirittiok.com/fonti', 'Fonti e regole usate'),
             '/metodo': ('Metodo e fonti', 'https://dirittiok.com/metodo', 'Metodo e fonti'),
             '/contatti': ('Contatti · DirittiOk', 'https://dirittiok.com/contatti', 'Contatti'),
@@ -68,8 +74,12 @@ def main():
             tx = bd.decode('utf-8', 'replace')
             check(st == 200, f'{path} è 200 ({st})')
             check(f'rel="canonical" href="{canon}"' in tx, f'{path} canonical {canon}')
+            check('http-equiv="Content-Language" content="it"' in tx, f'{path} Content-Language=it')
+            check('class="lang-switch notranslate" translate="no"' in tx, f'{path} selettore notranslate')
             check(title in tx, f'{path} title contiene {title!r}')
-            check(f'<h1>{h1}' in tx or f'<h1>{h1}</h1>' in tx or h1 in tx, f'{path} H1 nel grezzo')
+            h1m = re.search(r'<h1>(.*?)</h1>', tx, re.S)
+            h1_plain = re.sub(r'<[^>]+>', '', h1m.group(1)).strip() if h1m else ''
+            check(h1 in h1_plain or f'<h1>{h1}' in tx or h1 in tx, f'{path} H1 nel grezzo ({h1_plain!r})')
             # description in head equals itself pre-JS (static)
             m = re.search(r'<meta name="description" content="([^"]+)"', tx)
             check(m and 120 <= len(m.group(1)) <= 160, f'{path} description ~150 ({len(m.group(1)) if m else 0})')
@@ -108,12 +118,32 @@ def main():
         check('<lastmod>2026-11-16</lastmod>' in sm and '<lastmod>2026-11-15</lastmod>' in sm, 'sitemap lastmod distinti')
         check('changefreq' not in sm and 'priority' not in sm, 'sitemap senza changefreq/priority')
 
+        check('https://dirittiok.com/isee-assegno-unico' in sm, 'sitemap contiene /isee-assegno-unico')
+        check('hreflang="en"' in sm and '/en/isee-assegno-unico' in sm and '/bn/isee-assegno-unico' in sm, 'sitemap hreflang nuova pagina')
+
+        st, hd, bd = raw_headers('/isee-assegno-unico')
+        tx = bd.decode('utf-8', 'replace')
+        check('FAQPage' in tx, '/isee-assegno-unico ha FAQPage JSON-LD')
+        check('Quale ISEE si usa per l' + "'" + 'Assegno Unico?' in tx, '/isee-assegno-unico FAQ visibile = JSON-LD')
+        check('href="/stima"' in tx, '/isee-assegno-unico CTA /stima')
+        check('17.468,51' in tx and '46.582,71' in tx and '203,80' in tx and '58,30' in tx, '/isee-assegno-unico importi ufficiali 2026')
+        check('stime' in tx.lower() or 'stima' in tx.lower(), '/isee-assegno-unico etichetta stime 2027')
+        check('dal terzo figlio in poi' in tx, '/isee-assegno-unico maggiorazione dal terzo figlio')
+        check('servizio civile universale' in tx and '8.000' in tx, '/isee-assegno-unico requisiti 18-21')
+        check('nella stessa famiglia' in tx, '/isee-assegno-unico esempio su una famiglia')
+        check('hreflang="en"' in tx and 'hreflang="bn"' in tx and 'hreflang="x-default"' in tx, '/isee-assegno-unico hreflang')
+
+        for path, needle in (('/', 'href="/isee-assegno-unico"'), ('/diritti-pa', 'href="/isee-assegno-unico"'), ('/fonti', 'href="/isee-assegno-unico"')):
+            st, hd, bd = raw_headers(path)
+            tx = bd.decode('utf-8', 'replace')
+            check(needle in tx, f'{path} linka {needle}')
+
         # pages-data identico a HTML per title/desc
         data = open(os.path.join(ROOT, 'js/pages-data.js'), encoding='utf-8').read()
         check('window.DC_PAGES' in data, 'pages-data.js presente')
         check('#lovable-badge' in open(os.path.join(ROOT, 'css/app.css'), encoding='utf-8').read(), 'CSS nasconde il badge')
         ver = open(os.path.join(ROOT, 'js/version.js'), encoding='utf-8').read()
-        check('DC_VERSION = "1.5.1"' in ver, 'versione unica 1.5.1')
+        check('DC_VERSION = "1.5.2"' in ver, 'versione unica 1.5.2')
 
         # lingue
         for lp, hrefl, h1 in (('/en', 'en', 'Your benefits in Italy'), ('/bn', 'bn', 'ইতালিতে আপনার সরকারি সহায়তা')):
@@ -121,6 +151,9 @@ def main():
             tx = bd.decode('utf-8', 'replace')
             check(st == 200, f'{lp} è 200 ({st})')
             check(f'lang="{hrefl}"' in tx, f'{lp} html lang={hrefl}')
+            check(f'http-equiv="Content-Language" content="{hrefl}"' in tx, f'{lp} Content-Language={hrefl}')
+            check('class="lang-switch notranslate" translate="no"' in tx, f'{lp} selettore notranslate')
+            check(not re.search(r'<html[^>]*translate="no"', tx) and not re.search(r'<body[^>]*translate="no"', tx), f'{lp} senza notranslate globale')
             check('hreflang="it"' in tx and 'hreflang="x-default"' in tx, f'{lp} hreflang')
             check(h1 in tx, f'{lp} H1 nel grezzo')
             check(f'rel="canonical" href="https://dirittiok.com{lp}"' in tx or f'rel="canonical" href="https://dirittiok.com{lp}/"' in tx, f'{lp} canonical')

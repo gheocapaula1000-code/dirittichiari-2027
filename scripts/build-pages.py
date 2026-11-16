@@ -10,11 +10,11 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 from i18n_lib import (
     DEFAULT_LANG, DIR_ATTR, HTML_LANG, I18N_DIR, LANGS, LANG_PREFIX, LOCALE,
     ROUTE_BY_SLUG, SLUG_BY_ROUTE, flatten, fmt_euro, lang_path, load_catalog, page_url,
-    rich, t_map,
+    protect_proper_nouns, rich, t_map,
 )
 
 ROOT = Path(__file__).resolve().parent.parent
-VERSION = "1.5.1"
+VERSION = "1.5.2"
 SITE = "https://dirittiok.com"
 ORG_ID = SITE + "/#organizzazione"
 SITE_ID = SITE + "/#website"
@@ -45,6 +45,10 @@ PAGE_DEFS = [
          sources=True, robots=None, sitemap=True, webapp=False, faqs=["quale"],
          crumbs=[("schema.crumb_home", "/"), ("seo.dir_h1", "/diritti-pa")],
          seo="dir", title_key="seo.dir_title", desc_key="seo.dir_desc", h1_key="seo.dir_h1"),
+    dict(route="auu", slug="isee-assegno-unico", path="/isee-assegno-unico", file_it="pages/isee-assegno-unico.html", date="2026-11-16", date_key="common.date_2026_11_16",
+         sources=True, robots=None, sitemap=True, webapp=False, faqs=["auu_quale", "auu_senza", "auu_2027", "auu_figli"],
+         crumbs=[("schema.crumb_home", "/"), ("schema.crumb_auu", "/isee-assegno-unico")],
+         seo="auu", title_key="seo.auu_title", desc_key="seo.auu_desc", h1_key="seo.auu_h1"),
     dict(route="fonti", slug="fonti", path="/fonti", file_it="pages/fonti.html", date="2026-11-16", date_key="common.date_2026_11_16",
          sources=True, robots=None, sitemap=True, webapp=False, faqs=[],
          crumbs=[("schema.crumb_home", "/"), ("seo.fonti_h1", "/fonti")],
@@ -90,6 +94,10 @@ FAQ_KEYS = {
     "anni": ("faq.anni_q", "faq.anni_a"),
     "gratis": ("faq.gratis_q", "faq.gratis_a"),
     "quale": ("faq.quale_q", "faq.quale_a"),
+    "auu_quale": ("faq.auu_quale_q", "faq.auu_quale_a"),
+    "auu_senza": ("faq.auu_senza_q", "faq.auu_senza_a"),
+    "auu_2027": ("faq.auu_2027_q", "faq.auu_2027_a"),
+    "auu_figli": ("faq.auu_figli_q", "faq.auu_figli_a"),
 }
 
 
@@ -147,6 +155,7 @@ def main_home(m, lang, p):
     u = lambda path: href(lang, path)
     cards = [
         ("🎁", "card_aiuti", "/diritti-pa"),
+        ("👶", "card_auu", "/isee-assegno-unico"),
         ("💶", "card_residuo", "/stima"),
         ("🧭", "card_isee", "/stima"),
         ("📄", "card_docs", "/checklist-dsu"),
@@ -185,8 +194,9 @@ def main_home(m, lang, p):
     faqs_html = []
     for fk in p["faqs"]:
         qk, ak = FAQ_KEYS[fk]
+        fp = auu_params(lang) if str(fk).startswith("auu") else {}
         faqs_html.append(
-            f'<details><summary>{tv(m, qk)}</summary><p>{tr(m, lang, ak)}</p></details>'
+            f'<details><summary>{tv(m, qk, **fp)}</summary><p>{tr(m, lang, ak, **fp)}</p></details>'
         )
     inst = tv(m, "install.cta")
     return f"""
@@ -354,6 +364,7 @@ def main_diritti(m, lang, p):
       <section class="card"><h2>{tv(m, "diritti.h2_auu")}</h2>
         <p>{tr(m, lang, "diritti.p_auu1")}</p>
         <p>{tr(m, lang, "diritti.p_auu2")}</p>
+        <p>{tr(m, lang, "diritti.auu_more")}</p>
         <p><strong>{tv(m, "faq.quale_q")}</strong> {tr(m, lang, "faq.quale_a")}</p>
         <a class="btn btn-primary btn-block" href="{href(lang, "/stima")}">{tv(m, "diritti.cta_stima")}</a></section>
       <section class="card"><h2>{tv(m, "diritti.h2_manovra")}</h2>
@@ -379,6 +390,7 @@ def main_fonti(m, lang, p):
         {lis(norme)}
         <h2>{tv(m, "fonti.h2_aiuti")}</h2>
         {lis(aiuti)}
+        <p>{tr(m, lang, "fonti.auu_page")}</p>
       </section>
       {disclaimer(m, lang)}
     """
@@ -446,9 +458,72 @@ def main_404(m, lang, p):
     """
 
 
+
+def auu_params(lang):
+    return {
+        "full": fmt_euro(203.80, lang, 2),
+        "min_importo": fmt_euro(58.30, lang, 2),
+        "min_isee": fmt_euro(17468.51, lang, 2),
+        "max_isee": fmt_euro(46582.71, lang, 2),
+        "franchigia": fmt_euro(91500, lang, 0),
+        "franchigia_metro": fmt_euro(120000, lang, 0),
+        "income_21": fmt_euro(8000, lang, 0),
+        "url": FONTE_URL["auu"],
+        "url2": FONTE_URL["inps102"],
+    }
+
+
+def faqs_html(m, lang, p):
+    out = []
+    for fk in p.get("faqs") or []:
+        qk, ak = FAQ_KEYS[fk]
+        fp = auu_params(lang) if str(fk).startswith("auu") else {}
+        out.append(
+            f'<details><summary>{tv(m, qk, **fp)}</summary><p>{tr(m, lang, ak, **fp)}</p></details>'
+        )
+    return "".join(out)
+
+
+def main_auu(m, lang, p):
+    a = auu_params(lang)
+    def tp(key):
+        return tr(m, lang, key, **a)
+    faqs = faqs_html(m, lang, p)
+    return f"""
+      <h1>{tv(m, p["h1_key"])}</h1>
+      {disclaimer(m, lang)}
+      {updated(m, lang, p)}
+      <p>{tp("auu.lead")}</p>
+      <section class="card"><h2>{tv(m, "auu.h2_what")}</h2>
+        <p>{tp("auu.p_what")}</p></section>
+      <section class="card"><h2>{tv(m, "auu.h2_isee")}</h2>
+        <p>{tp("auu.p_isee1")}</p>
+        <p>{tp("auu.p_isee2")}</p></section>
+      <section class="card"><h2>{tv(m, "auu.h2_amounts")}</h2>
+        <p>{tp("auu.p_amounts")}</p>
+        <ul>
+          <li>{tp("auu.li_full")}</li>
+          <li>{tp("auu.li_min")}</li>
+          <li>{tp("auu.li_mid")}</li>
+        </ul>
+        <p class="small">{tp("auu.p_amounts_note")}</p></section>
+      <section class="card"><h2>{tv(m, "auu.h2_without")}</h2>
+        <p>{tp("auu.p_without")}</p></section>
+      <section class="card"><h2>{tv(m, "auu.h2_cta")}</h2>
+        <p>{tp("auu.p_cta")}</p>
+        <a class="btn btn-primary btn-block" href="{href(lang, "/stima")}">{tv(m, "auu.cta")}</a></section>
+      <section class="card" id="faq">
+        <h2>{tv(m, "home.faq_title")}</h2>
+        {faqs}
+      </section>
+      <p>{tp("auu.see_also")}</p>
+      <p class="small">{tp("auu.source")}</p>
+    """
+
+
 COMPOSERS = {
     "": main_home, "stima": main_stima, "risultati": main_risultati, "consigli": main_ott,
-    "documenti": main_docs, "diritti": main_diritti, "fonti": main_fonti, "metodo": main_metodo,
+    "documenti": main_docs, "diritti": main_diritti, "auu": main_auu, "fonti": main_fonti, "metodo": main_metodo,
     "contatti": main_contatti, "privacy": main_privacy, "404": main_404,
 }
 
@@ -524,10 +599,11 @@ def json_ld(m, lang, p, title, desc, url):
         ents = []
         for fk in p["faqs"]:
             qk, ak = FAQ_KEYS[fk]
+            fp = auu_params(lang) if str(fk).startswith("auu") else {}
             ents.append({
                 "@type": "Question",
-                "name": tv(m, qk),
-                "acceptedAnswer": {"@type": "Answer", "text": plain(tv(m, ak))},
+                "name": tv(m, qk, **fp),
+                "acceptedAnswer": {"@type": "Answer", "text": plain(tv(m, ak, **fp))},
             })
         graph.append({
             "@type": "FAQPage",
@@ -560,7 +636,7 @@ def switcher_html(m, lang, p):
         url = href(L, path)
         cur = ' aria-current="true"' if L == lang else ""
         items.append(f'<a href="{url}" lang="{L}" hreflang="{L}" data-no-spa{cur}>{tv(m, short)}</a>')
-    return f'<nav class="lang-switch" aria-label="{tv(m, "chrome.lang_label")}">{"".join(items)}</nav>'
+    return f'<nav class="lang-switch notranslate" translate="no" aria-label="{tv(m, "chrome.lang_label")}">{"".join(items)}</nav>'
 
 
 def footer_links(m, lang):
@@ -586,6 +662,7 @@ def render_html(shell, m, lang, p, title, desc, main_html, url, jsonld):
         "{{LOCALE}}": LOCALE[lang] if lang == "it" else ("en" if lang == "en" else "bn"),
         "{{TITLE}}": title,
         "{{DESCRIPTION}}": desc.replace('"', "&quot;"),
+        "{{CONTENT_LANGUAGE}}": HTML_LANG[lang],
         "{{ROBOTS}}": robots,
         "{{CANONICAL}}": canonical,
         "{{HREFLANG}}": hreflang_links(p),
@@ -625,7 +702,7 @@ def render_html(shell, m, lang, p, title, desc, main_html, url, jsonld):
     }
     for k, v in repl.items():
         html = html.replace(k, v)
-    return html
+    return protect_proper_nouns(html)
 
 
 def write_version():
@@ -712,7 +789,7 @@ def main():
             title = tv(m, p["title_key"])
             desc = tv(m, p["desc_key"])
             h1 = tv(m, p["h1_key"])
-            main_html = COMPOSERS[p["route"]](m, lang, p)
+            main_html = protect_proper_nouns(COMPOSERS[p["route"]](m, lang, p))
             url = page_url(lang, p["path"], SITE) if p["path"] is not None else ""
             jld = json_ld(m, lang, p, title, desc, url or None)
             html = render_html(shell, m, lang, p, title, desc, main_html, url, jld)

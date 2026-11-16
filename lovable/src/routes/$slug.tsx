@@ -9,6 +9,7 @@ import fonti from "../../public/pwa/fonti.html?raw";
 import metodo from "../../public/pwa/metodo.html?raw";
 import contatti from "../../public/pwa/contatti.html?raw";
 import privacy from "../../public/pwa/privacy.html?raw";
+import auu from "../../public/pwa/isee-assegno-unico.html?raw";
 import notFound from "../../public/404.html?raw";
 
 const PAGES: Record<string, string> = {
@@ -21,6 +22,7 @@ const PAGES: Record<string, string> = {
   metodo,
   contatti,
   privacy,
+  "isee-assegno-unico": auu,
 };
 
 /** Deep link: /contatti ecc. restituiscono l'HTML proprio, 200. /stima/ → 301 /stima. */
