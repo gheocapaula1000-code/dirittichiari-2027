@@ -45,10 +45,13 @@ def main():
         check(status == 200, f'GET / è 200 ({status})')
         check('location' not in hdr, f'GET / senza Location ({hdr.get("location")})')
         html = body.decode('utf-8', 'replace')
-        check('<html lang="it">' in html, 'home lang=it')
-        check('Capisci il tuo ISEE 2027' in html, 'home ha H1 nel grezzo')
+        check('<html lang="it"' in html, 'home lang=it')
+        check('I tuoi aiuti in Italia' in html and '<h1>I tuoi aiuti in Italia</h1>' in html, 'home ha H1 landing nel grezzo')
         check('rel="canonical" href="https://dirittiok.com/"' in html, 'home canonical')
-        check('1.4.0' in html, 'versione 1.4.0 nella home')
+        check('1.5.0' in html, 'versione 1.5.0 nella home')
+        check('hreflang="en"' in html and 'hreflang="bn"' in html and 'hreflang="x-default"' in html, 'home ha hreflang it/en/bn/x-default')
+        check('Scopri i tuoi aiuti' in html and 'Installa l' + "'" + 'app' in html, 'home ha CTA e Installa l app')
+        check('lang="it"' in html, 'home lang=it')
 
         pages = {
             '/stima': ('Simulatore ISEE 2027', 'https://dirittiok.com/stima', 'Calcolo ISEE 2027: simulatore online gratuito'),
@@ -57,8 +60,8 @@ def main():
             '/diritti-pa': ('Bonus e aiuti con ISEE 2027', 'https://dirittiok.com/diritti-pa', 'Bonus ISEE 2027'),
             '/fonti': ('Fonti e regole usate', 'https://dirittiok.com/fonti', 'Fonti e regole usate'),
             '/metodo': ('Metodo e fonti', 'https://dirittiok.com/metodo', 'Metodo e fonti'),
-            '/contatti': ('Contatti · DirittiChiari', 'https://dirittiok.com/contatti', 'Contatti'),
-            '/privacy': ('Privacy · DirittiChiari', 'https://dirittiok.com/privacy', 'Privacy'),
+            '/contatti': ('Contatti · DirittiOk', 'https://dirittiok.com/contatti', 'Contatti'),
+            '/privacy': ('Privacy · DirittiOk', 'https://dirittiok.com/privacy', 'Privacy'),
         }
         for path, (title, canon, h1) in pages.items():
             st, hd, bd = raw_headers(path)
@@ -110,7 +113,26 @@ def main():
         check('window.DC_PAGES' in data, 'pages-data.js presente')
         check('#lovable-badge' in open(os.path.join(ROOT, 'css/app.css'), encoding='utf-8').read(), 'CSS nasconde il badge')
         ver = open(os.path.join(ROOT, 'js/version.js'), encoding='utf-8').read()
-        check('DC_VERSION = "1.4.0"' in ver, 'versione unica 1.4.0')
+        check('DC_VERSION = "1.5.0"' in ver, 'versione unica 1.5.0')
+
+        # lingue
+        for lp, hrefl, h1 in (('/en', 'en', 'I tuoi aiuti in Italia'), ('/bn', 'bn', 'I tuoi aiuti in Italia')):
+            st, hd, bd = raw_headers(lp)
+            tx = bd.decode('utf-8', 'replace')
+            check(st == 200, f'{lp} è 200 ({st})')
+            check(f'lang="{hrefl}"' in tx, f'{lp} html lang={hrefl}')
+            check('hreflang="it"' in tx and 'hreflang="x-default"' in tx, f'{lp} hreflang')
+            check(h1 in tx, f'{lp} H1 nel grezzo')
+            check(f'rel="canonical" href="https://dirittiok.com{lp}"' in tx or f'rel="canonical" href="https://dirittiok.com{lp}/"' in tx, f'{lp} canonical')
+        st, hd, _ = raw_headers('/en/stima/')
+        check(st == 301 and hd.get('location','').rstrip('/').endswith('/en/stima'), f'/en/stima/ 301 ({st} {hd.get("location")})')
+        st, hd, bd = raw_headers('/en/pagina-inesistente-xyz')
+        tx = bd.decode('utf-8', 'replace')
+        check(st == 404 and 'lang="en"' in tx and 'Pagina non trovata' in tx, f'/en sconosciuta 404 lingua ({st})')
+        sm_ok = 'https://dirittiok.com/en' in sm and 'https://dirittiok.com/bn/stima' in sm and 'hreflang="bn"' in sm
+        check(sm_ok, 'sitemap contiene /en, /bn e hreflang')
+        check('window.DC_MSG' in open(os.path.join(ROOT, 'js/messages.js'), encoding='utf-8').read(), 'messages.js presente')
+
     finally:
         srv.terminate()
         srv.wait(timeout=3)

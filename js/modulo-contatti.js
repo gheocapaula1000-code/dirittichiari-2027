@@ -4,20 +4,25 @@
 const ENDPOINT = '/api/contatto';
 const EMAIL = 'info@pigiservice.com';
 const EMAIL_RE = /^[^\s@<>()",;:]+@[^\s@<>()",;:]+\.[^\s@<>()",;:]{2,}$/;
-const T = {
-  titolo: 'Scrivici',
-  intro: 'Compila il modulo: ti rispondiamo via email, in genere entro un giorno lavorativo. Partono soltanto le informazioni che scrivi tu: i dati della stima ISEE restano sul tuo dispositivo.',
-  nome: 'Nome e cognome', email: 'Email', telefono: 'Telefono', azienda: 'Azienda o attività', facoltativo: 'facoltativo',
-  messaggio: 'Messaggio', messaggioAiuto: 'Raccontaci in poche righe di cosa hai bisogno.',
-  consensoPrima: "Ho letto l'", consensoLink: 'informativa privacy', consensoDopo: " e acconsento all'uso dei miei dati per ricevere una risposta.",
-  invia: 'Invia il messaggio', invio: 'Invio in corso…',
-  ok: 'Messaggio inviato. Grazie!', okDettaglio: "Ti risponderemo all'indirizzo email che hai indicato.", altro: 'Scrivi un altro messaggio',
-  errNome: 'Scrivi il tuo nome.', errEmail: "Controlla l'indirizzo email.", errMessaggio: 'Scrivi un messaggio di almeno qualche parola.',
-  errConsenso: 'Per inviare il messaggio serve il consenso alla privacy.',
-  errTroppi: 'Hai inviato diversi messaggi in poco tempo. Riprova tra qualche minuto.',
-  errRete: 'Sei offline o la connessione è instabile. Riprova quando sei di nuovo online.',
-  errGenerico: 'Il messaggio non è partito. Riprova tra poco oppure scrivi a', oppure: "Preferisci l'email? Scrivi a",
-};
+function T() {
+  const i = window.DC_i18n;
+  const g = (k, fb) => (i && i.t ? i.t(k) : fb);
+  return {
+    titolo: g('contatti.form_title', 'Scrivici'),
+    intro: g('contatti.form_intro', 'Compila il modulo: ti rispondiamo via email, in genere entro un giorno lavorativo. Partono soltanto le informazioni che scrivi tu: i dati della stima ISEE restano sul tuo dispositivo.'),
+    nome: g('contatti.nome', 'Nome e cognome'), email: g('contatti.email', 'Email'), telefono: g('contatti.telefono', 'Telefono'), azienda: g('contatti.azienda', 'Azienda o attività'), facoltativo: g('common.optional', 'facoltativo'),
+    messaggio: g('contatti.messaggio', 'Messaggio'), messaggioAiuto: g('contatti.messaggio_aiuto', 'Raccontaci in poche righe di cosa hai bisogno.'),
+    consensoPrima: g('contatti.consenso_prima', "Ho letto l'"), consensoLink: g('contatti.consenso_link', 'informativa privacy'), consensoDopo: g('contatti.consenso_dopo', " e acconsento all'uso dei miei dati per ricevere una risposta."),
+    invia: g('contatti.invia', 'Invia il messaggio'), invio: g('contatti.invio', 'Invio in corso…'),
+    ok: g('contatti.ok', 'Messaggio inviato. Grazie!'), okDettaglio: g('contatti.ok_dettaglio', "Ti risponderemo all'indirizzo email che hai indicato."), altro: g('contatti.altro', 'Scrivi un altro messaggio'),
+    errNome: g('contatti.err_nome', 'Scrivi il tuo nome.'), errEmail: g('contatti.err_email', "Controlla l'indirizzo email."), errMessaggio: g('contatti.err_messaggio', 'Scrivi un messaggio di almeno qualche parola.'),
+    errConsenso: g('contatti.err_consenso', 'Per inviare il messaggio serve il consenso alla privacy.'),
+    errTroppi: g('contatti.err_troppi', 'Hai inviato diversi messaggi in poco tempo. Riprova tra qualche minuto.'),
+    errRete: g('contatti.err_rete', 'Sei offline o la connessione è instabile. Riprova quando sei di nuovo online.'),
+    errGenerico: g('contatti.err_generico', 'Il messaggio non è partito. Riprova tra poco oppure scrivi a'), oppure: g('contatti.oppure', "Preferisci l'email? Scrivi a"),
+    hp: g('contatti.hp', 'Lascia vuoto'),
+  };
+}
 
 function el(tag, attrs = {}, ...kids) {
   const n = document.createElement(tag);
@@ -31,6 +36,7 @@ function el(tag, attrs = {}, ...kids) {
 const mail = () => el('a', { href: `mailto:${EMAIL}`, text: EMAIL });
 
 function monta(box, n) {
+  const L = T();
   const id = (s) => `mc${n}-${s}`;
   const privacy = box.getAttribute('data-privacy') || 'privacy.html';
   const lingua = box.getAttribute('data-lang') || document.documentElement.lang || 'it';
@@ -42,30 +48,30 @@ function monta(box, n) {
   const campo = (k, label, attrs, opz) => {
     const wrap = el('div', { class: 'mc-f' });
     const lab = el('label', { for: id(k), class: 'mc-l' }, label);
-    if (opz) lab.append(' ', el('span', { class: 'mc-opz', text: `(${T.facoltativo})` }));
+    if (opz) lab.append(' ', el('span', { class: 'mc-opz', text: `(${L.facoltativo})` }));
     const inp = el(attrs.rows ? 'textarea' : 'input', { id: id(k), class: 'mc-i', ...attrs });
     wrap.append(lab, inp);
     return { wrap, inp };
   };
-  const nome = campo('nome', T.nome, { name: 'name', autocomplete: 'name', required: true, maxlength: 120 });
-  const email = campo('email', T.email, { name: 'email', type: 'email', inputmode: 'email', autocomplete: 'email', required: true, maxlength: 254 });
-  const tel = campo('tel', T.telefono, { name: 'tel', type: 'tel', inputmode: 'tel', autocomplete: 'tel', maxlength: 40 }, true);
-  const az = campo('az', T.azienda, { name: 'organization', autocomplete: 'organization', maxlength: 160 }, true);
-  const msg = campo('messaggio', T.messaggio, { name: 'message', rows: 5, required: true, maxlength: 5000, 'aria-describedby': id('mh') });
-  msg.wrap.append(el('p', { id: id('mh'), class: 'mc-h', text: T.messaggioAiuto }));
+  const nome = campo('nome', L.nome, { name: 'name', autocomplete: 'name', required: true, maxlength: 120 });
+  const email = campo('email', L.email, { name: 'email', type: 'email', inputmode: 'email', autocomplete: 'email', required: true, maxlength: 254 });
+  const tel = campo('tel', L.telefono, { name: 'tel', type: 'tel', inputmode: 'tel', autocomplete: 'tel', maxlength: 40 }, true);
+  const az = campo('az', L.azienda, { name: 'organization', autocomplete: 'organization', maxlength: 160 }, true);
+  const msg = campo('messaggio', L.messaggio, { name: 'message', rows: 5, required: true, maxlength: 5000, 'aria-describedby': id('mh') });
+  msg.wrap.append(el('p', { id: id('mh'), class: 'mc-h', text: L.messaggioAiuto }));
   const hp = el('input', { id: id('hp'), name: 'sito_web', tabindex: '-1', autocomplete: 'off' });
-  const trappola = el('div', { class: 'mc-hp', 'aria-hidden': 'true' }, el('label', { for: id('hp'), text: 'Lascia vuoto' }), hp);
+  const trappola = el('div', { class: 'mc-hp', 'aria-hidden': 'true' }, el('label', { for: id('hp'), text: L.hp }), hp);
   const cb = el('input', { id: id('consenso'), type: 'checkbox', required: true, class: 'mc-cb' });
-  const consenso = el('div', { class: 'mc-f' }, el('label', { for: id('consenso'), class: 'mc-c' }, cb, el('span', {}, T.consensoPrima, el('a', { href: privacy, target: '_blank', rel: 'noopener', text: T.consensoLink }), T.consensoDopo)));
+  const consenso = el('div', { class: 'mc-f' }, el('label', { for: id('consenso'), class: 'mc-c' }, cb, el('span', {}, L.consensoPrima, el('a', { href: privacy, target: '_blank', rel: 'noopener', text: L.consensoLink }), L.consensoDopo)));
   const avviso = el('div', { class: 'mc-err', role: 'alert', tabindex: '-1', hidden: true });
-  const btn = el('button', { type: 'submit', class: 'mc-b', text: T.invia });
-  const alt = el('p', { class: 'mc-alt' }, `${T.oppure} `, mail());
+  const btn = el('button', { type: 'submit', class: 'mc-b', text: L.invia });
+  const alt = el('p', { class: 'mc-alt' }, `${L.oppure} `, mail());
   const form = el('form', { novalidate: true, class: 'mc-form' }, nome.wrap, email.wrap, tel.wrap, az.wrap, trappola, msg.wrap, consenso, avviso, btn, alt);
-  const titolo = el(livello, { class: 'mc-t', text: T.titolo });
-  const intro = el('p', { class: 'mc-intro', text: T.intro });
+  const titolo = el(livello, { class: 'mc-t', text: L.titolo });
+  const intro = el('p', { class: 'mc-intro', text: L.intro });
   const fatto = el('div', { class: 'mc-ok', role: 'status', tabindex: '-1', hidden: true },
-    el('p', { class: 'mc-ok-t', text: `✓ ${T.ok}` }), el('p', { text: T.okDettaglio }));
-  const ancora = el('button', { type: 'button', class: 'mc-b2', text: T.altro });
+    el('p', { class: 'mc-ok-t', text: `✓ ${L.ok}` }), el('p', { text: L.okDettaglio }));
+  const ancora = el('button', { type: 'button', class: 'mc-b2', text: L.altro });
   fatto.append(ancora);
   box.append(titolo, intro, form, fatto);
 
@@ -83,10 +89,10 @@ function monta(box, n) {
   };
   const controlla = () => {
     for (const k of Object.keys(errori)) delete errori[k];
-    segna('nome', nome.inp.value.trim().length < 2 ? T.errNome : '');
-    segna('email', EMAIL_RE.test(email.inp.value.trim()) ? '' : T.errEmail);
-    segna('messaggio', msg.inp.value.trim().length < 5 ? T.errMessaggio : '');
-    segna('consenso', cb.checked ? '' : T.errConsenso);
+    segna('nome', nome.inp.value.trim().length < 2 ? L.errNome : '');
+    segna('email', EMAIL_RE.test(email.inp.value.trim()) ? '' : L.errEmail);
+    segna('messaggio', msg.inp.value.trim().length < 5 ? L.errMessaggio : '');
+    segna('consenso', cb.checked ? '' : L.errConsenso);
     const primo = ['nome', 'email', 'messaggio', 'consenso'].find((k) => errori[k]);
     if (primo) ({ nome: nome.inp, email: email.inp, messaggio: msg.inp, consenso: cb })[primo].focus();
     return !primo;
@@ -102,7 +108,7 @@ function monta(box, n) {
     ev.preventDefault();
     if (btn.disabled || !controlla()) return;
     avviso.hidden = true;
-    btn.disabled = true; btn.setAttribute('aria-busy', 'true'); btn.textContent = T.invio;
+    btn.disabled = true; btn.setAttribute('aria-busy', 'true'); btn.textContent = L.invio;
     const ctrl = new AbortController();
     const timer = setTimeout(() => ctrl.abort(), 20000);
     try {
@@ -122,13 +128,13 @@ function monta(box, n) {
         return;
       }
       const c = j && j.errore;
-      if (['nome', 'email', 'messaggio', 'consenso'].includes(c)) { segna(c, { nome: T.errNome, email: T.errEmail, messaggio: T.errMessaggio, consenso: T.errConsenso }[c]); return; }
-      if (r.status === 429) mostraErrore(T.errTroppi); else mostraErrore(T.errGenerico, true);
+      if (['nome', 'email', 'messaggio', 'consenso'].includes(c)) { segna(c, { nome: L.errNome, email: L.errEmail, messaggio: L.errMessaggio, consenso: L.errConsenso }[c]); return; }
+      if (r.status === 429) mostraErrore(L.errTroppi); else mostraErrore(L.errGenerico, true);
     } catch {
-      if (navigator.onLine === false) mostraErrore(T.errRete); else mostraErrore(T.errGenerico, true);
+      if (navigator.onLine === false) mostraErrore(L.errRete); else mostraErrore(L.errGenerico, true);
     } finally {
       clearTimeout(timer);
-      btn.disabled = false; btn.removeAttribute('aria-busy'); btn.textContent = T.invia;
+      btn.disabled = false; btn.removeAttribute('aria-busy'); btn.textContent = L.invia;
     }
   });
   ancora.addEventListener('click', () => {

@@ -33,6 +33,9 @@ npm run test:ui     # Playwright: Chromium + WebKit a 320/390/440 px
 npm run serve       # server locale su http://127.0.0.1:4321 (URL pulite)
 ```
 
+## Lingue
+Le stringhe dell'interfaccia e dei contenuti sono nel catalogo `i18n/it.json` (italiano di partenza, con note per chi traduce). `i18n/en.json` e `i18n/bn.json` partono come copia; le rotte `/en/...` e `/bn/...` hanno HTML statico, `hreflang` e l'attributo `lang`. Il manifest resta in italiano (`DirittiOk`). Dopo una traduzione si lancia `npm run build`.
+
 ## Pubblicare una nuova versione
 1. Aggiorna i valori in `RULES` (e `docs/FONTI.md`).
 2. Aumenta la versione in `scripts/build-pages.py` (`VERSION`) ed esegui `npm run build` (aggiorna `js/version.js`, l'HTML e il commento in `sw.js`).

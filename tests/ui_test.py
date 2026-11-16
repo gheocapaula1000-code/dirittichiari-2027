@@ -53,9 +53,9 @@ def run_flow(browser, width):
     page.on('pageerror', lambda e: errors.append(str(e)))
     page.goto(BASE + '/')
     page.wait_for_selector('h1')
-    check('ISEE 2027' in page.inner_text('h1'), f'{tag}: titolo home')
+    check('I tuoi aiuti in Italia' in page.inner_text('h1'), f'{tag}: titolo home {page.inner_text("h1")!r}')
     check(page.locator('h1').count() == 1, f'{tag}: un solo h1 in home ({page.locator("h1").count()})')
-    check('DirittiChiari 2027' in page.title(), f'{tag}: title home {page.title()!r}')
+    check('DirittiOk' in page.title() and 'I tuoi aiuti in Italia' in page.title(), f'{tag}: title home {page.title()!r}')
     canon = page.locator('link[rel="canonical"]').get_attribute('href') or ''
     check(canon.startswith('https://dirittiok.com/'), f'{tag}: canonical {canon!r}')
     og = page.locator('meta[property="og:image"]').get_attribute('content') or ''
@@ -70,6 +70,10 @@ def run_flow(browser, width):
     # parole vietate: "semplice" da sola
     txt = page.inner_text('body').lower()
     check(not re.search(r'\bsemplice\b(?! da utilizzare)', txt), f'{tag}: parola "semplice" da sola')
+    check(page.locator('a.btn-primary[href="/stima"]').count() >= 1, f'{tag}: CTA Scopri i tuoi aiuti')
+    check('Scopri i tuoi aiuti' in page.inner_text('body'), f'{tag}: testo CTA home')
+    check(page.locator('.lang-switch').count() == 1, f'{tag}: selettore lingua')
+    check(page.locator('footer #install-footer, footer [data-install-cta]').count() >= 1, f'{tag}: Installa nel footer')
 
     page.click('a.btn-primary[href="/stima"]')
     # Passo 1
@@ -208,6 +212,81 @@ def run_flow(browser, width):
         check(page.locator('#step-title').evaluate('e => e.tagName') == 'H2', f'{tag}: passo del wizard come H2')
     ctx.close()
 
+
+IPHONE_UA = "Mozilla/5.0 (iPhone; CPU iPhone OS 17_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.0 Mobile/15E148 Safari/604.1"
+
+def install_and_i18n(browser, width=390):
+    tag = f"{browser.browser_type.name}-install"
+    print("▶", tag)
+    name = browser.browser_type.name
+    if name == "webkit":
+        ctx = browser.new_context(viewport={"width": width, "height": 844}, user_agent=IPHONE_UA, has_touch=True, is_mobile=True)
+        page = ctx.new_page()
+        page.goto(BASE + "/?installa=ios")
+        page.wait_for_selector("h1")
+        page.wait_for_timeout(400)
+        vis = page.is_visible("#install-banner")
+        check(vis, f"{tag}: banner iOS non visibile in WebKit/iPhone")
+        if vis:
+            check("Condividi" in page.inner_text("#install-banner") or "Installa" in page.inner_text("#install-banner") or "home" in page.inner_text("#install-banner").lower(), f"{tag}: testo guida iOS")
+            page.click("[data-install-cta]")
+            page.wait_for_selector("#install-sheet", timeout=3000)
+            check(page.locator("#install-sheet").count() == 1, f"{tag}: foglio iOS")
+            if page.locator("#install-sheet").count():
+                body = page.inner_text("#install-sheet")
+                check("Aggiungi alla schermata Home" in body or "schermata Home" in body, f"{tag}: passi Condividi/Home nel foglio")
+                page.locator(".install-sheet-dlg button.btn-primary, .install-sheet-dlg .icon-btn").first.click()
+        # sul wizard il banner non deve comparire
+        page.goto(BASE + "/stima?installa=ios")
+        page.wait_for_selector("h1")
+        page.wait_for_timeout(300)
+        check(not page.is_visible("#install-banner"), f"{tag}: banner visibile nel wizard")
+        no_hscroll(page, f"{tag} stima")
+        ctx.close()
+    else:
+        ctx = browser.new_context(viewport={"width": width, "height": 844}, has_touch=True, is_mobile=True)
+        page = ctx.new_page()
+        page.goto(BASE + "/?installa=android")
+        page.wait_for_selector("h1")
+        page.wait_for_timeout(400)
+        check(page.is_visible("#install-banner"), f"{tag}: banner Android/Chromium non visibile quando installabile")
+        # standalone: nascosto
+        ctx2 = browser.new_context(viewport={"width": width, "height": 844}, has_touch=True, is_mobile=True)
+        page2 = ctx2.new_page()
+        page2.add_init_script("""
+            Object.defineProperty(navigator, "standalone", { get: () => true });
+            const orig = window.matchMedia.bind(window);
+            window.matchMedia = (q) => {
+              if (String(q).includes("display-mode: standalone")) {
+                return { matches: true, media: q, addEventListener(){}, removeEventListener(){}, addListener(){}, removeListener(){}, onchange: null, dispatchEvent(){ return false; } };
+              }
+              return orig(q);
+            };
+        """)
+        page2.goto(BASE + "/?installa=android")
+        page2.wait_for_selector("h1")
+        page2.wait_for_timeout(400)
+        check(not page2.is_visible("#install-banner"), f"{tag}: banner visibile in standalone")
+        # CTA hero hidden when standalone
+        hidden = page2.evaluate("() => { const b=[...document.querySelectorAll('[data-install-cta]')]; return b.every(el => el.hidden || el.offsetParent===null); }")
+        check(hidden, f"{tag}: pulsanti Installa visibili in standalone")
+        ctx.close(); ctx2.close()
+
+    # rotte lingua
+    ctx = browser.new_context(viewport={"width": width, "height": 844}, has_touch=True, is_mobile=name=="chromium")
+    page = ctx.new_page()
+    page.goto(BASE + "/en")
+    page.wait_for_selector("h1")
+    check(page.evaluate("() => document.documentElement.lang") == "en", f"{tag}: lang en")
+    check(page.locator(".lang-switch").count() == 1, f"{tag}: switcher su /en")
+    no_hscroll(page, f"{tag} en")
+    page.goto(BASE + "/bn")
+    page.wait_for_selector("h1")
+    check(page.evaluate("() => document.documentElement.lang") == "bn", f"{tag}: lang bn")
+    no_hscroll(page, f"{tag} bn")
+    ctx.close()
+
+
 def sw_and_banner(browser, base_dir):
     """Prima visita: niente banner. Nuova versione pubblicata: banner una sola volta."""
     tag = f'{browser.browser_type.name} SW'
@@ -265,6 +344,7 @@ def main():
                 for w in (320, 390, 440):
                     run_flow(b, w)
                 sw_and_banner(b, site)
+                install_and_i18n(b)
                 b.close()
     finally:
         if server: server.terminate()

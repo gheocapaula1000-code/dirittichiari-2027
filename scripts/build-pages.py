@@ -1,27 +1,96 @@
 #!/usr/bin/env python3
-"""Genera l'HTML statico di ogni rotta, js/pages-data.js e sitemap.xml.
-Eseguire dalla radice del repo: python3 scripts/build-pages.py
+"""Genera l'HTML statico per ogni rotta e lingua, js/messages.js, js/pages-data.js e sitemap.xml.
+Fonte delle stringhe: i18n/{it,en,bn}.json. Eseguire dalla radice: python3 scripts/build-pages.py
 """
 from __future__ import annotations
 import json, re, sys
 from pathlib import Path
 
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from i18n_lib import (
+    DEFAULT_LANG, DIR_ATTR, HTML_LANG, I18N_DIR, LANGS, LANG_PREFIX, LOCALE,
+    ROUTE_BY_SLUG, SLUG_BY_ROUTE, flatten, lang_path, load_catalog, page_url,
+    rich, t_map,
+)
+
 ROOT = Path(__file__).resolve().parent.parent
-VERSION = "1.4.0"
+VERSION = "1.5.0"
 SITE = "https://dirittiok.com"
 ORG_ID = SITE + "/#organizzazione"
 SITE_ID = SITE + "/#website"
 APP_ID = SITE + "/#app"
 
-DISCLAIMER = (
-    '<div class="disclaimer" role="note"><strong>Attenzione:</strong> Stima orientativa '
-    "basata sulle regole note a novembre 2026. I valori ufficiali si ottengono solo con la DSU "
-    "presentata a INPS o CAF. Alcuni importi 2027 sono ancora stime.</div>"
-)
+# route, slug, path (it), date, robots, sitemap, webapp, faqs, crumb keys (title keys), seo keys prefix
+PAGE_DEFS = [
+    dict(route="", slug="", path="/", file_it="index.html", date="2026-11-16", date_key="common.date_2026_11_16",
+         sources=True, robots=None, sitemap=True, webapp=True, faqs=["aiuti", "dati", "anni", "gratis"],
+         crumbs=[("schema.crumb_home", "/")], seo="home", title_key="home.seo_title", desc_key="home.seo_desc", h1_key="home.h1"),
+    dict(route="stima", slug="stima", path="/stima", file_it="pages/stima.html", date="2026-11-16", date_key="common.date_2026_11_16",
+         sources=True, robots=None, sitemap=True, webapp=True, faqs=["anni"],
+         crumbs=[("schema.crumb_home", "/"), ("schema.crumb_stima", "/stima")],
+         seo="stima", title_key="seo.stima_title", desc_key="seo.stima_desc", h1_key="seo.stima_h1"),
+    dict(route="risultati", slug="risultati", path="/risultati", file_it="pages/risultati.html", date="2026-11-16", date_key="common.date_2026_11_16",
+         sources=True, robots="noindex,follow", sitemap=False, webapp=False, faqs=[],
+         crumbs=[("schema.crumb_home", "/"), ("schema.crumb_risultati", "/risultati")],
+         seo="risultati", title_key="seo.risultati_title", desc_key="seo.risultati_desc", h1_key="seo.risultati_empty_h1"),
+    dict(route="consigli", slug="ottimizzazione", path="/ottimizzazione", file_it="pages/ottimizzazione.html", date="2026-11-16", date_key="common.date_2026_11_16",
+         sources=True, robots=None, sitemap=True, webapp=False, faqs=[],
+         crumbs=[("schema.crumb_home", "/"), ("seo.ott_crumb", "/ottimizzazione")],
+         seo="ott", title_key="seo.ott_title", desc_key="seo.ott_desc", h1_key="seo.ott_h1"),
+    dict(route="documenti", slug="checklist-dsu", path="/checklist-dsu", file_it="pages/checklist-dsu.html", date="2026-11-16", date_key="common.date_2026_11_16",
+         sources=True, robots=None, sitemap=True, webapp=False, faqs=[],
+         crumbs=[("schema.crumb_home", "/"), ("seo.chk_h1", "/checklist-dsu")],
+         seo="chk", title_key="seo.chk_title", desc_key="seo.chk_desc", h1_key="seo.chk_h1"),
+    dict(route="diritti", slug="diritti-pa", path="/diritti-pa", file_it="pages/diritti-pa.html", date="2026-11-16", date_key="common.date_2026_11_16",
+         sources=True, robots=None, sitemap=True, webapp=False, faqs=["quale"],
+         crumbs=[("schema.crumb_home", "/"), ("seo.dir_h1", "/diritti-pa")],
+         seo="dir", title_key="seo.dir_title", desc_key="seo.dir_desc", h1_key="seo.dir_h1"),
+    dict(route="fonti", slug="fonti", path="/fonti", file_it="pages/fonti.html", date="2026-11-16", date_key="common.date_2026_11_16",
+         sources=True, robots=None, sitemap=True, webapp=False, faqs=[],
+         crumbs=[("schema.crumb_home", "/"), ("seo.fonti_h1", "/fonti")],
+         seo="fonti", title_key="seo.fonti_title", desc_key="seo.fonti_desc", h1_key="seo.fonti_h1"),
+    dict(route="metodo", slug="metodo", path="/metodo", file_it="pages/metodo.html", date="2026-11-16", date_key="common.date_2026_11_16",
+         sources=True, robots=None, sitemap=True, webapp=False, faqs=[],
+         crumbs=[("schema.crumb_home", "/"), ("seo.metodo_h1", "/metodo")],
+         seo="metodo", title_key="seo.metodo_title", desc_key="seo.metodo_desc", h1_key="seo.metodo_h1"),
+    dict(route="contatti", slug="contatti", path="/contatti", file_it="pages/contatti.html", date="2026-11-15", date_key="common.date_2026_11_15",
+         sources=False, robots=None, sitemap=True, webapp=False, faqs=[],
+         crumbs=[("schema.crumb_home", "/"), ("seo.contatti_h1", "/contatti")],
+         seo="contatti", title_key="seo.contatti_title", desc_key="seo.contatti_desc", h1_key="seo.contatti_h1"),
+    dict(route="privacy", slug="privacy", path="/privacy", file_it="pages/privacy.html", date="2026-11-15", date_key="common.date_2026_11_15",
+         sources=False, robots=None, sitemap=True, webapp=False, faqs=[],
+         crumbs=[("schema.crumb_home", "/"), ("seo.privacy_h1", "/privacy")],
+         seo="privacy", title_key="seo.privacy_title", desc_key="seo.privacy_desc", h1_key="seo.privacy_h1"),
+    dict(route="404", slug="404", path=None, file_it="404.html", date="2026-11-16", date_key="common.date_2026_11_16",
+         sources=False, robots="noindex,follow", sitemap=False, webapp=False, faqs=[],
+         crumbs=[("schema.crumb_home", "/")],
+         seo="notfound", title_key="seo.notfound_title", desc_key="seo.notfound_desc", h1_key="seo.notfound_h1"),
+]
 
-def updated(label: str, sources: bool = False) -> str:
-    extra = " · fonti verificate su INPS, ARERA, MEF" if sources else ""
-    return f'<p class="small muted aggiornamento">Ultimo aggiornamento: {label}{extra}.</p>'
+PORTALE_ISEE = "https://www.inps.it/it/it/dettaglio-scheda.it.schede-servizio-strumento.schede-servizi.isee-precompilato-55801.isee-precompilato.html"
+# URL ufficiali (invarianti)
+FONTE_URL = {
+    "dpcm159": "https://www.normattiva.it/uri-res/N2Ls?urn:nir:presidente.consiglio.ministri:decreto:2013-12-05;159!vig=",
+    "inps102": "https://www.inps.it/content/dam/inps-site/it/scorporati/circolari-e-messaggi/2026/01/Circolare_15133/Allegati/16520_Messaggio-numero-102-del-12-01-2026.pdf",
+    "dsu2026": "https://www.lavoro.gov.it/sites/default/files/documenti-e-norme/normativa/Decreto-Dip-3-del-02032026-ISEE.pdf",
+    "adi": "https://www.inps.it/it/it/dettaglio-scheda.it.schede-servizio-strumento.schede-servizi.assegno-di-inclusione-adi.html",
+    "auu": "https://www.inps.it/content/dam/inps-site/it/scorporati/circolari-e-messaggi/2026/01/Circolare_15152/Allegati/16548_Circolare-numero-7-del-30-01-2026.pdf",
+    "arera": "https://www.arera.it/consumatori/bonus-sociale/bonus-sociale-per-disagio-economico/quali-sono-i-requisiti",
+    "dedicata": "https://www.inps.it/it/it/inps-comunica/notizie/dettaglio-news-page.news.2026.09.carta-dedicata-a-te-modalit-operative-per-il-2026-2027.html",
+    "cartaAcquisti": "https://www.mef.gov.it/focus/carta_acquisti/eventi/2026/Dal-1-gennaio-2026-in-vigore-gli-aggiornamenti-ISTAT-per-gli-importi-di-reddito-e-lindicatore-ISEE/",
+    "nido": "https://www.inps.it/content/dam/inps-site/it/scorporati/circolari-e-messaggi/2026/03/Circolare_15207/Allegati/16651_Circolare-numero-29-del-27-03-2026.pdf",
+    "nuoviNati": "https://www.inps.it/it/it/dettaglio-scheda.it.schede-servizio-strumento.schede-servizi.bonus-nuovi-nati.html",
+    "venetoAffitti": "https://www.regione.veneto.it/web/casa/fondo-affitti",
+    "portaleIsee": PORTALE_ISEE,
+}
+
+FAQ_KEYS = {
+    "aiuti": ("faq.aiuti_q", "faq.aiuti_a"),
+    "dati": ("faq.dati_q", "faq.dati_a"),
+    "anni": ("faq.anni_q", "faq.anni_a"),
+    "gratis": ("faq.gratis_q", "faq.gratis_a"),
+    "quale": ("faq.quale_q", "faq.quale_a"),
+}
 
 
 def words(html: str) -> int:
@@ -30,590 +99,398 @@ def words(html: str) -> int:
     return len(text.split())
 
 
-# ---------------------------------------------------------------------------
-# Metadati e contenuto statico (identici a quelli usati da JS dopo il render)
-# ---------------------------------------------------------------------------
-PAGES = []
+def plain(text: str) -> str:
+    s = re.sub(r"\*\*([^*]+)\*\*", r"\1", text)
+    s = re.sub(r"\[([^\]]+)\]\([^)]+\)", r"\1", s)
+    return s
 
-def add(**kw):
-    PAGES.append(kw)
 
-# -- Home
-HOME_H1 = "Capisci il tuo ISEE 2027 prima di andare al CAF"
-HOME_DESC = (
-    "Stima orientativa dell'ISEE 2027, del residuo per vivere e degli aiuti pubblici. "
-    "Gratis, senza registrazione. I calcoli restano sul tuo telefono."
-)
-add(
-    route="",
-    slug="",
-    path="/",
-    file="index.html",
-    title="DirittiChiari 2027 · Stima ISEE, residuo per vivere e aiuti",
-    desc=HOME_DESC,
-    date="2026-11-16",
-    date_label="16 novembre 2026",
-    sources=True,
-    robots=None,
-    sitemap=True,
-    webapp=True,
-    faqs=["anni"],
-    crumbs=[("Home", "/")],
-    h1=HOME_H1,
-    main=f"""
-      <section class="card hero">
-        <h1>{HOME_H1}</h1>
-        <p>Con il calcolo ISEE in 5 passi stimi l'ISEE ordinario, quello per le prestazioni familiari e l'eventuale ISEE corrente, scopri quanto ti resta ogni mese per vivere e quali aiuti puoi chiedere.</p>
-        <p class="muted">Gratis, senza registrazione, facile da utilizzare. I calcoli restano solo sul tuo telefono. Se ci scrivi dal modulo contatti, partono soltanto le informazioni che inserisci tu.</p>
+def tv(m, key, **params):
+    s = m.get(key, key)
+    if params:
+        def repl(mo):
+            k = mo.group(1)
+            return str(params[k]) if k in params else mo.group(0)
+        s = re.sub(r"\{([a-zA-Z0-9_]+)\}", repl, s)
+    return s
+
+
+def tr(m, lang, key, **params):
+    return rich(tv(m, key, **params), lang, **params)
+
+
+def updated(m, lang, p):
+    d = tv(m, p["date_key"])
+    key = "common.updated_sources" if p["sources"] else "common.updated"
+    return f'<p class="small muted aggiornamento">{tr(m, lang, key, date=d)}</p>'
+
+
+def disclaimer(m, lang):
+    return f'<div class="disclaimer" role="note">{tr(m, lang, "common.disclaimer")}</div>'
+
+
+def file_for(lang, p):
+    if p["route"] == "404":
+        return "404.html" if lang == "it" else f"{lang}/404.html"
+    if p["path"] == "/":
+        return "index.html" if lang == "it" else f"{lang}/index.html"
+    slug = p["slug"]
+    return f"pages/{slug}.html" if lang == "it" else f"{lang}/{slug}.html"
+
+
+def href(lang, path):
+    return lang_path(lang, path)
+
+
+# -------------------- compositori di pagina --------------------
+def main_home(m, lang, p):
+    u = lambda path: href(lang, path)
+    cards = [
+        ("🎁", "card_aiuti", "/diritti-pa"),
+        ("💶", "card_residuo", "/stima"),
+        ("🧭", "card_isee", "/stima"),
+        ("📄", "card_docs", "/checklist-dsu"),
+        ("🏛️", "card_diritti", "/diritti-pa"),
+        ("💡", "card_consigli", "/ottimizzazione"),
+    ]
+    grid = []
+    for ico, k, path in cards:
+        grid.append(
+            f'<a class="service-card" href="{u(path)}">'
+            f'<span class="ico" aria-hidden="true">{ico}</span>'
+            f'<strong>{tv(m, "home."+k+"_title")}</strong>'
+            f'<span class="muted">{tv(m, "home."+k+"_text")}</span>'
+            f'<span class="cta-line">{tv(m, "home."+k+"_cta")}</span></a>'
+        )
+    steps = []
+    for i in range(1, 4):
+        steps.append(
+            f'<div class="step-card"><span class="n" aria-hidden="true">{i}</span>'
+            f'<div><strong>{tv(m, f"home.how{i}_title")}</strong>'
+            f'<p class="muted" style="margin:0">{tv(m, f"home.how{i}_text")}</p></div></div>'
+        )
+    trusts = [
+        ("✓", "trust_free"),
+        ("📱", "trust_device"),
+        ("📚", "trust_sources"),
+        ("🗓️", "trust_updated"),
+    ]
+    tgrid = []
+    for ico, k in trusts:
+        body = tr(m, lang, f"home.{k}_text", date=tv(m, p["date_key"]))
+        tgrid.append(
+            f'<div class="trust-card"><span class="ico" aria-hidden="true">{ico}</span>'
+            f'<strong>{tv(m, f"home.{k}_title")}</strong><p class="muted" style="margin:0">{body}</p></div>'
+        )
+    faqs_html = []
+    for fk in p["faqs"]:
+        qk, ak = FAQ_KEYS[fk]
+        faqs_html.append(
+            f'<details><summary>{tv(m, qk)}</summary><p>{tr(m, lang, ak)}</p></details>'
+        )
+    inst = tv(m, "install.cta")
+    return f"""
+      <div class="landing">
+      <section class="landing-hero">
+        <p class="kicker">{tv(m, "home.kicker")}</p>
+        <h1>{tv(m, "home.h1")}</h1>
+        <p class="lead">{tv(m, "home.lead")}</p>
         <div class="btn-row">
-          <a class="btn btn-primary" href="/stima">Inizia la stima</a>
+          <a class="btn btn-primary" href="{u("/stima")}">{tv(m, "home.cta_primary")}</a>
+          <button type="button" class="btn btn-ghost" data-install-cta>{inst}</button>
         </div>
+        <p class="trust-line muted">{tv(m, "home.trust_line")}</p>
       </section>
-      {DISCLAIMER}
-      {updated("16 novembre 2026", True)}
-      <h2>Da dove vuoi partire?</h2>
-      <div class="paths">
-        <a class="path" href="/stima"><span class="ico" aria-hidden="true">🧭</span><span><strong>Stima ISEE e residuo</strong><span class="muted">Nucleo, redditi 2025, spese, patrimonio al 31/12/2025.</span></span></a>
-        <a class="path" href="/diritti-pa"><span class="ico" aria-hidden="true">🏛️</span><span><strong>Diritti e aiuti pubblici</strong><span class="muted">Assegno di Inclusione, Assegno Unico, bonus sociali e altri, con le soglie.</span></span></a>
-        <a class="path" href="/ottimizzazione"><span class="ico" aria-hidden="true">💡</span><span><strong>Come ottimizzare legalmente</strong><span class="muted">Cosa conta davvero nell'ISEE e cosa non fare mai.</span></span></a>
-        <a class="path" href="/checklist-dsu"><span class="ico" aria-hidden="true">📄</span><span><strong>Documenti per la DSU 2027</strong><span class="muted">Lista da spuntare e stampare prima del CAF.</span></span></a>
+      {disclaimer(m, lang)}
+      {updated(m, lang, p)}
+      <h2 class="section-head">{tv(m, "home.services_title")}</h2>
+      <div class="service-grid">
+        {''.join(grid)}
       </div>
-      <section class="card mt16">
-        <h2>Quali anni contano per l'ISEE 2027?</h2>
-        <ul class="tips">
-          <li><strong>Redditi del 2025</strong>, cioè quelli della CU 2026 o del 730/2026.</li>
-          <li><strong>Patrimonio al 31 dicembre 2025</strong>: conti, investimenti, case.</li>
-          <li><strong>Affitto</strong>: il canone del contratto registrato, fino a 7.000 € l'anno.</li>
-        </ul>
-        <p class="small muted">Lo prevede il DPCM 159/2013 (artt. 4 e 5): si guarda al secondo anno prima della DSU.</p>
+      <h2 class="section-head">{tv(m, "home.how_title")}</h2>
+      <div class="steps-3">
+        {''.join(steps)}
+      </div>
+      <h2 class="section-head">{tv(m, "home.trust_title")}</h2>
+      <div class="trust-grid">
+        {''.join(tgrid)}
+      </div>
+      <section class="landing-faq" id="faq">
+        <h2>{tv(m, "home.faq_title")}</h2>
+        {''.join(faqs_html)}
       </section>
-      <p class="small">Una domanda su DirittiChiari? <a href="/contatti">Scrivici dal modulo contatti</a>. Come facciamo le stime lo spieghiamo in <a href="/metodo">Metodo e fonti</a>.</p>
-    """,
-)
-
-# -- /stima
-STIMA_H1 = "Calcolo ISEE 2027: simulatore online gratuito"
-STIMA_DESC = (
-    "Calcola l'ISEE 2027 online in 5 passi: ordinario, per prestazioni familiari e corrente, "
-    "con redditi 2025 e patrimonio al 31/12/2025. Gratis, sul tuo telefono."
-)
-add(
-    route="stima",
-    slug="stima",
-    path="/stima",
-    file="pages/stima.html",
-    title="Simulatore ISEE 2027 online gratis: calcolo in 5 passi · DirittiChiari",
-    desc=STIMA_DESC,
-    date="2026-11-16",
-    date_label="16 novembre 2026",
-    sources=True,
-    robots=None,
-    sitemap=True,
-    webapp=True,
-    faqs=["anni"],
-    crumbs=[("Home", "/"), ("Calcolo ISEE 2027", "/stima")],
-    h1=STIMA_H1,
-    main=f"""
-      <section class="card hero">
-        <h1>{STIMA_H1}</h1>
-        <p>Questo simulatore ti guida in 5 passi per stimare l'ISEE 2027: l'ordinario, quello per le prestazioni familiari e inclusione e, se ti è utile, l'ISEE corrente. Inserisci il nucleo, i redditi del 2025, le spese fisse di oggi e il patrimonio al 31 dicembre 2025. Alla fine vedi una stima dell'indicatore, quanto ti resta ogni mese per vivere e quali aiuti pubblici puoi valutare, con il collegamento alla fonte di ogni soglia.</p>
-        <p>Il percorso è gratis e senza registrazione. I calcoli restano solo su questo telefono o computer: non inviamo i dati della stima a nessun server. I valori ufficiali si ottengono solo con la DSU presentata all'INPS o a un CAF. Questa è una stima orientativa, basata sulle regole note a novembre 2026.</p>
-        <p>I cinque passi riguardano: il nucleo familiare; i redditi 2025 e le entrate di oggi; casa e spese fisse; il patrimonio; e l'eventuale calo di reddito per l'ISEE corrente. Prima di andare al CAF puoi anche consultare la <a href="/checklist-dsu">checklist dei documenti per la DSU</a> e la pagina sui <a href="/diritti-pa">bonus e gli aiuti pubblici legati all'ISEE</a>.</p>
-        <div class="btn-row"><a class="btn btn-primary" href="/stima#wizard-start">Inizia i 5 passi</a></div>
-      </section>
-      {DISCLAIMER}
-      {updated("16 novembre 2026", True)}
-      <section class="card" id="wizard-start">
-        <h2>Il tuo nucleo familiare</h2>
-        <p>Per usare il percorso guidato serve JavaScript attivo nel browser. I dati che inserisci restano su questo dispositivo.</p>
-        <noscript><p>Attiva JavaScript per compilare i 5 passi, oppure scrivici dal <a href="/contatti">modulo contatti</a>.</p></noscript>
-      </section>
-    """,
-)
-
-# -- /risultati (noindex, fuori sitemap)
-add(
-    route="risultati",
-    slug="risultati",
-    path="/risultati",
-    file="pages/risultati.html",
-    title="Risultati della stima ISEE · DirittiChiari",
-    desc=(
-        "Qui vedi la stima del tuo ISEE 2027, il residuo mensile per vivere e gli aiuti da valutare. "
-        "I risultati restano sul tuo dispositivo, non vengono pubblicati."
-    ),
-    date="2026-11-16",
-    date_label="16 novembre 2026",
-    sources=True,
-    robots="noindex,follow",
-    sitemap=False,
-    webapp=False,
-    faqs=[],
-    crumbs=[("Home", "/"), ("Risultati", "/risultati")],
-    h1="Risultati",
-    main=f"""
-      <section class="card">
-        <h1>Risultati</h1>
-        <p>Non hai ancora inserito dati. Ci vogliono pochi minuti.</p>
-        <p>Dopo il percorso guidato trovi qui la stima dell'ISEE, il residuo per vivere e gli <a href="/diritti-pa">aiuti a cui puoi avere diritto</a>.</p>
-        <a class="btn btn-primary" href="/stima">Inizia la stima</a>
-      </section>
-      {DISCLAIMER}
-      {updated("16 novembre 2026", True)}
-    """,
-)
-
-# -- /ottimizzazione
-OTT_H1 = "Come abbassare l'ISEE in modo legale: cosa conta davvero"
-add(
-    route="consigli",
-    slug="ottimizzazione",
-    path="/ottimizzazione",
-    file="pages/ottimizzazione.html",
-    title="Come abbassare l'ISEE in modo legale · DirittiChiari",
-    desc=(
-        "Cosa conta davvero nell'ISEE, le scelte permesse che possono abbassarlo e cosa non fare mai. "
-        "Spiegato con calma, prima del CAF."
-    ),
-    date="2026-11-16",
-    date_label="16 novembre 2026",
-    sources=True,
-    robots=None,
-    sitemap=True,
-    webapp=False,
-    faqs=[],
-    crumbs=[("Home", "/"), ("Ottimizzazione ISEE", "/ottimizzazione")],
-    h1=OTT_H1,
-    main=f"""
-      <h1>{OTT_H1}</h1>
-      {DISCLAIMER}
-      {updated("16 novembre 2026", True)}
-      <section class="card"><h2>Residuo pratico e ISEE sono due cose diverse</h2>
-        <p>Il residuo è quanto ti resta davvero ogni mese. L'ISEE invece guarda ai redditi 2025 e al patrimonio al 31/12/2025: bollette, trasporti, rate di prestiti e assicurazioni <strong>non</strong> lo abbassano.</p></section>
-      <section class="card"><h2>Scelte permesse che contano</h2>
-        <ul class="tips">
-          <li><strong>Registra il contratto d'affitto</strong> e tieni a portata gli estremi di registrazione: solo così il canone si sottrae dai redditi (fino a 7.000 € l'anno, +500 € per ogni figlio dopo il secondo).</li>
-          <li><strong>Indica il mutuo residuo al 31/12/2025</strong> per ogni immobile: si sottrae dal valore della casa. Chiedi alla banca la certificazione del debito residuo.</li>
-          <li><strong>Casa di proprietà</strong>: nell'ISEE per prestazioni familiari e inclusione la franchigia è di 91.500 € (120.000 € nei capoluoghi delle città metropolitane), +2.500 € per ogni figlio convivente dopo il primo. Lo calcola l'INPS in automatico, non devi fare nulla.</li>
-          <li><strong>Titoli di Stato, buoni fruttiferi e libretti postali</strong> sono esclusi fino a 50.000 € in tutto per il nucleo (DPCM 13/2025). Dichiarali comunque: l'esclusione la applica il calcolo.</li>
-          <li><strong>Conti correnti</strong>: conta il valore più alto tra saldo al 31/12 e giacenza media annua. Controlla bene entrambi sull'estratto conto.</li>
-          <li><strong>Disabilità</strong>: dichiara le certificazioni di disabilità media, grave o non autosufficienza: ogni persona aggiunge 0,5 alla scala, e i trattamenti legati alla disabilità non tassati non contano nei redditi.</li>
-          <li><strong>Usa la DSU precompilata</strong> sul portale INPS: riduce gli errori e le difformità che bloccano gli aiuti.</li>
-        </ul></section>
-      <section class="card"><h2>Quando conviene l'ISEE corrente</h2>
-        <ul class="tips">
-          <li>Hai perso o ridotto un lavoro a tempo indeterminato, ti è finito un contratto a termine (almeno 120 giorni negli ultimi 12 mesi) o hai chiuso un'attività autonoma.</li>
-          <li>Si è interrotto un sussidio pubblico (per esempio la NASpI).</li>
-          <li>Il tuo indicatore reddituale è calato di oltre il 25% rispetto a quello dell'ISEE ordinario.</li>
-        </ul>
-        <p>Serve prima un ISEE ordinario valido. Se aggiorni solo i redditi, il corrente vale 6 mesi. Dal 1° aprile puoi aggiornare anche il patrimonio, se è cambiato di oltre il 20%.</p></section>
-      <section class="card"><h2>Cosa non fare mai</h2>
-        <ul class="tips">
-          <li>Non omettere componenti del nucleo, conti, investimenti o immobili: i dati vengono incrociati con Agenzia delle Entrate e INPS.</li>
-          <li>Non spostare la residenza in modo fittizio per dividere il nucleo.</li>
-          <li>Non intestare beni ad altri o nascondere patrimonio: oltre a perdere gli aiuti, la DSU falsa ha conseguenze penali e si restituisce quanto ricevuto.</li>
-        </ul>
-        <p class="small muted">Per casi particolari (separazioni, figli non conviventi, eredità, imprese) rivolgiti a un CAF o a un patronato.</p></section>
-      <p class="small">Vedi anche gli <a href="/diritti-pa">aiuti pubblici legati all'ISEE</a>, la <a href="/checklist-dsu">checklist dei documenti</a> e le <a href="/fonti">fonti usate</a>.</p>
-    """,
-)
-
-# -- /checklist-dsu
-CHK_H1 = "Documenti necessari per la DSU e l'ISEE 2027"
-add(
-    route="documenti",
-    slug="checklist-dsu",
-    path="/checklist-dsu",
-    file="pages/checklist-dsu.html",
-    title="Documenti ISEE 2027 per la DSU: checklist da stampare · DirittiChiari",
-    desc=(
-        "Checklist dei documenti necessari per la DSU e l'ISEE 2027, da spuntare e stampare "
-        "prima di andare al CAF o sul portale ISEE dell'INPS."
-    ),
-    date="2026-11-16",
-    date_label="16 novembre 2026",
-    sources=True,
-    robots=None,
-    sitemap=True,
-    webapp=False,
-    faqs=[],
-    crumbs=[("Home", "/"), ("Documenti DSU", "/checklist-dsu")],
-    h1=CHK_H1,
-    main=f"""
-      <h1>{CHK_H1}</h1>
-      <p class="muted">Elenco da portare al CAF o da usare con la DSU precompilata sul portale INPS. Con JavaScript attivo puoi spuntare quello che hai già: la lista resta su questo dispositivo.</p>
-      {updated("16 novembre 2026", True)}
-      <section class="card"><h2>Per tutti</h2>
-        <ul class="tips">
-          <li>Documenti d'identità e codici fiscali di tutti i componenti del nucleo</li>
-          <li>SPID, CIE o CNS di ogni maggiorenne, se vuoi usare la DSU precompilata</li>
-          <li>Contratto d'affitto registrato (estremi di registrazione) e canone annuo</li>
-          <li>Redditi 2025: Certificazione Unica 2026, modello 730/2026 o Redditi PF 2026 di ogni componente</li>
-          <li>Redditi 2025 non tassati o a imposta sostitutiva (es. borse di studio, redditi esteri, forfettari)</li>
-          <li>Assegni di mantenimento ricevuti o versati nel 2025 (sentenza o accordo)</li>
-          <li>Saldo al 31/12/2025 e giacenza media 2025 di ogni conto, carta prepagata con IBAN e libretto</li>
-          <li>Valore al 31/12/2025 di titoli, buoni postali, fondi, azioni e polizze vita (estratti della banca o di Poste)</li>
-          <li>Visure catastali o rendite di case e terreni posseduti al 31/12/2025</li>
-          <li>Certificato del mutuo residuo al 31/12/2025</li>
-          <li>Targhe di auto, moto e imbarcazioni intestate ai componenti</li>
-          <li>Verbali di disabilità o non autosufficienza</li>
-        </ul></section>
-      <section class="card"><h2>In più, per l'ISEE corrente</h2>
-        <ul class="tips">
-          <li>ISEE ordinario già attestato (serve prima di chiedere il corrente)</li>
-          <li>Lettera di licenziamento, fine contratto, chiusura della partita IVA o comunicazione di interruzione del sussidio</li>
-          <li>Buste paga, cedolini e incassi degli ultimi 12 mesi (o degli ultimi 2 mesi, se ammesso)</li>
-          <li>Importi di NASpI, cassa integrazione o altri sussidi degli ultimi 12 mesi</li>
-        </ul></section>
-      <section class="card no-print">
-        <p>Puoi presentare la DSU da solo sul <a href="https://www.inps.it/it/it/dettaglio-scheda.it.schede-servizio-strumento.schede-servizi.isee-precompilato-55801.isee-precompilato.html" target="_blank" rel="noopener">portale ISEE dell'INPS</a>, con l'app INPS Mobile o gratis tramite un CAF. Prima puoi fare il <a href="/stima">calcolo ISEE 2027</a> e vedere i <a href="/diritti-pa">bonus e aiuti pubblici</a> collegati.</p>
-      </section>
-      {DISCLAIMER}
-    """,
-)
-
-# -- /diritti-pa
-DIR_H1 = "Bonus ISEE 2027: aiuti pubblici, soglie e fonti"
-add(
-    route="diritti",
-    slug="diritti-pa",
-    path="/diritti-pa",
-    file="pages/diritti-pa.html",
-    title="Bonus e aiuti con ISEE 2027: soglie e fonti ufficiali · DirittiChiari",
-    desc=(
-        "Assegno di Inclusione, Assegno Unico, bonus sociali e altri aiuti legati all'ISEE 2027, "
-        "con le soglie e le fonti ufficiali."
-    ),
-    date="2026-11-16",
-    date_label="16 novembre 2026",
-    sources=True,
-    robots=None,
-    sitemap=True,
-    webapp=False,
-    faqs=["quale"],
-    crumbs=[("Home", "/"), ("Bonus e aiuti ISEE", "/diritti-pa")],
-    h1=DIR_H1,
-    main=f"""
-      <h1>{DIR_H1}</h1>
-      {DISCLAIMER}
-      {updated("16 novembre 2026", True)}
-      <p class="muted">Ogni aiuto ha altri requisiti (residenza, cittadinanza, età, patrimonio). Apri la fonte ufficiale prima di fare domanda. Come verifichiamo i valori è spiegato in <a href="/fonti">Fonti e regole usate</a> e in <a href="/metodo">Metodo e fonti</a>.</p>
-      <article class="benefit forse"><h3>Assegno di Inclusione (ADI)</h3><span class="badge stato"><a href="/fonti">Verificato</a></span>
-        <p class="small"><strong>Soglia:</strong> ISEE per prestazioni familiari fino a 10.140 €<br>
-        <strong>Cosa offre:</strong> Integra il reddito familiare fino a 6.500 € l'anno × scala ADI (8.190 € se il nucleo è composto da persone di almeno 67 anni, o da over 67 e familiari con disabilità grave o non autosufficienza), più fino a 3.640 € l'anno se in affitto (1.950 € negli stessi nuclei).<br>
-        <strong>Chi può chiederlo:</strong> Nuclei con almeno un minorenne, una persona con disabilità, una persona di almeno 60 anni o in carico ai servizi socio-sanitari.</p>
-        <a class="small" href="https://www.inps.it/it/it/dettaglio-scheda.it.schede-servizio-strumento.schede-servizi.assegno-di-inclusione-adi.html" target="_blank" rel="noopener">Fonte: INPS, scheda Assegno di Inclusione</a></article>
-      <article class="benefit forse"><h3>Assegno Unico per i figli</h3><span class="badge stato"><a href="/fonti">Valori 2026, da confermare per il 2027</a></span>
-        <p class="small"><strong>Soglia:</strong> Importo pieno fino a 17.468,51 €; minimo da 46.582,71 €<br>
-        <strong>Cosa offre:</strong> Da 58,30 € a 203,80 € al mese per figlio minorenne</p>
-        <a class="small" href="https://www.inps.it/content/dam/inps-site/it/scorporati/circolari-e-messaggi/2026/01/Circolare_15152/Allegati/16548_Circolare-numero-7-del-30-01-2026.pdf" target="_blank" rel="noopener">Fonte: INPS, Circolare n. 7 del 30/01/2026 (Assegno Unico 2026)</a></article>
-      <article class="benefit forse"><h3>Bonus sociali luce, gas, acqua, TARI</h3><span class="badge stato"><a href="/fonti">Verificato</a></span>
-        <p class="small"><strong>Soglia:</strong> ISEE fino a 9.796 € (20.000 € con 4+ figli a carico)<br>
-        <strong>Cosa offre:</strong> Automatici con la DSU</p>
-        <a class="small" href="https://www.arera.it/consumatori/bonus-sociale/bonus-sociale-per-disagio-economico/quali-sono-i-requisiti" target="_blank" rel="noopener">Fonte: ARERA, delibera 2/2026/R/com (bonus sociali)</a></article>
-      <article class="benefit forse"><h3>Carta «Dedicata a te»</h3><span class="badge stato"><a href="/fonti">Verificato</a></span>
-        <p class="small"><strong>Soglia:</strong> ISEE ordinario fino a 15.000 €<br>
-        <strong>Cosa offre:</strong> 500 € l'anno, lista unica 2026-2027</p>
-        <a class="small" href="https://www.inps.it/it/it/inps-comunica/notizie/dettaglio-news-page.news.2026.09.carta-dedicata-a-te-modalit-operative-per-il-2026-2027.html" target="_blank" rel="noopener">Fonte: INPS, Carta «Dedicata a te» 2026-2027</a></article>
-      <article class="benefit forse"><h3>Carta Acquisti</h3><span class="badge stato"><a href="/fonti">Valore 2026, rivalutato ogni anno</a></span>
-        <p class="small"><strong>Soglia:</strong> ISEE fino a 8.230,81 €<br>
-        <strong>Cosa offre:</strong> Carta prepagata ricaricata ogni due mesi<br>
-        <strong>Chi può chiederlo:</strong> Bambini sotto i 3 anni e persone dai 65 anni in su, con altri limiti di reddito.</p>
-        <a class="small" href="https://www.mef.gov.it/focus/carta_acquisti/eventi/2026/Dal-1-gennaio-2026-in-vigore-gli-aggiornamenti-ISTAT-per-gli-importi-di-reddito-e-lindicatore-ISEE/" target="_blank" rel="noopener">Fonte: MEF, Carta Acquisti: limiti 2026</a></article>
-      <article class="benefit forse"><h3>Bonus asilo nido</h3><span class="badge stato"><a href="/fonti">Valori 2026, da confermare per il 2027</a></span>
-        <p class="small"><strong>Soglia:</strong> Importo pieno con ISEE minorenni fino a 40.000 €<br>
-        <strong>Cosa offre:</strong> 3.600 € per i nati dal 2024; 3.000/2.500/1.500 € per i nati prima</p>
-        <a class="small" href="https://www.inps.it/content/dam/inps-site/it/scorporati/circolari-e-messaggi/2026/03/Circolare_15207/Allegati/16651_Circolare-numero-29-del-27-03-2026.pdf" target="_blank" rel="noopener">Fonte: INPS, Circolare n. 29 del 27/03/2026 (bonus asilo nido)</a></article>
-      <article class="benefit forse"><h3>Bonus nuovi nati</h3><span class="badge stato"><a href="/fonti">Confermato per il 2026, da confermare per il 2027</a></span>
-        <p class="small"><strong>Soglia:</strong> ISEE fino a 40.000 €<br>
-        <strong>Cosa offre:</strong> 1.000 € una tantum</p>
-        <a class="small" href="https://www.inps.it/it/it/dettaglio-scheda.it.schede-servizio-strumento.schede-servizi.bonus-nuovi-nati.html" target="_blank" rel="noopener">Fonte: INPS, scheda Bonus nuovi nati</a></article>
-      <article class="benefit forse"><h3>Contributo affitto (Comuni e Regioni)</h3><span class="badge stato"><a href="/fonti">Da verificare nel bando</a></span>
-        <p class="small"><strong>Soglia:</strong> Soglie del singolo bando<br>
-        <strong>Cosa offre:</strong> In Veneto: Fondo affitti tramite i bandi comunali</p>
-        <a class="small" href="https://www.regione.veneto.it/web/casa/fondo-affitti" target="_blank" rel="noopener">Fonte: Regione del Veneto, Fondo affitti</a></article>
-      <section class="card"><h2>Quale ISEE serve per l'Assegno Unico</h2>
-        <p>Per l'Assegno Unico si usa l'<strong>ISEE per prestazioni familiari e inclusione</strong>, non l'ISEE ordinario. È lo stesso indicatore previsto dalla L. 199/2025, in genere più favorevole se hai casa di proprietà o almeno due figli. Vale anche, al netto dell'Assegno Unico già percepito, per il bonus nido e il bonus nuovi nati.</p>
-        <p>Dal 2026 l'INPS calcola questo ISEE in automatico. Si usa solo per ADI, Supporto per la formazione e il lavoro, Assegno Unico, bonus nido e bonus nuovi nati. Per tutto il resto (bonus sociali, Carta «Dedicata a te», molti servizi comunali) vale l'ISEE ordinario.</p>
-        <a class="btn btn-primary btn-block" href="/stima">Calcola il tuo ISEE</a></section>
-      <section class="card"><h2>Manovra 2027 (in discussione)</h2>
-        <p>Il disegno di legge di bilancio 2027 (A.C. 3174) è all'esame del Parlamento e <strong>non è ancora legge</strong>. Alcune misure e soglie legate all'ISEE potrebbero cambiare: le ricontrolleremo quando il testo diventerà legge.</p>
-        <p class="small"><a href="https://www.senato.it/leggi-e-documenti/disegni-di-legge/scheda-ddl?did=60577" target="_blank" rel="noopener">Fonte ufficiale: scheda A.C. 3174 sul sito del Senato</a>.</p></section>
-    """,
-)
-
-# -- /fonti
-add(
-    route="fonti",
-    slug="fonti",
-    path="/fonti",
-    file="pages/fonti.html",
-    title="Fonti e regole usate · DirittiChiari",
-    desc=(
-        "Regole e fonti ufficiali usate da DirittiChiari per la stima ISEE 2027, "
-        "con lo stato di ogni valore. Come lavoriamo è in Metodo e fonti."
-    ),
-    date="2026-11-16",
-    date_label="16 novembre 2026",
-    sources=True,
-    robots=None,
-    sitemap=True,
-    webapp=False,
-    faqs=[],
-    crumbs=[("Home", "/"), ("Fonti e regole", "/fonti")],
-    h1="Fonti e regole usate",
-    main=f"""
-      <h1>Fonti e regole usate</h1>
-      {DISCLAIMER}
-      {updated("16 novembre 2026", True)}
-      <p>Ogni soglia e ogni regola usata nel simulatore ha uno stato (verificato, valore 2026 da confermare, da confermare) e un collegamento alla fonte ufficiale. Come facciamo le stime, e cosa non copriamo, è spiegato in <a href="/metodo">Metodo e fonti</a>.</p>
-      <section class="card"><h2>Soglie e parametri</h2>
-        <ul class="tips small">
-          <li>Scala di equivalenza (1 · 1,57 · 2,04 · 2,46 · 2,85, +0,35)</li>
-          <li>Maggiorazioni figli ISEE ordinario (0,2 · 0,35 · 0,5) e speciale (0,1 · 0,25 · 0,40 · 0,55)</li>
-          <li>Quota 20% lavoro dipendente (max 3.000 €) e pensione (max 1.000 €)</li>
-          <li>Affitto registrato fino a 7.000 € (+500 € per figlio dopo il secondo)</li>
-          <li>Franchigia casa ordinario 52.500 €; speciale 91.500 € / 120.000 €</li>
-          <li>Franchigia mobiliare 6.000 € +2.000 € a componente (max 10.000 €)</li>
-          <li>Titoli di Stato e risparmio postale esclusi fino a 50.000 €</li>
-          <li>Soglia ADI 10.140 € · Assegno Unico 2026 · Bonus sociali 9.796 € / 20.000 €</li>
-          <li>Carta «Dedicata a te» 15.000 € · Carta Acquisti 8.230,81 € · Bonus nido e nuovi nati</li>
-        </ul>
-        <p class="small">Con JavaScript attivo ogni riga mostra lo stato e il collegamento alla fonte.</p>
-      </section>
-      <section class="card"><h2>Semplificazioni di questa stima</h2><ul class="tips small">
-        <li>Le quote del 20% su lavoro e pensione sono calcolate sul totale del nucleo, con il tetto moltiplicato per il numero di persone.</li>
-        <li>Non sono gestiti: redditi agrari, immobili all'estero, nuclei con genitori non conviventi (ISEE minorenni), ISEE università e socio-sanitario.</li>
-        <li>Il rendimento figurativo usa un tasso indicativo, da confermare ogni anno.</li>
-        <li>Nell'ISEE corrente i redditi indicati per il periodo sostituiscono tutti i redditi del nucleo; il patrimonio resta quello al 31/12/2025.</li>
-        <li>L'importo dell'Assegno Unico è una stima lineare dell'importo base, senza maggiorazioni.</li>
-      </ul></section>
-    """,
-)
-
-# -- /metodo (nuova pagina)
-add(
-    route="metodo",
-    slug="metodo",
-    path="/metodo",
-    file="pages/metodo.html",
-    title="Metodo e fonti · DirittiChiari 2027",
-    desc=(
-        "Come DirittiChiari stima l'ISEE 2027: regole seguite, fonti ufficiali, limiti della stima "
-        "e aggiornamenti. Un servizio di Pi.Gi Service."
-    ),
-    date="2026-11-16",
-    date_label="16 novembre 2026",
-    sources=True,
-    robots=None,
-    sitemap=True,
-    webapp=False,
-    faqs=[],
-    crumbs=[("Home", "/"), ("Metodo e fonti", "/metodo")],
-    h1="Metodo e fonti",
-    main=f"""
-      <section class="card">
-        <h1>Metodo e fonti</h1>
-        <p>DirittiChiari 2027 è un servizio di <strong>Pi.Gi Service</strong>. Offre una stima orientativa dell'ISEE, di quanto ti resta per vivere e degli aiuti pubblici, per capirli con calma prima di andare al CAF o sul portale INPS.</p>
-        <h2>Come facciamo la stima</h2>
-        <p>I calcoli seguono le regole del DPCM 159/2013 e gli aggiornamenti successivi, tra cui la legge 199/2025 sull'ISEE per prestazioni familiari e inclusione. Le soglie e i parametri arrivano da fonti ufficiali: INPS, ARERA, Ministero del Lavoro, Ministero dell'Economia e delle Finanze, Normattiva.</p>
-        <p>Ogni valore usato nel simulatore ha uno stato: verificato, valore 2026 da confermare per il 2027, oppure da confermare. L'elenco completo, con il collegamento a ogni fonte, è nella pagina <a href="/fonti">Fonti e regole usate</a>.</p>
-        <h2>Cosa non è questa stima</h2>
-        <p>Non è una DSU e non sostituisce l'attestazione INPS, il CAF o una consulenza. I calcoli restano solo sul tuo dispositivo. Quando una norma è ancora in discussione in Parlamento, lo indichiamo in pagina e la ricontrolliamo quando diventa legge.</p>
-        <h2>Chi la cura</h2>
-        <p>Autore del servizio: <strong>Pi.Gi Service</strong>. Per una domanda: <a href="/contatti">modulo contatti</a> oppure <a href="mailto:info@pigiservice.com">info@pigiservice.com</a>.</p>
-        {updated("16 novembre 2026", True)}
-      </section>
-      {DISCLAIMER}
-    """,
-)
-
-# -- /contatti
-add(
-    route="contatti",
-    slug="contatti",
-    path="/contatti",
-    file="pages/contatti.html",
-    title="Contatti · DirittiChiari 2027",
-    desc=(
-        "Scrivi a DirittiChiari: ti rispondiamo via email. Dal modulo partono solo le informazioni "
-        "che inserisci tu, non i dati della stima."
-    ),
-    date="2026-11-15",
-    date_label="15 novembre 2026",
-    sources=False,
-    robots=None,
-    sitemap=True,
-    webapp=False,
-    faqs=[],
-    crumbs=[("Home", "/"), ("Contatti", "/contatti")],
-    h1="Contatti",
-    main=f"""
-      <section class="card">
-        <h1>Contatti</h1>
-        <p>Una domanda su DirittiChiari? Scrivici: ti rispondiamo via email.</p>
-        <p class="small muted">I calcoli della stima restano sul tuo dispositivo. Da questo modulo partono soltanto le informazioni che scrivi tu, e le usiamo solo per risponderti. Non viene mai inviato nessun dato del percorso ISEE.</p>
-        <div data-modulo-contatti data-privacy="/privacy" data-titolo="h2">
-          <p>Per usare il modulo serve JavaScript. In alternativa scrivi a <a href="mailto:info@pigiservice.com">info@pigiservice.com</a>.</p>
-        </div>
-        {updated("15 novembre 2026", False)}
-      </section>
-      {DISCLAIMER}
-    """,
-)
-
-# -- /privacy
-add(
-    route="privacy",
-    slug="privacy",
-    path="/privacy",
-    file="pages/privacy.html",
-    title="Privacy · DirittiChiari 2027",
-    desc=(
-        "Come trattiamo i dati su DirittiChiari 2027: i calcoli restano sul tuo dispositivo. "
-        "Il modulo contatti serve solo per risponderti."
-    ),
-    date="2026-11-15",
-    date_label="15 novembre 2026",
-    sources=False,
-    robots=None,
-    sitemap=True,
-    webapp=False,
-    faqs=[],
-    crumbs=[("Home", "/"), ("Privacy", "/privacy")],
-    h1="Privacy",
-    main=f"""
-      <section class="card">
-        <h1>Privacy</h1>
-        <p>DirittiChiari 2027 è un servizio di <strong>Pi.Gi Service di Gheoca Paula</strong> (titolare del trattamento). Per qualsiasi domanda: <a href="mailto:info@pigiservice.com">info@pigiservice.com</a>.</p>
-        <h2>I calcoli restano sul tuo dispositivo</h2>
-        <p>La stima ISEE, il residuo per vivere, gli aiuti e la checklist si calcolano e si salvano solo su questo telefono o computer, in locale. Non li inviamo a nessun server, non chiediamo una registrazione, non facciamo tracciamento e non usiamo intelligenza artificiale.</p>
-        <p>Puoi cancellare tutto in qualsiasi momento con «Cancella i miei dati», in fondo alla pagina.</p>
-        <h2>Modulo contatti</h2>
-        <p>Se ci scrivi dal <a href="/contatti">modulo contatti</a>, inviamo soltanto quello che inserisci tu: nome, email, eventuale telefono o attività, il messaggio, il consenso e la pagina da cui scrivi. Questi dati servono solo per risponderti. Non viene mai incluso nessun dato della stima ISEE o del percorso guidato.</p>
-        <p>Il messaggio arriva a <a href="mailto:info@pigiservice.com">info@pigiservice.com</a>. Lo conserviamo il tempo necessario per darti una risposta e per eventuali obblighi di legge.</p>
-        {updated("15 novembre 2026", False)}
-      </section>
-      {DISCLAIMER}
-    """,
-)
-
-# -- 404
-add(
-    route="404",
-    slug="404",
-    path=None,
-    file="404.html",
-    title="Pagina non trovata · DirittiChiari 2027",
-    desc="Questa pagina non esiste. Puoi calcolare l'ISEE 2027 o aprire la checklist dei documenti per la DSU.",
-    date="2026-11-16",
-    date_label="16 novembre 2026",
-    sources=False,
-    robots="noindex,follow",
-    sitemap=False,
-    webapp=False,
-    faqs=[],
-    crumbs=[("Home", "/")],
-    h1="Pagina non trovata",
-    main=f"""
-      <section class="card">
-        <h1>Pagina non trovata</h1>
-        <p>Questo indirizzo non corrisponde a una pagina di DirittiChiari. Puoi tornare all'inizio o proseguire da qui:</p>
+      <section class="landing-final">
+        <h2>{tv(m, "home.final_title")}</h2>
+        <p>{tv(m, "home.final_text")}</p>
         <div class="btn-row">
-          <a class="btn btn-primary" href="/stima">Calcolo ISEE 2027</a>
-          <a class="btn btn-ghost" href="/checklist-dsu">Checklist documenti DSU</a>
+          <a class="btn btn-primary" href="{u("/stima")}">{tv(m, "home.cta_primary")}</a>
+          <button type="button" class="btn btn-ghost" data-install-cta>{inst}</button>
         </div>
-        <p class="small"><a href="/">Torna all'inizio</a></p>
+        <p class="small">{tr(m, lang, "home.final_contact")}</p>
       </section>
-    """,
-)
+      </div>
+    """
 
-FAQS = {
-    "anni": {
-        "@type": "Question",
-        "name": "Quali anni contano per l'ISEE 2027?",
-        "acceptedAnswer": {
-            "@type": "Answer",
-            "text": (
-                "Redditi del 2025, cioè quelli della CU 2026 o del 730/2026. Patrimonio al 31 dicembre 2025: "
-                "conti, investimenti, case. Affitto: il canone del contratto registrato, fino a 7.000 € l'anno. "
-                "Lo prevede il DPCM 159/2013 (artt. 4 e 5): si guarda al secondo anno prima della DSU."
-            ),
-        },
-    },
-    "quale": {
-        "@type": "Question",
-        "name": "Quale ISEE si usa?",
-        "acceptedAnswer": {
-            "@type": "Answer",
-            "text": (
-                "Dal 2026 l'INPS calcola anche l'ISEE per prestazioni familiari e inclusione (L. 199/2025), "
-                "più favorevole per chi ha casa di proprietà o almeno 2 figli. Si usa solo per ADI, Supporto "
-                "formazione e lavoro, Assegno Unico, bonus nido e bonus nuovi nati. Per tutto il resto vale l'ISEE ordinario."
-            ),
-        },
-    },
+
+def main_stima(m, lang, p):
+    u = lambda path: href(lang, path)
+    return f"""
+      <section class="card hero">
+        <h1>{tv(m, "seo.stima_h1")}</h1>
+        <p>{tv(m, "wizard.stima_lead1")}</p>
+        <p>{tv(m, "wizard.stima_lead2")}</p>
+        <p>{tr(m, lang, "wizard.stima_lead3")}</p>
+        <div class="btn-row"><a class="btn btn-primary" href="{u("/stima")}#wizard-start">{tv(m, "wizard.stima_start")}</a></div>
+      </section>
+      {disclaimer(m, lang)}
+      {updated(m, lang, p)}
+      <section class="card" id="wizard-start">
+        <h2>{tv(m, "wizard.s1_title")}</h2>
+        <p>{tv(m, "wizard.intro_js")}</p>
+        <noscript><p>{tr(m, lang, "wizard.noscript")}</p></noscript>
+      </section>
+    """
+
+
+def main_risultati(m, lang, p):
+    u = lambda path: href(lang, path)
+    return f"""
+      <section class="card">
+        <h1>{tv(m, "seo.risultati_empty_h1")}</h1>
+        <p>{tv(m, "results.empty_p1")}</p>
+        <p>{tr(m, lang, "results.empty_p2")}</p>
+        <a class="btn btn-primary" href="{u("/stima")}">{tv(m, "results.empty_cta")}</a>
+      </section>
+      {disclaimer(m, lang)}
+      {updated(m, lang, p)}
+    """
+
+
+def main_ott(m, lang, p):
+    tips = "".join(f"<li>{tr(m, lang, k)}</li>" for k in ("ottimizzazione.t1","ottimizzazione.t2","ottimizzazione.t3","ottimizzazione.t4","ottimizzazione.t5","ottimizzazione.t6","ottimizzazione.t7"))
+    corr = "".join(f"<li>{tr(m, lang, k)}</li>" for k in ("ottimizzazione.c1","ottimizzazione.c2","ottimizzazione.c3"))
+    mai = "".join(f"<li>{tr(m, lang, k)}</li>" for k in ("ottimizzazione.n1","ottimizzazione.n2","ottimizzazione.n3"))
+    return f"""
+      <h1>{tv(m, "seo.ott_h1")}</h1>
+      {disclaimer(m, lang)}
+      {updated(m, lang, p)}
+      <section class="card"><h2>{tv(m, "ottimizzazione.h2_due")}</h2>
+        <p>{tr(m, lang, "ottimizzazione.p_due")}</p></section>
+      <section class="card"><h2>{tv(m, "ottimizzazione.h2_scelte")}</h2>
+        <ul class="tips">{tips}</ul></section>
+      <section class="card"><h2>{tv(m, "ottimizzazione.h2_corrente")}</h2>
+        <ul class="tips">{corr}</ul>
+        <p>{tv(m, "ottimizzazione.c_note")}</p></section>
+      <section class="card"><h2>{tv(m, "ottimizzazione.h2_mai")}</h2>
+        <ul class="tips">{mai}</ul>
+        <p class="small muted">{tv(m, "ottimizzazione.n_note")}</p></section>
+      <p class="small">{tr(m, lang, "ottimizzazione.see_also")}</p>
+    """
+
+
+def main_docs(m, lang, p):
+    base = "".join(f'<li><label><input type="checkbox" data-doc="{i}" disabled> <span>{tv(m, f"docs.d{i}")}</span></label></li>' for i in range(1, 13))
+    corr = "".join(f'<li><label><input type="checkbox" data-doc="{i}" disabled> <span>{tv(m, f"docs.d{i}")}</span></label></li>' for i in range(13, 17))
+    # checkbox enabled by JS; disabled in static so they don't appear interactive without JS
+    return f"""
+      <h1>{tv(m, "seo.chk_h1")}</h1>
+      <p class="muted">{tv(m, "docs.intro")}</p>
+      {updated(m, lang, p)}
+      <section class="card"><h2>{tv(m, "docs.h2_all")}</h2><ul class="checklist">{base}</ul></section>
+      <section class="card"><h2>{tv(m, "docs.h2_corrente")}</h2><ul class="checklist">{corr}</ul></section>
+      <section class="card no-print">
+        <p>{tr(m, lang, "docs.outro", portale=PORTALE_ISEE)}</p>
+        <button type="button" class="btn btn-primary btn-block" data-action="print">{tv(m, "common.print_list")}</button>
+      </section>
+      {disclaimer(m, lang)}
+    """
+
+
+def main_diritti(m, lang, p):
+    # Testo statico senza importi calcolati in JS: stesse soglie ufficiali già nel catalogo
+    rows = [
+        ("benefits.adi_nome", "benefits.adi_soglia", "benefits.adi_offerta", "adi", "common.verified", "benefits.adi_chi", {"amount": "10.140 €"}),
+        ("benefits.auu_nome", "benefits.auu_soglia", "benefits.auu_offerta", "auu", "common.value_2026", None, {"min": "17.468,51 €", "max": "46.582,71 €"}),
+        ("benefits.bonus_nome", "benefits.bonus_soglia", "benefits.bonus_offerta", "arera", "benefits.bonus_stato", None, {"isee": "9.796 €", "fam": "20.000 €"}),
+        ("benefits.dedicata_nome", "benefits.dedicata_soglia", "benefits.dedicata_offerta", "dedicata", "common.verified", None, {"amount": "15.000 €"}),
+        ("benefits.acquisti_nome", "benefits.acquisti_soglia", "benefits.acquisti_offerta", "cartaAcquisti", "benefits.acquisti_stato", None, {"amount": "8.230,81 €"}),
+        ("benefits.nido_nome", "benefits.nido_soglia", "benefits.nido_offerta", "nido", "common.value_2026", None, {"amount": "40.000 €"}),
+        ("benefits.nuovinati_nome", "benefits.nuovinati_soglia", "benefits.nuovinati_offerta", "nuoviNati", "benefits.nuovinati_stato", None, {"amount": "1.000 €"}),
+        ("benefits.affitto_nome", "benefits.affitto_soglia", "benefits.affitto_offerta", "venetoAffitti", "benefits.affitto_stato", None, {}),
+    ]
+    # Fix auu offerta uses min/max as importi mensili in JS; in static the soglia uses min/max as ISEE and offerta uses different. Keep catalog as in JS view for offerta with monthly amounts:
+    # I'll special-case auu offerta params
+    articles = []
+    for nome, soglia, offerta, src, stato, chi, params in rows:
+        extra = dict(params)
+        if nome == "benefits.auu_nome":
+            soglia_html = tv(m, soglia, min="17.468,51 €", max="46.582,71 €")
+            offerta_html = tv(m, offerta, min="58,30 €", max="203,80 €")
+        elif nome == "benefits.dedicata_nome":
+            soglia_html = tv(m, soglia, amount="15.000 €")
+            offerta_html = tv(m, offerta, amount="500 €")
+        elif nome == "benefits.nuovinati_nome":
+            soglia_html = tv(m, soglia, amount="40.000 €")
+            offerta_html = tv(m, offerta, amount="1.000 €")
+        else:
+            soglia_html = tv(m, soglia, **extra)
+            offerta_html = tv(m, offerta, **extra)
+        chi_html = f'<br><strong>{tv(m, "benefits.thing_who")}</strong> {tv(m, chi)}' if chi else ""
+        src_title = tv(m, f"fonti.src_{src}")
+        src_url = FONTE_URL[src]
+        articles.append(
+            f'<article class="benefit forse"><h3>{tv(m, nome)}</h3>'
+            f'<span class="badge stato"><a href="{href(lang, "/fonti")}">{tv(m, stato)}</a></span>'
+            f'<p class="small"><strong>{tv(m, "results.threshold")}</strong> {soglia_html}'
+            f'<br><strong>{tv(m, "benefits.thing_offer")}</strong> {offerta_html}{chi_html}</p>'
+            f'<a class="small" href="{src_url}" target="_blank" rel="noopener">{tv(m, "common.source", title=src_title)}</a></article>'
+        )
+    return f"""
+      <h1>{tv(m, "seo.dir_h1")}</h1>
+      {disclaimer(m, lang)}
+      {updated(m, lang, p)}
+      <p class="muted">{tr(m, lang, "diritti.intro")}</p>
+      {''.join(articles)}
+      <section class="card"><h2>{tv(m, "diritti.h2_auu")}</h2>
+        <p>{tr(m, lang, "diritti.p_auu1")}</p>
+        <p>{tr(m, lang, "diritti.p_auu2")}</p>
+        <p><strong>{tv(m, "faq.quale_q")}</strong> {tr(m, lang, "faq.quale_a")}</p>
+        <a class="btn btn-primary btn-block" href="{href(lang, "/stima")}">{tv(m, "diritti.cta_stima")}</a></section>
+      <section class="card"><h2>{tv(m, "diritti.h2_manovra")}</h2>
+        <p>{tr(m, lang, "diritti.p_manovra")}</p>
+        <p class="small">{tr(m, lang, "diritti.manovra_fonte")}</p></section>
+    """
+
+
+def main_fonti(m, lang, p):
+    norme = ["dpcm159", "inps102", "dsu2026", "portaleIsee"]
+    aiuti = ["adi", "auu", "arera", "dedicata", "cartaAcquisti", "nido", "nuoviNati", "venetoAffitti"]
+    def lis(keys):
+        out = []
+        for k in keys:
+            out.append(f'<li><a href="{FONTE_URL[k]}" target="_blank" rel="noopener">{tv(m, "fonti.src_"+k)}</a></li>')
+        return "<ul class=\"tips\">" + "".join(out) + "</ul>"
+    return f"""
+      <section class="card">
+        <h1>{tv(m, "seo.fonti_h1")}</h1>
+        <p>{tr(m, lang, "fonti.intro")}</p>
+        {updated(m, lang, p)}
+        <h2>{tv(m, "fonti.h2_norme")}</h2>
+        {lis(norme)}
+        <h2>{tv(m, "fonti.h2_aiuti")}</h2>
+        {lis(aiuti)}
+      </section>
+      {disclaimer(m, lang)}
+    """
+
+
+def main_metodo(m, lang, p):
+    return f"""
+      <section class="card">
+        <h1>{tv(m, "seo.metodo_h1")}</h1>
+        <p>{tr(m, lang, "metodo.p1")}</p>
+        <h2>{tv(m, "metodo.h2_come")}</h2>
+        <p>{tr(m, lang, "metodo.p_come1")}</p>
+        <p>{tr(m, lang, "metodo.p_come2")}</p>
+        <h2>{tv(m, "metodo.h2_non")}</h2>
+        <p>{tr(m, lang, "metodo.p_non")}</p>
+        <h2>{tv(m, "metodo.h2_chi")}</h2>
+        <p>{tr(m, lang, "metodo.p_chi")}</p>
+        {updated(m, lang, p)}
+      </section>
+      {disclaimer(m, lang)}
+    """
+
+
+def main_contatti(m, lang, p):
+    privacy = href(lang, "/privacy")
+    return f"""
+      <section class="card">
+        <h1>{tv(m, "seo.contatti_h1")}</h1>
+        <p>{tv(m, "contatti.intro")}</p>
+        {updated(m, lang, p)}
+        <div data-modulo-contatti data-privacy="{privacy}"></div>
+      </section>
+      {disclaimer(m, lang)}
+    """
+
+
+def main_privacy(m, lang, p):
+    return f"""
+      <section class="card">
+        <h1>{tv(m, "seo.privacy_h1")}</h1>
+        <p>{tr(m, lang, "privacy.p_titolare")}</p>
+        <h2>{tv(m, "privacy.h2_local")}</h2>
+        <p>{tr(m, lang, "privacy.p_local")}</p>
+        <p>{tr(m, lang, "privacy.p_delete")}</p>
+        <h2>{tv(m, "privacy.h2_form")}</h2>
+        <p>{tr(m, lang, "privacy.p_form")}</p>
+        <p>{tr(m, lang, "privacy.p_retention")}</p>
+        {updated(m, lang, p)}
+      </section>
+      {disclaimer(m, lang)}
+    """
+
+
+def main_404(m, lang, p):
+    return f"""
+      <section class="card">
+        <h1>{tv(m, "seo.notfound_h1")}</h1>
+        <p>{tv(m, "notfound.p")}</p>
+        <div class="btn-row">
+          <a class="btn btn-primary" href="{href(lang, "/stima")}">{tv(m, "notfound.cta_stima")}</a>
+          <a class="btn btn-ghost" href="{href(lang, "/checklist-dsu")}">{tv(m, "notfound.cta_docs")}</a>
+        </div>
+        <p class="small"><a href="{href(lang, "/")}">{tv(m, "notfound.back_home")}</a></p>
+      </section>
+    """
+
+
+COMPOSERS = {
+    "": main_home, "stima": main_stima, "risultati": main_risultati, "consigli": main_ott,
+    "documenti": main_docs, "diritti": main_diritti, "fonti": main_fonti, "metodo": main_metodo,
+    "contatti": main_contatti, "privacy": main_privacy, "404": main_404,
 }
 
-ORG = {
-    "@type": "Organization",
-    "@id": ORG_ID,
-    "name": "Pi.Gi Service",
-    "legalName": "Pi.Gi Service di Gheoca Paula",
-    "email": "info@pigiservice.com",
-    "url": SITE + "/",
-    "logo": SITE + "/icons/icon-512.png",
-    "contactPoint": {
-        "@type": "ContactPoint",
+
+def org():
+    return {
+        "@type": "Organization",
+        "@id": ORG_ID,
+        "name": "Pi.Gi Service",
+        "legalName": "Pi.Gi Service di Gheoca Paula",
         "email": "info@pigiservice.com",
-        "contactType": "customer support",
-        "availableLanguage": "Italian",
-    },
-}
-
-WEBSITE = {
-    "@type": "WebSite",
-    "@id": SITE_ID,
-    "url": SITE + "/",
-    "name": "DirittiChiari 2027",
-    "inLanguage": "it-IT",
-    "publisher": {"@id": ORG_ID},
-}
-
-WEBAPP = {
-    "@type": "WebApplication",
-    "@id": APP_ID,
-    "name": "DirittiChiari 2027",
-    "url": SITE + "/",
-    "description": HOME_DESC,
-    "applicationCategory": "FinanceApplication",
-    "operatingSystem": "Any",
-    "inLanguage": "it-IT",
-    "isAccessibleForFree": True,
-    "offers": {"@type": "Offer", "price": "0", "priceCurrency": "EUR"},
-    "publisher": {"@id": ORG_ID},
-    "image": SITE + "/og-image.png",
-}
+        "url": SITE + "/",
+        "logo": SITE + "/icons/icon-512.png",
+        "contactPoint": {
+            "@type": "ContactPoint",
+            "email": "info@pigiservice.com",
+            "contactType": "customer support",
+            "availableLanguage": ["Italian", "English", "Bengali"],
+        },
+    }
 
 
-def page_url(p):
-    if p["path"] is None:
-        return None
-    return SITE + "/" if p["path"] == "/" else SITE + p["path"]
-
-
-def json_ld(p):
-    graph = [ORG, WEBSITE]
-    url = page_url(p)
+def json_ld(m, lang, p, title, desc, url):
+    website = {
+        "@type": "WebSite",
+        "@id": SITE_ID,
+        "url": SITE + "/",
+        "name": tv(m, "schema.website_name"),
+        "alternateName": tv(m, "schema.website_alt"),
+        "inLanguage": ["it-IT", "en", "bn"],
+        "publisher": {"@id": ORG_ID},
+    }
+    graph = [org(), website]
     page_id = (url or SITE + "/404") + "#webpage"
     crumb_id = (url or SITE + "/404") + "#breadcrumb"
     webpage = {
         "@type": "WebPage",
         "@id": page_id,
-        "name": p["title"],
-        "description": p["desc"],
+        "name": title,
+        "description": desc,
         "dateModified": p["date"],
-        "inLanguage": "it-IT",
+        "inLanguage": LOCALE[lang] if lang == "it" else lang,
         "isPartOf": {"@id": SITE_ID},
         "author": {"@id": ORG_ID},
         "publisher": {"@id": ORG_ID},
@@ -623,37 +500,131 @@ def json_ld(p):
         webpage["url"] = url
     graph.append(webpage)
     items = []
-    for i, (name, path) in enumerate(p["crumbs"], start=1):
-        item = {"@type": "ListItem", "position": i, "name": name}
-        item["item"] = SITE + "/" if path == "/" else SITE + path
+    for i, (name_key, path) in enumerate(p["crumbs"], start=1):
+        item = {"@type": "ListItem", "position": i, "name": tv(m, name_key), "item": page_url(lang, path, SITE)}
         items.append(item)
     graph.append({"@type": "BreadcrumbList", "@id": crumb_id, "itemListElement": items})
     if p.get("webapp"):
-        graph.append(WEBAPP)
+        graph.append({
+            "@type": "WebApplication",
+            "@id": APP_ID,
+            "name": tv(m, "schema.webapp_name"),
+            "alternateName": tv(m, "schema.website_alt"),
+            "url": SITE + "/",
+            "description": tv(m, "home.seo_desc"),
+            "applicationCategory": "FinanceApplication",
+            "operatingSystem": "Any",
+            "inLanguage": ["it-IT", "en", "bn"],
+            "isAccessibleForFree": True,
+            "offers": {"@type": "Offer", "price": "0", "priceCurrency": "EUR"},
+            "publisher": {"@id": ORG_ID},
+            "image": SITE + "/og-image.png",
+        })
     if p.get("faqs"):
+        ents = []
+        for fk in p["faqs"]:
+            qk, ak = FAQ_KEYS[fk]
+            ents.append({
+                "@type": "Question",
+                "name": tv(m, qk),
+                "acceptedAnswer": {"@type": "Answer", "text": plain(tv(m, ak))},
+            })
         graph.append({
             "@type": "FAQPage",
             "@id": (url or SITE) + "#faq",
-            "inLanguage": "it-IT",
+            "inLanguage": LOCALE[lang] if lang == "it" else lang,
             "isPartOf": {"@id": page_id},
-            "mainEntity": [FAQS[k] for k in p["faqs"]],
+            "mainEntity": ents,
         })
     return {"@context": "https://schema.org", "@graph": graph}
 
 
-def render_html(p, shell: str) -> str:
-    url = page_url(p) or ""
+def hreflang_links(p):
+    if p["path"] is None:
+        return ""
+    lines = []
+    for lang in LANGS:
+        url = page_url(lang, p["path"], SITE)
+        hreflang = "it" if lang == "it" else lang
+        lines.append(f'<link rel="alternate" hreflang="{hreflang}" href="{url}">')
+    lines.append(f'<link rel="alternate" hreflang="x-default" href="{page_url("it", p["path"], SITE)}">')
+    return "\n".join(lines) + "\n"
+
+
+def switcher_html(m, lang, p):
+    items = []
+    for L, key, short in (("it", "chrome.lang_it", "chrome.lang_it_short"),
+                          ("en", "chrome.lang_en", "chrome.lang_en_short"),
+                          ("bn", "chrome.lang_bn", "chrome.lang_bn_short")):
+        path = p["path"] or "/"
+        url = href(L, path)
+        cur = ' aria-current="true"' if L == lang else ""
+        items.append(f'<a href="{url}" lang="{L}" hreflang="{L}"{cur}>{tv(m, short)}</a>')
+    return f'<nav class="lang-switch" aria-label="{tv(m, "chrome.lang_label")}">{"".join(items)}</nav>'
+
+
+def footer_links(m, lang):
+    pairs = [
+        ("/fonti", "chrome.footer_fonti"),
+        ("/metodo", "chrome.footer_metodo"),
+        ("/diritti-pa", "chrome.footer_diritti"),
+        ("/contatti", "chrome.footer_contatti"),
+        ("/privacy", "chrome.footer_privacy"),
+    ]
+    parts = [f'<a href="{href(lang, path)}">{tv(m, key)}</a>' for path, key in pairs]
+    inst = f'<button type="button" class="btn btn-ghost" id="install-footer" data-install-cta hidden>{tv(m, "chrome.footer_install")}</button>'
+    return " · ".join(parts) + " · " + inst
+
+
+def render_html(shell, m, lang, p, title, desc, main_html, url, jsonld):
     robots = f'<meta name="robots" content="{p["robots"]}">\n' if p.get("robots") else ""
     canonical = f'<link rel="canonical" href="{url}">\n' if url else ""
     html = shell
-    html = html.replace("{{TITLE}}", p["title"])
-    html = html.replace("{{DESCRIPTION}}", p["desc"].replace('"', "&quot;"))
-    html = html.replace("{{ROBOTS}}", robots)
-    html = html.replace("{{CANONICAL}}", canonical)
-    html = html.replace("{{URL}}", url)
-    html = html.replace("{{JSON_LD}}", json.dumps(json_ld(p), ensure_ascii=False, indent=2))
-    html = html.replace("{{MAIN}}", p["main"].rstrip() + "\n")
-    html = html.replace("{{VERSION}}", VERSION)
+    repl = {
+        "{{LANG}}": HTML_LANG[lang],
+        "{{DIR}}": DIR_ATTR[lang],
+        "{{LOCALE}}": LOCALE[lang] if lang == "it" else ("en" if lang == "en" else "bn"),
+        "{{TITLE}}": title,
+        "{{DESCRIPTION}}": desc.replace('"', "&quot;"),
+        "{{ROBOTS}}": robots,
+        "{{CANONICAL}}": canonical,
+        "{{HREFLANG}}": hreflang_links(p),
+        "{{URL}}": url or "",
+        "{{JSON_LD}}": json.dumps(jsonld, ensure_ascii=False, indent=2),
+        "{{VERSION}}": VERSION,
+        "{{OG_SITE}}": tv(m, "brand.og_site_name"),
+        "{{OG_ALT}}": tv(m, "brand.og_image_alt"),
+        "{{APPLE_TITLE}}": tv(m, "brand.apple_title"),
+        "{{BODY_CLASS}}": "page-home" if p["route"] == "" else "",
+        "{{SKIP}}": tv(m, "chrome.skip"),
+        "{{PTR_PULL}}": tv(m, "ptr.pull"),
+        "{{BRAND_NAME}}": tv(m, "brand.name"),
+        "{{TAGLINE}}": tv(m, "brand.tagline"),
+        "{{HOME_HREF}}": href(lang, "/"),
+        "{{SWITCHER}}": switcher_html(m, lang, p),
+        "{{MAIN}}": main_html.rstrip() + "\n",
+        "{{FOOTER_OWNER}}": tr(m, lang, "brand.footer_owner"),
+        "{{FOOTER_LEGAL}}": tr(m, lang, "brand.footer_legal"),
+        "{{FOOTER_LINKS}}": footer_links(m, lang),
+        "{{FOOTER_CLEAR}}": tv(m, "chrome.footer_clear"),
+        "{{NAV_LABEL}}": tv(m, "chrome.nav_label"),
+        "{{NAV_HOME}}": tv(m, "chrome.nav_home"),
+        "{{NAV_STIMA}}": tv(m, "chrome.nav_stima"),
+        "{{NAV_RISULTATI}}": tv(m, "chrome.nav_risultati"),
+        "{{NAV_CONSIGLI}}": tv(m, "chrome.nav_consigli"),
+        "{{NAV_DOCUMENTI}}": tv(m, "chrome.nav_documenti"),
+        "{{HREF_HOME}}": href(lang, "/"),
+        "{{HREF_STIMA}}": href(lang, "/stima"),
+        "{{HREF_RISULTATI}}": href(lang, "/risultati"),
+        "{{HREF_CONSIGLI}}": href(lang, "/ottimizzazione"),
+        "{{HREF_DOCUMENTI}}": href(lang, "/checklist-dsu"),
+        "{{UPDATE_MSG}}": tv(m, "update.message"),
+        "{{UPDATE_APPLY}}": tv(m, "update.apply"),
+        "{{UPDATE_LATER}}": tv(m, "update.later"),
+        "{{INSTALL_CTA}}": tv(m, "install.cta"),
+    }
+    for k, v in repl.items():
+        html = html.replace(k, v)
     return html
 
 
@@ -677,75 +648,126 @@ def stamp_sw():
     text = re.sub(r"const VERSION = '[^']+'", "const VERSION = '%s'" % VERSION, text, count=1)
     sw.write_text(text, encoding="utf-8")
 
-def write_pages_data(pages):
-    out = {}
-    for p in pages:
-        if p["route"] == "404":
-            key = "404"
-        else:
-            key = p["route"]
-        payload = {
-            "title": p["title"],
-            "desc": p["desc"],
-            "url": page_url(p) or "",
-            "robots": p.get("robots"),
-            "dateModified": p["date"],
-            "dateLabel": p["date_label"],
-            "showSources": p["sources"],
-            "h1": p["h1"],
-            "jsonLdText": json.dumps(json_ld(p), ensure_ascii=False, indent=2),
-        }
-        out[key] = payload
+
+def write_messages(catalogs):
+    out = {lang: t_map(flat) for lang, flat in catalogs.items()}
+    text = "/* generato da scripts/build-pages.py — non modificare a mano */\n"
+    text += "window.DC_MSG = " + json.dumps(out, ensure_ascii=False, indent=2) + ";\n"
+    (ROOT / "js" / "messages.js").write_text(text, encoding="utf-8")
+
+
+def write_pages_data(built):
+    # built: list of dicts with lang, route, payload
+    out = {lang: {} for lang in LANGS}
+    for b in built:
+        out[b["lang"]][b["key"]] = b["payload"]
     text = "/* generato da scripts/build-pages.py — non modificare a mano */\n"
     text += "window.DC_PAGES = " + json.dumps(out, ensure_ascii=False, indent=2) + ";\n"
     (ROOT / "js" / "pages-data.js").write_text(text, encoding="utf-8")
 
 
-def write_sitemap(pages):
-    lines = ['<?xml version="1.0" encoding="UTF-8"?>',
-             '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">']
-    for p in pages:
-        if not p.get("sitemap"):
+def write_sitemap(built):
+    # xhtml alternates
+    lines = [
+        '<?xml version="1.0" encoding="UTF-8"?>',
+        '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"',
+        '        xmlns:xhtml="http://www.w3.org/1999/xhtml">',
+    ]
+    # group by path
+    by_path = {}
+    for b in built:
+        if not b["sitemap"]:
             continue
-        loc = page_url(p)
-        lines.append(f"  <url><loc>{loc}</loc><lastmod>{p['date']}</lastmod></url>")
+        by_path.setdefault(b["it_path"], []).append(b)
+    for it_path in by_path:
+        for b in by_path[it_path]:
+            lines.append(f'  <url>')
+            lines.append(f'    <loc>{b["url"]}</loc>')
+            lines.append(f'    <lastmod>{b["date"]}</lastmod>')
+            # alternates for this path
+            alts = by_path[it_path]
+            for a in alts:
+                hl = "it" if a["lang"] == "it" else a["lang"]
+                lines.append(f'    <xhtml:link rel="alternate" hreflang="{hl}" href="{a["url"]}"/>')
+            it_url = next(a["url"] for a in alts if a["lang"] == "it")
+            lines.append(f'    <xhtml:link rel="alternate" hreflang="x-default" href="{it_url}"/>')
+            lines.append(f'  </url>')
     lines.append("</urlset>")
     (ROOT / "sitemap.xml").write_text("\n".join(lines) + "\n", encoding="utf-8")
 
 
 def main():
     shell = (ROOT / "templates" / "shell.html").read_text(encoding="utf-8")
+    catalogs = {lang: load_catalog(lang) for lang in LANGS}
+    maps = {lang: t_map(catalogs[lang]) for lang in LANGS}
     errors = []
+    built = []
     (ROOT / "pages").mkdir(exist_ok=True)
-    for p in PAGES:
-        if p.get("desc") and p["route"] != "404":
-            n = len(p["desc"])
-            if not (120 <= n <= 160):
-                errors.append(f"desc {p['path']}: {n} caratteri (attesi ~150)")
-        if p["path"] == "/stima":
-            n = words(p["main"])
-            if not (150 <= n <= 320):
-                errors.append(f"/stima parole in main: {n} (attese 150-300)")
-        html = render_html(p, shell)
-        dest = ROOT / p["file"]
-        dest.parent.mkdir(parents=True, exist_ok=True)
-        dest.write_text(html, encoding="utf-8")
-        print(f"  {p['file']}: title={len(p['title'])}c desc={len(p['desc'])}c words≈{words(p['main'])}")
-    write_pages_data(PAGES)
+    for lang in LANGS:
+        (ROOT / lang).mkdir(exist_ok=True)
+        m = maps[lang]
+        for p in PAGE_DEFS:
+            dest = ROOT / file_for(lang, p)
+            dest.parent.mkdir(parents=True, exist_ok=True)
+            title = tv(m, p["title_key"])
+            desc = tv(m, p["desc_key"])
+            h1 = tv(m, p["h1_key"])
+            main_html = COMPOSERS[p["route"]](m, lang, p)
+            url = page_url(lang, p["path"], SITE) if p["path"] is not None else ""
+            jld = json_ld(m, lang, p, title, desc, url or None)
+            html = render_html(shell, m, lang, p, title, desc, main_html, url, jld)
+            dest.write_text(html, encoding="utf-8")
+            n = len(desc)
+            if p["route"] != "404" and not (120 <= n <= 160):
+                errors.append(f"desc {lang} {p['path']}: {n} caratteri (attesi ~150)")
+            if lang == "it" and p["path"] == "/stima":
+                w = words(main_html)
+                if not (150 <= w <= 320):
+                    errors.append(f"/stima parole in main: {w} (attese 150-300)")
+            print(f"  {dest.relative_to(ROOT)}: title={len(title)}c desc={len(desc)}c words≈{words(main_html)}")
+            built.append({
+                "lang": lang,
+                "key": "404" if p["route"] == "404" else p["route"],
+                "sitemap": bool(p.get("sitemap")),
+                "date": p["date"],
+                "it_path": p["path"],
+                "url": url,
+                "payload": {
+                    "title": title,
+                    "desc": desc,
+                    "url": url,
+                    "robots": p.get("robots"),
+                    "dateModified": p["date"],
+                    "dateLabel": tv(m, p["date_key"]),
+                    "showSources": p["sources"],
+                    "h1": h1,
+                    "jsonLdText": json.dumps(jld, ensure_ascii=False, indent=2),
+                    "main": main_html,
+                },
+            })
+
+    write_messages(catalogs)
+    write_pages_data(built)
     write_version()
     stamp_sw()
-    write_sitemap(PAGES)
-    # interdizione della parola "semplice" da sola nei file generati
-    for f in list((ROOT / "pages").glob("*.html")) + [ROOT / "index.html", ROOT / "404.html"]:
+    write_sitemap(built)
+
+    # interdizione «semplice» da sola nei file generati
+    htmls = list((ROOT / "pages").glob("*.html")) + [ROOT / "index.html", ROOT / "404.html"]
+    for lang in ("en", "bn"):
+        htmls += list((ROOT / lang).glob("*.html"))
+    for f in htmls:
+        if not f.exists():
+            continue
         txt = f.read_text(encoding="utf-8")
         if re.search(r"\bsemplice\b(?! da utilizzare)", txt, re.I):
-            errors.append(f"{f.name}: contiene 'semplice'")
+            errors.append(f"{f.relative_to(ROOT)}: contiene 'semplice'")
     if errors:
         print("ERRORI:")
         for e in errors:
             print(" -", e)
         sys.exit(1)
-    print("OK, pagine generate (v%s)" % VERSION)
+    print("OK, pagine generate (v%s) per lingue %s" % (VERSION, ",".join(LANGS)))
 
 
 if __name__ == "__main__":

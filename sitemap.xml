@@ -1,12 +1,220 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url><loc>https://dirittiok.com/</loc><lastmod>2026-11-16</lastmod></url>
-  <url><loc>https://dirittiok.com/stima</loc><lastmod>2026-11-16</lastmod></url>
-  <url><loc>https://dirittiok.com/ottimizzazione</loc><lastmod>2026-11-16</lastmod></url>
-  <url><loc>https://dirittiok.com/checklist-dsu</loc><lastmod>2026-11-16</lastmod></url>
-  <url><loc>https://dirittiok.com/diritti-pa</loc><lastmod>2026-11-16</lastmod></url>
-  <url><loc>https://dirittiok.com/fonti</loc><lastmod>2026-11-16</lastmod></url>
-  <url><loc>https://dirittiok.com/metodo</loc><lastmod>2026-11-16</lastmod></url>
-  <url><loc>https://dirittiok.com/contatti</loc><lastmod>2026-11-15</lastmod></url>
-  <url><loc>https://dirittiok.com/privacy</loc><lastmod>2026-11-15</lastmod></url>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  <url>
+    <loc>https://dirittiok.com/</loc>
+    <lastmod>2026-11-16</lastmod>
+    <xhtml:link rel="alternate" hreflang="it" href="https://dirittiok.com/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://dirittiok.com/en"/>
+    <xhtml:link rel="alternate" hreflang="bn" href="https://dirittiok.com/bn"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://dirittiok.com/"/>
+  </url>
+  <url>
+    <loc>https://dirittiok.com/en</loc>
+    <lastmod>2026-11-16</lastmod>
+    <xhtml:link rel="alternate" hreflang="it" href="https://dirittiok.com/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://dirittiok.com/en"/>
+    <xhtml:link rel="alternate" hreflang="bn" href="https://dirittiok.com/bn"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://dirittiok.com/"/>
+  </url>
+  <url>
+    <loc>https://dirittiok.com/bn</loc>
+    <lastmod>2026-11-16</lastmod>
+    <xhtml:link rel="alternate" hreflang="it" href="https://dirittiok.com/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://dirittiok.com/en"/>
+    <xhtml:link rel="alternate" hreflang="bn" href="https://dirittiok.com/bn"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://dirittiok.com/"/>
+  </url>
+  <url>
+    <loc>https://dirittiok.com/stima</loc>
+    <lastmod>2026-11-16</lastmod>
+    <xhtml:link rel="alternate" hreflang="it" href="https://dirittiok.com/stima"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://dirittiok.com/en/stima"/>
+    <xhtml:link rel="alternate" hreflang="bn" href="https://dirittiok.com/bn/stima"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://dirittiok.com/stima"/>
+  </url>
+  <url>
+    <loc>https://dirittiok.com/en/stima</loc>
+    <lastmod>2026-11-16</lastmod>
+    <xhtml:link rel="alternate" hreflang="it" href="https://dirittiok.com/stima"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://dirittiok.com/en/stima"/>
+    <xhtml:link rel="alternate" hreflang="bn" href="https://dirittiok.com/bn/stima"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://dirittiok.com/stima"/>
+  </url>
+  <url>
+    <loc>https://dirittiok.com/bn/stima</loc>
+    <lastmod>2026-11-16</lastmod>
+    <xhtml:link rel="alternate" hreflang="it" href="https://dirittiok.com/stima"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://dirittiok.com/en/stima"/>
+    <xhtml:link rel="alternate" hreflang="bn" href="https://dirittiok.com/bn/stima"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://dirittiok.com/stima"/>
+  </url>
+  <url>
+    <loc>https://dirittiok.com/ottimizzazione</loc>
+    <lastmod>2026-11-16</lastmod>
+    <xhtml:link rel="alternate" hreflang="it" href="https://dirittiok.com/ottimizzazione"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://dirittiok.com/en/ottimizzazione"/>
+    <xhtml:link rel="alternate" hreflang="bn" href="https://dirittiok.com/bn/ottimizzazione"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://dirittiok.com/ottimizzazione"/>
+  </url>
+  <url>
+    <loc>https://dirittiok.com/en/ottimizzazione</loc>
+    <lastmod>2026-11-16</lastmod>
+    <xhtml:link rel="alternate" hreflang="it" href="https://dirittiok.com/ottimizzazione"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://dirittiok.com/en/ottimizzazione"/>
+    <xhtml:link rel="alternate" hreflang="bn" href="https://dirittiok.com/bn/ottimizzazione"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://dirittiok.com/ottimizzazione"/>
+  </url>
+  <url>
+    <loc>https://dirittiok.com/bn/ottimizzazione</loc>
+    <lastmod>2026-11-16</lastmod>
+    <xhtml:link rel="alternate" hreflang="it" href="https://dirittiok.com/ottimizzazione"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://dirittiok.com/en/ottimizzazione"/>
+    <xhtml:link rel="alternate" hreflang="bn" href="https://dirittiok.com/bn/ottimizzazione"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://dirittiok.com/ottimizzazione"/>
+  </url>
+  <url>
+    <loc>https://dirittiok.com/checklist-dsu</loc>
+    <lastmod>2026-11-16</lastmod>
+    <xhtml:link rel="alternate" hreflang="it" href="https://dirittiok.com/checklist-dsu"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://dirittiok.com/en/checklist-dsu"/>
+    <xhtml:link rel="alternate" hreflang="bn" href="https://dirittiok.com/bn/checklist-dsu"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://dirittiok.com/checklist-dsu"/>
+  </url>
+  <url>
+    <loc>https://dirittiok.com/en/checklist-dsu</loc>
+    <lastmod>2026-11-16</lastmod>
+    <xhtml:link rel="alternate" hreflang="it" href="https://dirittiok.com/checklist-dsu"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://dirittiok.com/en/checklist-dsu"/>
+    <xhtml:link rel="alternate" hreflang="bn" href="https://dirittiok.com/bn/checklist-dsu"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://dirittiok.com/checklist-dsu"/>
+  </url>
+  <url>
+    <loc>https://dirittiok.com/bn/checklist-dsu</loc>
+    <lastmod>2026-11-16</lastmod>
+    <xhtml:link rel="alternate" hreflang="it" href="https://dirittiok.com/checklist-dsu"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://dirittiok.com/en/checklist-dsu"/>
+    <xhtml:link rel="alternate" hreflang="bn" href="https://dirittiok.com/bn/checklist-dsu"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://dirittiok.com/checklist-dsu"/>
+  </url>
+  <url>
+    <loc>https://dirittiok.com/diritti-pa</loc>
+    <lastmod>2026-11-16</lastmod>
+    <xhtml:link rel="alternate" hreflang="it" href="https://dirittiok.com/diritti-pa"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://dirittiok.com/en/diritti-pa"/>
+    <xhtml:link rel="alternate" hreflang="bn" href="https://dirittiok.com/bn/diritti-pa"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://dirittiok.com/diritti-pa"/>
+  </url>
+  <url>
+    <loc>https://dirittiok.com/en/diritti-pa</loc>
+    <lastmod>2026-11-16</lastmod>
+    <xhtml:link rel="alternate" hreflang="it" href="https://dirittiok.com/diritti-pa"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://dirittiok.com/en/diritti-pa"/>
+    <xhtml:link rel="alternate" hreflang="bn" href="https://dirittiok.com/bn/diritti-pa"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://dirittiok.com/diritti-pa"/>
+  </url>
+  <url>
+    <loc>https://dirittiok.com/bn/diritti-pa</loc>
+    <lastmod>2026-11-16</lastmod>
+    <xhtml:link rel="alternate" hreflang="it" href="https://dirittiok.com/diritti-pa"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://dirittiok.com/en/diritti-pa"/>
+    <xhtml:link rel="alternate" hreflang="bn" href="https://dirittiok.com/bn/diritti-pa"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://dirittiok.com/diritti-pa"/>
+  </url>
+  <url>
+    <loc>https://dirittiok.com/fonti</loc>
+    <lastmod>2026-11-16</lastmod>
+    <xhtml:link rel="alternate" hreflang="it" href="https://dirittiok.com/fonti"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://dirittiok.com/en/fonti"/>
+    <xhtml:link rel="alternate" hreflang="bn" href="https://dirittiok.com/bn/fonti"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://dirittiok.com/fonti"/>
+  </url>
+  <url>
+    <loc>https://dirittiok.com/en/fonti</loc>
+    <lastmod>2026-11-16</lastmod>
+    <xhtml:link rel="alternate" hreflang="it" href="https://dirittiok.com/fonti"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://dirittiok.com/en/fonti"/>
+    <xhtml:link rel="alternate" hreflang="bn" href="https://dirittiok.com/bn/fonti"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://dirittiok.com/fonti"/>
+  </url>
+  <url>
+    <loc>https://dirittiok.com/bn/fonti</loc>
+    <lastmod>2026-11-16</lastmod>
+    <xhtml:link rel="alternate" hreflang="it" href="https://dirittiok.com/fonti"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://dirittiok.com/en/fonti"/>
+    <xhtml:link rel="alternate" hreflang="bn" href="https://dirittiok.com/bn/fonti"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://dirittiok.com/fonti"/>
+  </url>
+  <url>
+    <loc>https://dirittiok.com/metodo</loc>
+    <lastmod>2026-11-16</lastmod>
+    <xhtml:link rel="alternate" hreflang="it" href="https://dirittiok.com/metodo"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://dirittiok.com/en/metodo"/>
+    <xhtml:link rel="alternate" hreflang="bn" href="https://dirittiok.com/bn/metodo"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://dirittiok.com/metodo"/>
+  </url>
+  <url>
+    <loc>https://dirittiok.com/en/metodo</loc>
+    <lastmod>2026-11-16</lastmod>
+    <xhtml:link rel="alternate" hreflang="it" href="https://dirittiok.com/metodo"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://dirittiok.com/en/metodo"/>
+    <xhtml:link rel="alternate" hreflang="bn" href="https://dirittiok.com/bn/metodo"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://dirittiok.com/metodo"/>
+  </url>
+  <url>
+    <loc>https://dirittiok.com/bn/metodo</loc>
+    <lastmod>2026-11-16</lastmod>
+    <xhtml:link rel="alternate" hreflang="it" href="https://dirittiok.com/metodo"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://dirittiok.com/en/metodo"/>
+    <xhtml:link rel="alternate" hreflang="bn" href="https://dirittiok.com/bn/metodo"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://dirittiok.com/metodo"/>
+  </url>
+  <url>
+    <loc>https://dirittiok.com/contatti</loc>
+    <lastmod>2026-11-15</lastmod>
+    <xhtml:link rel="alternate" hreflang="it" href="https://dirittiok.com/contatti"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://dirittiok.com/en/contatti"/>
+    <xhtml:link rel="alternate" hreflang="bn" href="https://dirittiok.com/bn/contatti"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://dirittiok.com/contatti"/>
+  </url>
+  <url>
+    <loc>https://dirittiok.com/en/contatti</loc>
+    <lastmod>2026-11-15</lastmod>
+    <xhtml:link rel="alternate" hreflang="it" href="https://dirittiok.com/contatti"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://dirittiok.com/en/contatti"/>
+    <xhtml:link rel="alternate" hreflang="bn" href="https://dirittiok.com/bn/contatti"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://dirittiok.com/contatti"/>
+  </url>
+  <url>
+    <loc>https://dirittiok.com/bn/contatti</loc>
+    <lastmod>2026-11-15</lastmod>
+    <xhtml:link rel="alternate" hreflang="it" href="https://dirittiok.com/contatti"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://dirittiok.com/en/contatti"/>
+    <xhtml:link rel="alternate" hreflang="bn" href="https://dirittiok.com/bn/contatti"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://dirittiok.com/contatti"/>
+  </url>
+  <url>
+    <loc>https://dirittiok.com/privacy</loc>
+    <lastmod>2026-11-15</lastmod>
+    <xhtml:link rel="alternate" hreflang="it" href="https://dirittiok.com/privacy"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://dirittiok.com/en/privacy"/>
+    <xhtml:link rel="alternate" hreflang="bn" href="https://dirittiok.com/bn/privacy"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://dirittiok.com/privacy"/>
+  </url>
+  <url>
+    <loc>https://dirittiok.com/en/privacy</loc>
+    <lastmod>2026-11-15</lastmod>
+    <xhtml:link rel="alternate" hreflang="it" href="https://dirittiok.com/privacy"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://dirittiok.com/en/privacy"/>
+    <xhtml:link rel="alternate" hreflang="bn" href="https://dirittiok.com/bn/privacy"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://dirittiok.com/privacy"/>
+  </url>
+  <url>
+    <loc>https://dirittiok.com/bn/privacy</loc>
+    <lastmod>2026-11-15</lastmod>
+    <xhtml:link rel="alternate" hreflang="it" href="https://dirittiok.com/privacy"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://dirittiok.com/en/privacy"/>
+    <xhtml:link rel="alternate" hreflang="bn" href="https://dirittiok.com/bn/privacy"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://dirittiok.com/privacy"/>
+  </url>
 </urlset>

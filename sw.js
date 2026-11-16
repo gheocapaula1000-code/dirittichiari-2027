@@ -1,19 +1,30 @@
-/* dc-version:1.4.0 */
+/* dc-version:1.5.0 */
 /* DirittiChiari 2027 — service worker.
  * Navigazioni: rete prima, con attesa di 3,5 s, poi cache.
  * Asset con ?v=: prima la cache. L'installazione fallisce se manca un file del guscio. */
-const VERSION = '1.4.0';
+const VERSION = '1.5.0';
 const CACHE = 'dc2027-' + VERSION;
-const PAGES = ['/', '/stima', '/risultati', '/ottimizzazione', '/checklist-dsu', '/diritti-pa', '/fonti', '/metodo', '/contatti', '/privacy'];
+const IT_PAGES = ['/', '/stima', '/risultati', '/ottimizzazione', '/checklist-dsu', '/diritti-pa', '/fonti', '/metodo', '/contatti', '/privacy'];
+const PAGES = IT_PAGES.concat(
+  IT_PAGES.map((p) => p === '/' ? '/en' : '/en' + p),
+  IT_PAGES.map((p) => p === '/' ? '/bn' : '/bn' + p)
+);
 const SHELL = [
   '/',
+  '/en',
+  '/bn',
   '/404.html',
+  '/en/404.html',
+  '/bn/404.html',
   '/css/app.css?v=' + VERSION,
   '/css/modulo-contatti.css?v=' + VERSION,
   '/js/version.js?v=' + VERSION,
+  '/js/messages.js?v=' + VERSION,
+  '/js/i18n.js?v=' + VERSION,
   '/js/pages-data.js?v=' + VERSION,
   '/js/rules.js?v=' + VERSION,
   '/js/modulo-contatti.js?v=' + VERSION,
+  '/js/installa.js?v=' + VERSION,
   '/js/app.js?v=' + VERSION,
   '/manifest.webmanifest',
   '/icons/icon-192.png',
@@ -113,9 +124,11 @@ self.addEventListener('fetch', (e) => {
       } catch (err) {
         const path = pathOf(req.url);
         if (PAGES.indexOf(path) !== -1) {
-          return (await caches.match(path)) || (await caches.match('/')) || Response.error();
+          const fallback = path.indexOf('/bn') === 0 ? '/bn' : (path.indexOf('/en') === 0 ? '/en' : '/');
+          return (await caches.match(path)) || (await caches.match(fallback)) || (await caches.match('/')) || Response.error();
         }
-        const offline404 = await caches.match('/404.html');
+        const nf = path === '/bn' || path.indexOf('/bn/') === 0 ? '/bn/404.html' : (path === '/en' || path.indexOf('/en/') === 0 ? '/en/404.html' : '/404.html');
+        const offline404 = (await caches.match(nf)) || (await caches.match('/404.html'));
         if (offline404) {
           return new Response(await offline404.blob(), {
             status: 404,

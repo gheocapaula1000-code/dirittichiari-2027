@@ -21,3 +21,11 @@ Impostazioni già attivate in dashboard (hanno effetto alla pubblicazione): Hide
 Il CSS `#lovable-badge{display:none!important}` resta come difesa.
 
 Redirect www e dirittiok.lovable.app: oggi 302; se la dashboard consente 301, usarli. Altrimenti lasciare com'è.
+
+## Lingue (v1.5.0)
+- `public/pwa/home.html` ← italiano (index.html)
+- `public/pwa/<slug>.html` ← italiano
+- `public/pwa/en/home.html` ← `en/index.html`
+- `public/pwa/en/<slug>.html` e `public/pwa/en/404.html`
+- stesso schema per `bn/`
+- Rotte server: `/en`, `/en/<slug>`, `/bn`, `/bn/<slug>` con HTML proprio, slash 301, 404 nella lingua del prefisso

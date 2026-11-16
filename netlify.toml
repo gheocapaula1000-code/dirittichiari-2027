@@ -190,3 +190,311 @@
   from = "/privacy"
   to = "/pages/privacy.html"
   status = 200
+
+[[redirects]]
+  from = "/i18n/*"
+  to = "/404.html"
+  status = 404
+  force = true
+
+[[redirects]]
+  from = "/en/index.html"
+  to = "/en"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/bn/index.html"
+  to = "/bn"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/en/"
+  to = "/en"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/bn/"
+  to = "/bn"
+  status = 301
+  force = true
+
+# slash e file grezzi, poi 200, per /en e /bn
+[[redirects]]
+  from = "/en/stima.html"
+  to = "/en/stima"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/en/stima/"
+  to = "/en/stima"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/en/stima"
+  to = "/en/stima.html"
+  status = 200
+
+[[redirects]]
+  from = "/en/risultati.html"
+  to = "/en/risultati"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/en/risultati/"
+  to = "/en/risultati"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/en/risultati"
+  to = "/en/risultati.html"
+  status = 200
+
+[[redirects]]
+  from = "/en/ottimizzazione.html"
+  to = "/en/ottimizzazione"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/en/ottimizzazione/"
+  to = "/en/ottimizzazione"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/en/ottimizzazione"
+  to = "/en/ottimizzazione.html"
+  status = 200
+
+[[redirects]]
+  from = "/en/checklist-dsu.html"
+  to = "/en/checklist-dsu"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/en/checklist-dsu/"
+  to = "/en/checklist-dsu"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/en/checklist-dsu"
+  to = "/en/checklist-dsu.html"
+  status = 200
+
+[[redirects]]
+  from = "/en/diritti-pa.html"
+  to = "/en/diritti-pa"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/en/diritti-pa/"
+  to = "/en/diritti-pa"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/en/diritti-pa"
+  to = "/en/diritti-pa.html"
+  status = 200
+
+[[redirects]]
+  from = "/en/fonti.html"
+  to = "/en/fonti"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/en/fonti/"
+  to = "/en/fonti"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/en/fonti"
+  to = "/en/fonti.html"
+  status = 200
+
+[[redirects]]
+  from = "/en/metodo.html"
+  to = "/en/metodo"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/en/metodo/"
+  to = "/en/metodo"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/en/metodo"
+  to = "/en/metodo.html"
+  status = 200
+
+[[redirects]]
+  from = "/en/contatti.html"
+  to = "/en/contatti"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/en/contatti/"
+  to = "/en/contatti"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/en/contatti"
+  to = "/en/contatti.html"
+  status = 200
+
+[[redirects]]
+  from = "/en/privacy.html"
+  to = "/en/privacy"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/en/privacy/"
+  to = "/en/privacy"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/en/privacy"
+  to = "/en/privacy.html"
+  status = 200
+
+[[redirects]]
+  from = "/en"
+  to = "/en/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/bn/stima.html"
+  to = "/bn/stima"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/bn/stima/"
+  to = "/bn/stima"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/bn/stima"
+  to = "/bn/stima.html"
+  status = 200
+
+[[redirects]]
+  from = "/bn/risultati.html"
+  to = "/bn/risultati"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/bn/risultati/"
+  to = "/bn/risultati"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/bn/risultati"
+  to = "/bn/risultati.html"
+  status = 200
+
+[[redirects]]
+  from = "/bn/ottimizzazione.html"
+  to = "/bn/ottimizzazione"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/bn/ottimizzazione/"
+  to = "/bn/ottimizzazione"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/bn/ottimizzazione"
+  to = "/bn/ottimizzazione.html"
+  status = 200
+
+[[redirects]]
+  from = "/bn/checklist-dsu.html"
+  to = "/bn/checklist-dsu"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/bn/checklist-dsu/"
+  to = "/bn/checklist-dsu"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/bn/checklist-dsu"
+  to = "/bn/checklist-dsu.html"
+  status = 200
+
+[[redirects]]
+  from = "/bn/diritti-pa.html"
+  to = "/bn/diritti-pa"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/bn/diritti-pa/"
+  to = "/bn/diritti-pa"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/bn/diritti-pa"
+  to = "/bn/diritti-pa.html"
+  status = 200
+
+[[redirects]]
+  from = "/bn/fonti.html"
+  to = "/bn/fonti"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/bn/fonti/"
+  to = "/bn/fonti"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/bn/fonti"
+  to = "/bn/fonti.html"
+  status = 200
+
+[[redirects]]
+  from = "/bn/metodo.html"
+  to = "/bn/metodo"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/bn/metodo/"
+  to = "/bn/metodo"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/bn/metodo"
+  to = "/bn/metodo.html"
+  status = 200
+
+[[redirects]]
+  from = "/bn/contatti.html"
+  to = "/bn/contatti"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/bn/contatti/"
+  to = "/bn/contatti"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/bn/contatti"
+  to = "/bn/contatti.html"
+  status = 200
+
+[[redirects]]
+  from = "/bn/privacy.html"
+  to = "/bn/privacy"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/bn/privacy/"
+  to = "/bn/privacy"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/bn/privacy"
+  to = "/bn/privacy.html"
+  status = 200
+
+[[redirects]]
+  from = "/bn"
+  to = "/bn/index.html"
+  status = 200

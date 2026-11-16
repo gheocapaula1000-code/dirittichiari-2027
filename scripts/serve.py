@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
-"""Server statico con URL pulite e HTML proprio per ogni rotta.
- /stima restituisce pages/stima.html (200); /stima/ reindirizza a /stima (301);
- /index.html reindirizza a / (301). Pagine sconosciute e /tests/ → 404.html (404).
+"""Server statico con URL pulite, HTML proprio per ogni rotta e lingua.
+ /stima → pages/stima.html (200); /en/stima → en/stima.html; /stima/ → 301 /stima;
+ /index.html → /; /en/ → 301 /en. Pagine sconosciute e /tests/ → 404 della lingua (404).
  Uso: python3 scripts/serve.py [porta] [cartella]
 """
 import os, sys, posixpath, urllib.parse
@@ -9,7 +9,8 @@ from http.server import ThreadingHTTPServer, SimpleHTTPRequestHandler
 
 PORT = int(sys.argv[1]) if len(sys.argv) > 1 else 4321
 ROOT = os.path.abspath(sys.argv[2] if len(sys.argv) > 2 else os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-PAGES = {
+
+IT_PAGES = {
     '/': 'index.html',
     '/stima': 'pages/stima.html',
     '/risultati': 'pages/risultati.html',
@@ -21,7 +22,28 @@ PAGES = {
     '/contatti': 'pages/contatti.html',
     '/privacy': 'pages/privacy.html',
 }
-BLOCK_PREFIXES = ('/tests', '/scripts', '/templates', '/docs', '/.git', '/lovable')
+LANGS = ('en', 'bn')
+SLUGS = [p[1:] for p in IT_PAGES if p != '/']
+PAGES = dict(IT_PAGES)
+for lang in LANGS:
+    PAGES['/' + lang] = f'{lang}/index.html'
+    for slug in SLUGS:
+        PAGES[f'/{lang}/{slug}'] = f'{lang}/{slug}.html'
+
+BLOCK_PREFIXES = ('/tests', '/scripts', '/templates', '/docs', '/.git', '/lovable', '/i18n')
+
+
+def lang_of(raw):
+    for lang in LANGS:
+        if raw == '/' + lang or raw.startswith('/' + lang + '/'):
+            return lang
+    return 'it'
+
+
+def not_found_file(raw):
+    lang = lang_of(raw)
+    return '404.html' if lang == 'it' else f'{lang}/404.html'
+
 
 class Handler(SimpleHTTPRequestHandler):
     def __init__(self, *a, **k):
@@ -59,8 +81,10 @@ class Handler(SimpleHTTPRequestHandler):
             self.wfile.write(body)
         return True
 
-    def _send_404(self):
-        if not self._send_file('404.html', status=404, content_type='text/html; charset=utf-8'):
+    def _send_404(self, raw=None):
+        raw = raw or self._raw()
+        rel = not_found_file(raw)
+        if not self._send_file(rel, status=404, content_type='text/html; charset=utf-8'):
             body = 'Pagina non trovata'.encode()
             self.send_response(404)
             self.send_header('Content-Type', 'text/plain; charset=utf-8')
@@ -74,15 +98,25 @@ class Handler(SimpleHTTPRequestHandler):
         if raw == '/index.html':
             self._redirect('/')
             return True
+        for lang in LANGS:
+            if raw == f'/{lang}/index.html':
+                self._redirect(f'/{lang}')
+                return True
         for p in BLOCK_PREFIXES:
             if raw == p or raw.startswith(p + '/'):
-                self._send_404()
+                self._send_404(raw)
                 return True
         if raw.startswith('/pages/') and raw.endswith('.html'):
             slug = raw[len('/pages/'):-len('.html')]
-            if '/' + slug in PAGES:
+            if '/' + slug in IT_PAGES:
                 self._redirect('/' + slug)
                 return True
+        for lang in LANGS:
+            if raw.startswith(f'/{lang}/') and raw.endswith('.html'):
+                slug = raw[len(f'/{lang}/'):-len('.html')]
+                if slug != 'index' and f'/{lang}/{slug}' in PAGES:
+                    self._redirect(f'/{lang}/{slug}')
+                    return True
         if raw != '/' and raw.endswith('/'):
             self._redirect(raw.rstrip('/') or '/')
             return True
@@ -91,14 +125,14 @@ class Handler(SimpleHTTPRequestHandler):
             return True
         rel = posixpath.normpath(raw.lstrip('/'))
         if rel.startswith('..'):
-            self._send_404()
+            self._send_404(raw)
             return True
         if raw == '/sw.js':
             self._send_file('sw.js', status=200, content_type='text/javascript; charset=utf-8')
             return True
         if os.path.isfile(os.path.join(ROOT, rel)):
             return False
-        self._send_404()
+        self._send_404(raw)
         return True
 
     def do_GET(self):

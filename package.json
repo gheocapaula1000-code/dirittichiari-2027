@@ -1,8 +1,8 @@
 {
   "name": "dirittichiari-2027",
-  "version": "1.4.0",
+  "version": "1.5.0",
   "private": true,
-  "description": "PWA: stima ISEE 2027, residuo per vivere e diritti PA. Le pagine HTML si generano con npm run build.",
+  "description": "PWA DirittiOk: aiuti pubblici in Italia, residuo per vivere e stima ISEE. Pagine generate con npm run build (it, en, bn).",
   "scripts": {
     "test": "python3 scripts/build-pages.py && node --test tests/*.test.js && python3 tests/seo_test.py",
     "test:ui": "python3 tests/ui_test.py",

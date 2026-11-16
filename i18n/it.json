@@ -1,0 +1,1680 @@
+{
+  "$note": "Catalogo stringhe di DirittiOk (DirittiChiari 2027). Ogni voce ha 'value' (italiano di partenza) e, se serve, 'note' per chi traduce. Non tradurre i nomi ufficiali ISEE, DSU, ADI, CAF, INPS, ARERA, MEF, NASpI, TARI, IMU, SPID, CIE, CNS: lasciarli in italiano e, se utile, aggiungere una breve spiegazione. Non inventare testimonianze, cifre o credenziali. Non usare la parola «semplice» da sola (va bene «facile da utilizzare»). I placeholder {cosi} vanno lasciati come sono. I link nel testo usano la forma [etichetta](/percorso) o [etichetta](https://…). **grassetto** resta con gli asterischi.",
+  "meta": {
+    "language": {
+      "value": "it",
+      "note": "Codice lingua del catalogo (it, en, bn). Non tradurre."
+    },
+    "locale": {
+      "value": "it-IT",
+      "note": "Locale BCP 47. Per l'inglese: en. Per il bengalese: bn."
+    },
+    "direction": {
+      "value": "ltr",
+      "note": "Direzione del testo. Anche il bengalese è da sinistra a destra (ltr)."
+    },
+    "htmlLang": {
+      "value": "it",
+      "note": "Valore dell'attributo lang sull'elemento html."
+    }
+  },
+  "terms": {
+    "isee": {
+      "value": "ISEE",
+      "note": "Termine ufficiale italiano: lasciare invariato in tutte le lingue. Si può aggiungere una breve spiegazione tra parentesi nella lingua di arrivo, la prima volta che compare in pagina. Indicatore della Situazione Economica Equivalente: indicatore della situazione economica del nucleo, usato per accedere a molti aiuti in Italia."
+    },
+    "isee_explain": {
+      "value": "ISEE (indicatore della situazione economica del nucleo)",
+      "note": "Spiegazione breve da usare la prima volta, se nella lingua di arrivo il sigla non è nota. La sigla ISEE resta."
+    },
+    "dsu": {
+      "value": "DSU",
+      "note": "Termine ufficiale italiano: lasciare invariato in tutte le lingue. Si può aggiungere una breve spiegazione tra parentesi nella lingua di arrivo, la prima volta che compare in pagina. Dichiarazione Sostitutiva Unica: la dichiarazione con cui si chiede l'ISEE a INPS o CAF."
+    },
+    "dsu_explain": {
+      "value": "DSU (la dichiarazione per ottenere l'ISEE)",
+      "note": "Spiegazione breve opzionale; la sigla DSU resta."
+    },
+    "adi": {
+      "value": "ADI",
+      "note": "Termine ufficiale italiano: lasciare invariato in tutte le lingue. Si può aggiungere una breve spiegazione tra parentesi nella lingua di arrivo, la prima volta che compare in pagina. Assegno di Inclusione."
+    },
+    "adi_explain": {
+      "value": "Assegno di Inclusione (ADI)",
+      "note": "Nome per esteso + sigla. Tenere ADI."
+    },
+    "caf": {
+      "value": "CAF",
+      "note": "Termine ufficiale italiano: lasciare invariato in tutte le lingue. Si può aggiungere una breve spiegazione tra parentesi nella lingua di arrivo, la prima volta che compare in pagina. Centro di Assistenza Fiscale."
+    },
+    "caf_explain": {
+      "value": "CAF (centro di assistenza fiscale)",
+      "note": "Spiegazione breve opzionale; la sigla CAF resta."
+    },
+    "inps": {
+      "value": "INPS",
+      "note": "Termine ufficiale italiano: lasciare invariato in tutte le lingue. Si può aggiungere una breve spiegazione tra parentesi nella lingua di arrivo, la prima volta che compare in pagina. Istituto Nazionale della Previdenza Sociale, l'ente previdenziale pubblico italiano."
+    },
+    "arera": {
+      "value": "ARERA",
+      "note": "Termine ufficiale italiano: lasciare invariato in tutte le lingue. Si può aggiungere una breve spiegazione tra parentesi nella lingua di arrivo, la prima volta che compare in pagina. Autorità di regolazione per energia, reti e ambiente."
+    },
+    "mef": {
+      "value": "MEF",
+      "note": "Termine ufficiale italiano: lasciare invariato in tutte le lingue. Si può aggiungere una breve spiegazione tra parentesi nella lingua di arrivo, la prima volta che compare in pagina. Ministero dell'Economia e delle Finanze."
+    },
+    "naspi": {
+      "value": "NASpI",
+      "note": "Termine ufficiale italiano: lasciare invariato in tutte le lingue. Si può aggiungere una breve spiegazione tra parentesi nella lingua di arrivo, la prima volta che compare in pagina. Indennità di disoccupazione italiana. Non tradurre la sigla."
+    },
+    "tari": {
+      "value": "TARI",
+      "note": "Termine ufficiale italiano: lasciare invariato in tutte le lingue. Si può aggiungere una breve spiegazione tra parentesi nella lingua di arrivo, la prima volta che compare in pagina. Tassa sui rifiuti. Non tradurre la sigla."
+    },
+    "imu": {
+      "value": "IMU",
+      "note": "Termine ufficiale italiano: lasciare invariato in tutte le lingue. Si può aggiungere una breve spiegazione tra parentesi nella lingua di arrivo, la prima volta che compare in pagina. Imposta municipale sugli immobili. Non tradurre la sigla."
+    },
+    "cu": {
+      "value": "CU",
+      "note": "Termine ufficiale italiano: lasciare invariato in tutte le lingue. Si può aggiungere una breve spiegazione tra parentesi nella lingua di arrivo, la prima volta che compare in pagina. Certificazione Unica, il documento dei redditi da lavoro dipendente."
+    },
+    "spid": {
+      "value": "SPID",
+      "note": "Termine ufficiale italiano: lasciare invariato in tutte le lingue. Si può aggiungere una breve spiegazione tra parentesi nella lingua di arrivo, la prima volta che compare in pagina. Sistema Pubblico di Identità Digitale. Non tradurre."
+    },
+    "cie": {
+      "value": "CIE",
+      "note": "Termine ufficiale italiano: lasciare invariato in tutte le lingue. Si può aggiungere una breve spiegazione tra parentesi nella lingua di arrivo, la prima volta che compare in pagina. Carta di Identità Elettronica. Non tradurre la sigla."
+    },
+    "cns": {
+      "value": "CNS",
+      "note": "Termine ufficiale italiano: lasciare invariato in tutte le lingue. Si può aggiungere una breve spiegazione tra parentesi nella lingua di arrivo, la prima volta che compare in pagina. Carta Nazionale dei Servizi. Non tradurre la sigla."
+    }
+  },
+  "brand": {
+    "name": {
+      "value": "DirittiOk",
+      "note": "Marchio visibile, coerente con il dominio dirittiok.com. Non tradurre."
+    },
+    "tagline": {
+      "value": "I tuoi aiuti in Italia",
+      "note": "Tagline in testata e H1 della home."
+    },
+    "product": {
+      "value": "DirittiChiari 2027",
+      "note": "Nome del prodotto, accanto a DirittiOk nel footer e dove serve chiarezza. Non tradurre DirittiChiari."
+    },
+    "og_site_name": {
+      "value": "DirittiOk",
+      "note": "og:site_name. Non tradurre."
+    },
+    "apple_title": {
+      "value": "DirittiOk",
+      "note": "apple-mobile-web-app-title. Non tradurre."
+    },
+    "footer_owner": {
+      "value": "DirittiOk (DirittiChiari 2027) è un servizio di **Pi.Gi Service** · [info@pigiservice.com](mailto:info@pigiservice.com)",
+      "note": "Pi.Gi Service è il nome del titolare: non tradurlo."
+    },
+    "footer_legal": {
+      "value": "Stima indicativa, non sostituisce la DSU, l'attestazione INPS, il CAF o una consulenza. Nessuna registrazione, nessun tracciamento: i calcoli e i dati della stima restano solo su questo dispositivo. Dal modulo contatti partono soltanto le informazioni che scrivi tu, per ricevere una risposta.",
+      "note": "DSU, INPS e CAF restano in italiano; si può aggiungere una breve spiegazione."
+    },
+    "og_image_alt": {
+      "value": "DirittiOk: aiuti pubblici in Italia, residuo per vivere e stima ISEE. Un servizio di Pi.Gi Service.",
+      "note": "Testo alternativo dell'immagine di condivisione."
+    }
+  },
+  "chrome": {
+    "skip": {
+      "value": "Vai al contenuto"
+    },
+    "nav_label": {
+      "value": "Navigazione principale"
+    },
+    "nav_home": {
+      "value": "Inizio"
+    },
+    "nav_stima": {
+      "value": "Stima"
+    },
+    "nav_risultati": {
+      "value": "Risultati"
+    },
+    "nav_consigli": {
+      "value": "Consigli"
+    },
+    "nav_documenti": {
+      "value": "Documenti"
+    },
+    "lang_label": {
+      "value": "Lingua",
+      "note": "Etichetta accessibile del selettore di lingua."
+    },
+    "lang_it": {
+      "value": "Italiano",
+      "note": "Nome della lingua italiana, nella lingua di questa interfaccia."
+    },
+    "lang_en": {
+      "value": "English",
+      "note": "Nome della lingua inglese: lasciare «English» in tutti i cataloghi."
+    },
+    "lang_bn": {
+      "value": "বাংলা",
+      "note": "Nome della lingua bengalese: lasciare «বাংলা» in tutti i cataloghi."
+    },
+    "lang_it_short": {
+      "value": "IT",
+      "note": "Sigla breve, non tradurre."
+    },
+    "lang_en_short": {
+      "value": "EN",
+      "note": "Sigla breve, non tradurre."
+    },
+    "lang_bn_short": {
+      "value": "বাংলা",
+      "note": "Etichetta breve del bengalese nel selettore. Non sostituire con una sigla latina se non serve per lo spazio."
+    },
+    "footer_fonti": {
+      "value": "Fonti e regole usate"
+    },
+    "footer_metodo": {
+      "value": "Metodo e fonti"
+    },
+    "footer_diritti": {
+      "value": "Diritti e aiuti"
+    },
+    "footer_contatti": {
+      "value": "Contatti"
+    },
+    "footer_privacy": {
+      "value": "Privacy"
+    },
+    "footer_clear": {
+      "value": "Cancella i miei dati"
+    },
+    "footer_install": {
+      "value": "Installa l'app"
+    },
+    "version": {
+      "value": "Versione {version}",
+      "note": "Non tradurre la parola «versione» in un modo che confonda con le versioni dell'ISEE. {version} resta."
+    },
+    "clear_confirm": {
+      "value": "Vuoi cancellare tutti i dati inseriti su questo dispositivo?"
+    },
+    "clear_done": {
+      "value": "Dati cancellati."
+    }
+  },
+  "install": {
+    "cta": {
+      "value": "Installa l'app",
+      "note": "Pulsante visibile su Android/Chromium (finestra nativa) e nel footer. Su iPhone può comparire anche «Metti in home» (install.cta_ios)."
+    },
+    "cta_ios": {
+      "value": "Metti in home",
+      "note": "Etichetta del pulsante su iPhone/iPad Safari."
+    },
+    "cta_short": {
+      "value": "Installa",
+      "note": "Etichetta breve del pulsante nel banner, accanto a Installa l'app."
+    },
+    "banner_title": {
+      "value": "Installa l'app"
+    },
+    "banner_lead": {
+      "value": "Tieni DirittiOk in home: un tocco, come le altre app.",
+      "note": "DirittiOk non si traduce."
+    },
+    "dismiss": {
+      "value": "Non ora"
+    },
+    "dismiss_aria": {
+      "value": "Chiudi il suggerimento di installazione"
+    },
+    "sheet_title": {
+      "value": "Metti DirittiOk nella schermata Home",
+      "note": "Titolo del foglio guida su iPhone/iPad. DirittiOk non si traduce."
+    },
+    "sheet_intro": {
+      "value": "Così la apri con un tocco, come le altre app. Bastano tre passi:"
+    },
+    "step1_title": {
+      "value": "Tocca il tasto Condividi"
+    },
+    "step1_body": {
+      "value": "È il quadrato con la freccia in su, in basso (su iPad in alto). Se non lo vedi, tocca prima i tre puntini «⋯»."
+    },
+    "step2_title": {
+      "value": "Scegli «Aggiungi alla schermata Home»"
+    },
+    "step2_body": {
+      "value": "Se non lo vedi, scorri il menu verso il basso."
+    },
+    "step3_title": {
+      "value": "Tocca «Aggiungi»"
+    },
+    "step3_body": {
+      "value": "Fatto: DirittiOk è sulla schermata Home, come le altre app."
+    },
+    "got_it": {
+      "value": "Ho capito"
+    },
+    "close": {
+      "value": "Chiudi"
+    }
+  },
+  "update": {
+    "message": {
+      "value": "È disponibile una nuova versione di DirittiOk."
+    },
+    "apply": {
+      "value": "Aggiorna"
+    },
+    "later": {
+      "value": "Più tardi"
+    }
+  },
+  "ptr": {
+    "pull": {
+      "value": "↓ Tira per aggiornare"
+    },
+    "release": {
+      "value": "↻ Rilascia per aggiornare"
+    },
+    "updating": {
+      "value": "Aggiornamento…"
+    }
+  },
+  "common": {
+    "yes": {
+      "value": "Sì"
+    },
+    "no": {
+      "value": "No"
+    },
+    "optional": {
+      "value": "facoltativo"
+    },
+    "source": {
+      "value": "Fonte: {title}"
+    },
+    "verified": {
+      "value": "Verificato"
+    },
+    "value_2026": {
+      "value": "Valore 2026, da confermare per il 2027"
+    },
+    "to_confirm": {
+      "value": "Da confermare"
+    },
+    "updated": {
+      "value": "Ultimo aggiornamento: {date}."
+    },
+    "updated_sources": {
+      "value": "Ultimo aggiornamento: {date} · fonti verificate su INPS, ARERA, MEF.",
+      "note": "INPS, ARERA, MEF restano in italiano."
+    },
+    "date_2026_11_16": {
+      "value": "16 novembre 2026",
+      "note": "Data visibile. In inglese, ad esempio: 16 November 2026."
+    },
+    "date_2026_11_15": {
+      "value": "15 novembre 2026"
+    },
+    "disclaimer": {
+      "value": "**Attenzione:** Stima orientativa basata sulle regole note a novembre 2026. I valori ufficiali si ottengono solo con la DSU presentata a INPS o CAF. Alcuni importi 2027 sono ancora stime.",
+      "note": "DSU, INPS e CAF restano; si può spiegare tra parentesi."
+    },
+    "back": {
+      "value": "Indietro"
+    },
+    "next": {
+      "value": "Avanti"
+    },
+    "print": {
+      "value": "Stampa o salva in PDF"
+    },
+    "print_list": {
+      "value": "Stampa la lista o salvala in PDF"
+    }
+  },
+  "home": {
+    "kicker": {
+      "value": "DirittiOk",
+      "note": "Marchio sopra il titolo nell'hero. Non tradurre."
+    },
+    "h1": {
+      "value": "I tuoi aiuti in Italia",
+      "note": "H1 della home e tagline. Deve restare allineato a brand.tagline."
+    },
+    "lead": {
+      "value": "Scopri i bonus e gli aiuti pubblici che ti spettano in Italia: Assegno di Inclusione (ADI), Assegno Unico, bonus sociali, Carta Dedicata a te, bonus nido, contributi per l'affitto. Vedi quanto ti resta ogni mese, prepara i documenti per la DSU e conosci i tuoi diritti con la pubblica amministrazione. La stima ISEE 2027 è lo strumento che sta dietro, per capirlo prima di andare al CAF.",
+      "note": "Tenere ISEE, DSU, ADI, CAF. Elenco di aiuti: i nomi ufficiali restano in italiano, con spiegazione se serve."
+    },
+    "trust_line": {
+      "value": "Gratis, senza registrazione, facile da utilizzare. I calcoli restano solo sul tuo telefono."
+    },
+    "cta_primary": {
+      "value": "Scopri i tuoi aiuti",
+      "note": "Pulsante principale della home, porta al percorso di stima."
+    },
+    "cta_resume": {
+      "value": "Riprendi il percorso",
+      "note": "Se la persona ha già iniziato la stima."
+    },
+    "cta_results": {
+      "value": "Vedi i risultati"
+    },
+    "services_title": {
+      "value": "Cosa puoi fare"
+    },
+    "card_aiuti_title": {
+      "value": "Aiuti e bonus"
+    },
+    "card_aiuti_text": {
+      "value": "Assegno di Inclusione (ADI), Assegno Unico, bonus sociali, Carta Dedicata a te, bonus nido, contributi per l'affitto: soglie e fonti ufficiali."
+    },
+    "card_aiuti_cta": {
+      "value": "Vedi gli aiuti"
+    },
+    "card_residuo_title": {
+      "value": "Quanto ti resta al mese"
+    },
+    "card_residuo_text": {
+      "value": "Il residuo per vivere: le entrate di oggi meno affitto, bollette e altre spese fisse."
+    },
+    "card_residuo_cta": {
+      "value": "Calcola il residuo"
+    },
+    "card_isee_title": {
+      "value": "Stima ISEE 2027"
+    },
+    "card_isee_text": {
+      "value": "In 5 passi stimi l'ISEE ordinario, quello per le prestazioni familiari e l'eventuale ISEE corrente."
+    },
+    "card_isee_cta": {
+      "value": "Inizia la stima"
+    },
+    "card_docs_title": {
+      "value": "Documenti per la DSU"
+    },
+    "card_docs_text": {
+      "value": "La lista da spuntare e stampare prima di andare al CAF o sul portale INPS."
+    },
+    "card_docs_cta": {
+      "value": "Apri la checklist"
+    },
+    "card_diritti_title": {
+      "value": "Diritti con la PA"
+    },
+    "card_diritti_text": {
+      "value": "Cosa puoi chiedere alla pubblica amministrazione e quale ISEE serve per ciascun aiuto."
+    },
+    "card_diritti_cta": {
+      "value": "Conosci i tuoi diritti"
+    },
+    "card_consigli_title": {
+      "value": "Consigli legali"
+    },
+    "card_consigli_text": {
+      "value": "Cosa conta davvero nell'ISEE, le scelte permesse e cosa non fare mai."
+    },
+    "card_consigli_cta": {
+      "value": "Leggi i consigli"
+    },
+    "how_title": {
+      "value": "Come funziona"
+    },
+    "how1_title": {
+      "value": "Racconta la tua situazione"
+    },
+    "how1_text": {
+      "value": "In 5 passi inserisci nucleo, redditi, spese e patrimonio. I dati restano su questo dispositivo."
+    },
+    "how2_title": {
+      "value": "Vedi aiuti e residuo"
+    },
+    "how2_text": {
+      "value": "Scopri quanto ti resta ogni mese e quali bonus o aiuti pubblici puoi valutare, con il collegamento alla fonte."
+    },
+    "how3_title": {
+      "value": "Prepara documenti e diritti"
+    },
+    "how3_text": {
+      "value": "Usa la checklist della DSU e le pagine sui diritti con la pubblica amministrazione, prima del CAF."
+    },
+    "trust_title": {
+      "value": "Perché puoi fidarti"
+    },
+    "trust_free_title": {
+      "value": "Gratis, senza registrazione"
+    },
+    "trust_free_text": {
+      "value": "Non chiediamo un account e non facciamo tracciamento."
+    },
+    "trust_device_title": {
+      "value": "I dati restano sul telefono"
+    },
+    "trust_device_text": {
+      "value": "I calcoli della stima si salvano solo su questo dispositivo. Se ci scrivi, partono soltanto le parole che inserisci tu."
+    },
+    "trust_sources_title": {
+      "value": "Fonti ufficiali"
+    },
+    "trust_sources_text": {
+      "value": "Le regole e le soglie arrivano da INPS, ARERA, ministeri e Normattiva. Spieghiamo il metodo in [Metodo e fonti](/metodo) e l'elenco in [Fonti e regole usate](/fonti)."
+    },
+    "trust_updated_title": {
+      "value": "Aggiornato"
+    },
+    "trust_updated_text": {
+      "value": "Aggiornato al {date}."
+    },
+    "faq_title": {
+      "value": "Domande frequenti"
+    },
+    "final_title": {
+      "value": "Pronto a scoprire i tuoi aiuti?"
+    },
+    "final_text": {
+      "value": "Inizia dalla stima: è gratis e i dati restano sul tuo telefono. Poi puoi installare l'app per riaverla a portata di tocco."
+    },
+    "final_contact": {
+      "value": "Una domanda? [Scrivici dal modulo contatti](/contatti)."
+    },
+    "seo_title": {
+      "value": "DirittiOk · I tuoi aiuti in Italia: bonus, ISEE e diritti",
+      "note": "Title della home, circa 50-60 caratteri. DirittiOk e ISEE restano."
+    },
+    "seo_desc": {
+      "value": "Scopri bonus e aiuti pubblici in Italia (ADI, Assegno Unico, bonus sociali), quanto ti resta al mese e la stima ISEE 2027. Gratis, dati sul tuo telefono.",
+      "note": "Meta description, 120-160 caratteri. ADI e ISEE restano."
+    }
+  },
+  "faq": {
+    "aiuti_q": {
+      "value": "Quali aiuti posso scoprire con DirittiOk?"
+    },
+    "aiuti_a": {
+      "value": "Puoi vedere, con le soglie e il collegamento alle fonti ufficiali, l'Assegno di Inclusione (ADI), l'Assegno Unico, i bonus sociali luce, gas, acqua e TARI, la Carta Dedicata a te, il bonus nido, il bonus nuovi nati e i contributi per l'affitto. Ogni aiuto ha altri requisiti oltre all'ISEE: i dettagli sono nella pagina [Diritti e aiuti](/diritti-pa)."
+    },
+    "dati_q": {
+      "value": "Devo registrarmi? Dove restano i miei dati?"
+    },
+    "dati_a": {
+      "value": "No, non serve una registrazione. I calcoli della stima ISEE, il residuo e la checklist restano solo su questo telefono o computer. Non facciamo tracciamento. Se ci scrivi dal modulo contatti, partono soltanto le informazioni che inserisci tu."
+    },
+    "anni_q": {
+      "value": "Quali anni contano per l'ISEE 2027?",
+      "note": "Domanda visibile in home e in /stima; deve coincidere con il JSON-LD FAQPage."
+    },
+    "anni_a": {
+      "value": "Redditi del 2025, cioè quelli della CU 2026 o del 730/2026. Patrimonio al 31 dicembre 2025: conti, investimenti, case. Affitto: il canone del contratto registrato, fino a 7.000 € l'anno. Lo prevede il DPCM 159/2013 (artt. 4 e 5): si guarda al secondo anno prima della DSU."
+    },
+    "gratis_q": {
+      "value": "L'app è gratis?"
+    },
+    "gratis_a": {
+      "value": "Sì, DirittiOk è gratis. Non chiediamo un account e non facciamo tracciamento. I calcoli restano sul tuo dispositivo."
+    },
+    "quale_q": {
+      "value": "Quale ISEE si usa?",
+      "note": "Domanda visibile in /diritti-pa; deve coincidere con il JSON-LD FAQPage di quella pagina."
+    },
+    "quale_a": {
+      "value": "Dal 2026 l'INPS calcola anche l'ISEE per prestazioni familiari e inclusione (L. 199/2025), più favorevole per chi ha casa di proprietà o almeno 2 figli. Si usa solo per ADI, Supporto formazione e lavoro, Assegno Unico, bonus nido e bonus nuovi nati. Per tutto il resto vale l'ISEE ordinario."
+    }
+  },
+  "seo": {
+    "stima_title": {
+      "value": "Simulatore ISEE 2027 online gratis: calcolo in 5 passi · DirittiOk"
+    },
+    "stima_desc": {
+      "value": "Calcola l'ISEE 2027 online in 5 passi: ordinario, per prestazioni familiari e corrente, con redditi 2025 e patrimonio al 31/12/2025. Gratis, sul tuo telefono.",
+      "note": "120-160 caratteri. Tenere ISEE."
+    },
+    "stima_h1": {
+      "value": "Calcolo ISEE 2027: simulatore online gratuito"
+    },
+    "risultati_title": {
+      "value": "Risultati della stima ISEE · DirittiOk"
+    },
+    "risultati_desc": {
+      "value": "Qui vedi la stima del tuo ISEE 2027, il residuo mensile per vivere e gli aiuti da valutare. I risultati restano sul tuo dispositivo, non vengono pubblicati."
+    },
+    "risultati_h1": {
+      "value": "I tuoi risultati",
+      "note": "H1 quando ci sono dati. Lo stato vuoto usa risultati.empty_h1."
+    },
+    "risultati_empty_h1": {
+      "value": "Risultati"
+    },
+    "ott_title": {
+      "value": "Come abbassare l'ISEE in modo legale · DirittiOk"
+    },
+    "ott_desc": {
+      "value": "Cosa conta davvero nell'ISEE, le scelte permesse che possono abbassarlo e cosa non fare mai. Spiegato con calma, prima del CAF."
+    },
+    "ott_h1": {
+      "value": "Come abbassare l'ISEE in modo legale: cosa conta davvero"
+    },
+    "ott_crumb": {
+      "value": "Ottimizzazione ISEE"
+    },
+    "chk_title": {
+      "value": "Documenti ISEE 2027 per la DSU: checklist da stampare · DirittiOk"
+    },
+    "chk_desc": {
+      "value": "Checklist dei documenti per la DSU e l'ISEE 2027, da spuntare e stampare prima del CAF o del portale INPS. Resta salvata sul tuo dispositivo."
+    },
+    "chk_h1": {
+      "value": "Documenti necessari per la DSU e l'ISEE 2027"
+    },
+    "dir_title": {
+      "value": "Bonus e aiuti con ISEE 2027: soglie e fonti ufficiali · DirittiOk"
+    },
+    "dir_desc": {
+      "value": "Assegno di Inclusione, Assegno Unico, bonus sociali e altri aiuti pubblici: soglie ISEE 2027 e fonti ufficiali, spiegati con calma."
+    },
+    "dir_h1": {
+      "value": "Bonus ISEE 2027: aiuti pubblici, soglie e fonti"
+    },
+    "fonti_title": {
+      "value": "Fonti e regole usate · DirittiOk"
+    },
+    "fonti_desc": {
+      "value": "Regole e fonti ufficiali usate da DirittiOk per la stima ISEE 2027, il residuo per vivere e gli aiuti pubblici. Collegamenti a INPS, ARERA e norme."
+    },
+    "fonti_h1": {
+      "value": "Fonti e regole usate"
+    },
+    "metodo_title": {
+      "value": "Metodo e fonti · DirittiOk"
+    },
+    "metodo_desc": {
+      "value": "Come DirittiOk stima l'ISEE 2027: regole seguite, fonti ufficiali, limiti della stima e chi cura il servizio. Autore: Pi.Gi Service."
+    },
+    "metodo_h1": {
+      "value": "Metodo e fonti"
+    },
+    "contatti_title": {
+      "value": "Contatti · DirittiOk"
+    },
+    "contatti_desc": {
+      "value": "Scrivi a DirittiOk: ti rispondiamo via email. Dal modulo partono solo le informazioni che inserisci tu, non i dati della stima ISEE."
+    },
+    "contatti_h1": {
+      "value": "Contatti"
+    },
+    "privacy_title": {
+      "value": "Privacy · DirittiOk"
+    },
+    "privacy_desc": {
+      "value": "Come trattiamo i dati su DirittiOk: i calcoli restano sul telefono. Nessuna registrazione né tracciamento. Se ci scrivi, usiamo solo quello che inserisci tu.",
+      "note": "Meta description, 120-160 caratteri."
+    },
+    "privacy_h1": {
+      "value": "Privacy"
+    },
+    "notfound_title": {
+      "value": "Pagina non trovata · DirittiOk"
+    },
+    "notfound_desc": {
+      "value": "Questa pagina non esiste. Puoi scoprire i tuoi aiuti, calcolare l'ISEE 2027 o aprire la checklist dei documenti per la DSU."
+    },
+    "notfound_h1": {
+      "value": "Pagina non trovata"
+    }
+  },
+  "wizard": {
+    "step_label": {
+      "value": "Passo {current} di {total}"
+    },
+    "progress_aria": {
+      "value": "Avanzamento"
+    },
+    "submit_last": {
+      "value": "Calcola i risultati"
+    },
+    "intro_js": {
+      "value": "Per usare il percorso guidato serve JavaScript attivo nel browser. I dati che inserisci restano su questo dispositivo."
+    },
+    "noscript": {
+      "value": "Attiva JavaScript per compilare i 5 passi, oppure scrivici dal [modulo contatti](/contatti)."
+    },
+    "stima_lead1": {
+      "value": "Questo simulatore ti guida in 5 passi per stimare l'ISEE 2027: l'ordinario, quello per le prestazioni familiari e inclusione e, se ti è utile, l'ISEE corrente. Inserisci il nucleo, i redditi del 2025, le spese fisse di oggi e il patrimonio al 31 dicembre 2025. Alla fine vedi una stima dell'indicatore, quanto ti resta ogni mese per vivere e quali aiuti pubblici puoi valutare, con il collegamento alla fonte di ogni soglia."
+    },
+    "stima_lead2": {
+      "value": "Il percorso è gratis e senza registrazione. I calcoli restano solo su questo telefono o computer: non inviamo i dati della stima a nessun server. I valori ufficiali si ottengono solo con la DSU presentata all'INPS o a un CAF. Questa è una stima orientativa, basata sulle regole note a novembre 2026."
+    },
+    "stima_lead3": {
+      "value": "I cinque passi riguardano: il nucleo familiare; i redditi 2025 e le entrate di oggi; casa e spese fisse; il patrimonio; e l'eventuale calo di reddito per l'ISEE corrente. Prima di andare al CAF puoi anche consultare la [checklist dei documenti per la DSU](/checklist-dsu) e la pagina sui [bonus e gli aiuti pubblici legati all'ISEE](/diritti-pa)."
+    },
+    "stima_start": {
+      "value": "Inizia i 5 passi"
+    },
+    "stima_foot": {
+      "value": "I dati della stima vengono salvati solo su questo dispositivo mentre scrivi. Prima del CAF puoi vedere la [checklist dei documenti](/checklist-dsu) e i [bonus e aiuti pubblici](/diritti-pa)."
+    },
+    "s1_title": {
+      "value": "Il tuo nucleo familiare"
+    },
+    "s1_intro": {
+      "value": "Il nucleo ISEE è chi risulta nello stato di famiglia, più il coniuge e i figli a carico anche se vivono altrove."
+    },
+    "s1_componenti": {
+      "value": "Quante persone ci sono nel nucleo?"
+    },
+    "s1_figli": {
+      "value": "Quanti sono figli (di qualsiasi età)?"
+    },
+    "s1_figli_help": {
+      "value": "Servono per le maggiorazioni della scala e per le franchigie."
+    },
+    "s1_minori": {
+      "value": "Quanti hanno meno di 18 anni?"
+    },
+    "s1_under3": {
+      "value": "Di questi, quanti hanno meno di 3 anni?"
+    },
+    "s1_over60": {
+      "value": "Quanti hanno 60 anni o più?"
+    },
+    "s1_over67": {
+      "value": "Di questi, quanti hanno 67 anni o più?"
+    },
+    "s1_disabili": {
+      "value": "Quanti hanno una disabilità media, grave o non autosufficienza certificata?"
+    },
+    "s1_disabili_help": {
+      "value": "Ogni persona aggiunge 0,5 alla scala di equivalenza."
+    },
+    "s1_genitoreSolo": {
+      "value": "C'è un solo genitore con figli minorenni?"
+    },
+    "s1_genitoriLavorano": {
+      "value": "Nel 2025 entrambi i genitori (o l'unico) hanno lavorato almeno 6 mesi?"
+    },
+    "err_figli": {
+      "value": "I figli devono essere meno dei componenti (c'è almeno un genitore)."
+    },
+    "err_minori": {
+      "value": "Non possono essere più dei componenti."
+    },
+    "err_under3": {
+      "value": "Non possono essere più dei minorenni."
+    },
+    "err_over60": {
+      "value": "Minorenni e over 60 insieme superano i componenti."
+    },
+    "err_over67": {
+      "value": "Non possono essere più degli over 60."
+    },
+    "err_disabili": {
+      "value": "Non possono essere più dei componenti."
+    },
+    "err_number": {
+      "value": "Inserisci un numero uguale o maggiore di zero."
+    },
+    "err_max": {
+      "value": "Massimo {max}."
+    },
+    "err_fields": {
+      "value": "Controlla i campi segnalati."
+    },
+    "s2_title": {
+      "value": "Redditi 2025"
+    },
+    "s2_intro": {
+      "value": "Per l'ISEE 2027 contano i redditi del 2025 (quelli della CU 2026 o del 730/2026). Somma i valori di tutto il nucleo."
+    },
+    "s2_redditoDip": {
+      "value": "Redditi da lavoro dipendente o assimilati 2025"
+    },
+    "s2_redditoDip_help": {
+      "value": "Il reddito della CU (non lo stipendio netto in busta paga)."
+    },
+    "s2_nDip": {
+      "value": "Quante persone li hanno percepiti?"
+    },
+    "s2_redditoPens": {
+      "value": "Pensioni 2025"
+    },
+    "s2_nPens": {
+      "value": "Quante persone hanno una pensione?"
+    },
+    "s2_redditoAltri": {
+      "value": "Altri redditi 2025 (lavoro autonomo, affitti incassati, redditi a imposta sostitutiva)"
+    },
+    "s2_redditoAltri_help": {
+      "value": "Per la partita IVA forfettaria indica il reddito imponibile."
+    },
+    "s2_trattamentiEsenti": {
+      "value": "Aiuti e sussidi non tassati incassati nel 2025 (escluso l'Assegno Unico)"
+    },
+    "s2_trattamentiEsenti_help": {
+      "value": "Non inserire quelli legati alla disabilità: non contano nell'ISEE."
+    },
+    "s2_auu2025": {
+      "value": "Assegno Unico incassato nel 2025"
+    },
+    "s2_mantenimentoVersato": {
+      "value": "Assegni di mantenimento versati nel 2025 all'ex coniuge o per i figli"
+    },
+    "s2_nettoMensile": {
+      "value": "Quanto entra oggi in famiglia, al netto, ogni mese?"
+    },
+    "s2_nettoMensile_help": {
+      "value": "Stipendi, pensioni e aiuti di adesso: serve per calcolare il residuo per vivere."
+    },
+    "s3_title": {
+      "value": "Spese fisse di oggi"
+    },
+    "s3_intro": {
+      "value": "Queste spese servono per il residuo per vivere. Nell'ISEE conta solo l'affitto con contratto registrato."
+    },
+    "s3_abitazione": {
+      "value": "Dove vivete?"
+    },
+    "s3_affitto": {
+      "value": "In affitto"
+    },
+    "s3_proprieta": {
+      "value": "In una casa di proprietà"
+    },
+    "s3_altro": {
+      "value": "Altro (comodato, ospiti)"
+    },
+    "s3_affittoMensile": {
+      "value": "Affitto mensile"
+    },
+    "s3_contrattoRegistrato": {
+      "value": "Il contratto d'affitto è registrato?"
+    },
+    "s3_contrattoRegistrato_help": {
+      "value": "Solo il canone di un contratto registrato si sottrae nell'ISEE (fino a 7.000 € l'anno)."
+    },
+    "s3_rataMutuo": {
+      "value": "Rata mensile del mutuo"
+    },
+    "s3_bollette": {
+      "value": "Bollette (luce, gas, acqua, internet), media mensile"
+    },
+    "s3_trasporti": {
+      "value": "Trasporti per lavoro o scuola, al mese"
+    },
+    "s3_prestiti": {
+      "value": "Rate di prestiti o finanziamenti, al mese"
+    },
+    "s3_assicurazioni": {
+      "value": "Assicurazioni, media mensile"
+    },
+    "s3_altreSpese": {
+      "value": "Altre spese fisse (mensa, cure, rette), al mese"
+    },
+    "s4_title": {
+      "value": "Patrimonio al 31/12/2025"
+    },
+    "s4_intro": {
+      "value": "Indica la situazione al 31 dicembre 2025 di tutto il nucleo."
+    },
+    "s4_valoreCasa": {
+      "value": "Valore IMU della casa in cui vivete"
+    },
+    "s4_valoreCasa_help": {
+      "value": "Non è il prezzo di mercato. Se non lo sai, calcolalo qui sotto dalla rendita catastale."
+    },
+    "s4_rendita_summary": {
+      "value": "Calcola dalla rendita catastale"
+    },
+    "s4_rendita_label": {
+      "value": "Rendita catastale (dalla visura)"
+    },
+    "s4_rendita_help": {
+      "value": "Per le abitazioni (categorie A, escluso A/10): rendita × 1,05 × 160."
+    },
+    "s4_rendita_btn": {
+      "value": "Usa questo valore"
+    },
+    "s4_rendita_done": {
+      "value": "Valore IMU inserito: {value}"
+    },
+    "s4_mutuoCasa": {
+      "value": "Mutuo residuo sulla casa al 31/12/2025"
+    },
+    "s4_capoluogoMetro": {
+      "value": "La casa è in un capoluogo di città metropolitana?"
+    },
+    "s4_capoluogoMetro_help": {
+      "value": "Sono {elenco}. Qui la franchigia dell'ISEE per prestazioni familiari sale a 120.000 €.",
+      "note": "{elenco} è la lista dei capoluoghi, nomi propri italiani: non tradurre i nomi delle città."
+    },
+    "s4_altriImmobili": {
+      "value": "Valore IMU di altri immobili o terreni"
+    },
+    "s4_mutuoAltri": {
+      "value": "Mutuo residuo su questi altri immobili"
+    },
+    "s4_contiSaldo": {
+      "value": "Conti correnti e carte: saldo al 31/12/2025 (somma)"
+    },
+    "s4_contiGiacenza": {
+      "value": "Conti correnti e carte: giacenza media 2025 (somma)"
+    },
+    "s4_contiGiacenza_help": {
+      "value": "La trovi nell'estratto conto o la chiedi alla banca. Si usa il valore più alto tra saldo e giacenza media."
+    },
+    "s4_titoliStato": {
+      "value": "Titoli di Stato, buoni fruttiferi e libretti postali"
+    },
+    "s4_titoliStato_help": {
+      "value": "Sono esclusi dall'ISEE fino a 50.000 € in tutto."
+    },
+    "s4_altriInvestimenti": {
+      "value": "Altri investimenti (fondi, azioni, polizze vita, conti deposito)"
+    },
+    "s5_title": {
+      "value": "ISEE corrente (facoltativo)"
+    },
+    "s5_intro": {
+      "value": "Se oggi guadagni molto meno del 2025, l'ISEE corrente può usare i redditi più recenti."
+    },
+    "s5_peggiorata": {
+      "value": "La tua situazione è peggiorata dopo il 2025?"
+    },
+    "s5_motivo": {
+      "value": "Che cosa è successo?"
+    },
+    "motivo_lavoro_indeterminato": {
+      "value": "Ho perso o ridotto un lavoro a tempo indeterminato"
+    },
+    "motivo_lavoro_determinato": {
+      "value": "Mi è finito un contratto a termine o flessibile (almeno 120 giorni negli ultimi 12 mesi)"
+    },
+    "motivo_autonomo": {
+      "value": "Ho chiuso un'attività autonoma (svolta per almeno 12 mesi)"
+    },
+    "motivo_trattamenti": {
+      "value": "Si è interrotto un sussidio o trattamento pubblico (es. NASpI)"
+    },
+    "motivo_calo": {
+      "value": "Il reddito è calato, senza perdere il lavoro"
+    },
+    "s5_modoCorrente": {
+      "value": "Quali redditi vuoi usare?"
+    },
+    "s5_12mesi": {
+      "value": "Ultimi 12 mesi"
+    },
+    "s5_2mesi": {
+      "value": "Ultimi 2 mesi (moltiplicati per 6)"
+    },
+    "s5_correnteLD": {
+      "value": "Lavoro dipendente e pensioni nel periodo scelto (tutto il nucleo)"
+    },
+    "s5_correnteLD_help": {
+      "value": "Importi lordi, come nelle buste paga o nel cedolino."
+    },
+    "s5_correnteLA": {
+      "value": "Lavoro autonomo nel periodo (incassi meno spese)"
+    },
+    "s5_correnteTR": {
+      "value": "Sussidi pubblici nel periodo (es. NASpI, Assegno Unico)"
+    }
+  },
+  "results": {
+    "empty_p1": {
+      "value": "Non hai ancora inserito dati. Ci vogliono pochi minuti."
+    },
+    "empty_p2": {
+      "value": "Dopo il percorso guidato trovi qui la stima dell'ISEE, il residuo per vivere e gli [aiuti a cui puoi avere diritto](/diritti-pa)."
+    },
+    "empty_cta": {
+      "value": "Inizia la stima"
+    },
+    "missing_neg": {
+      "value": "Ogni mese ti mancano circa"
+    },
+    "missing_pos": {
+      "value": "Ti rimangono circa"
+    },
+    "per_month": {
+      "value": "{amount} al mese"
+    },
+    "to_cover": {
+      "value": "per coprire le spese fisse."
+    },
+    "to_live": {
+      "value": "per vivere, dopo le spese fisse."
+    },
+    "per_person": {
+      "value": "(circa {amount} a persona)"
+    },
+    "from_title": {
+      "value": "Da dove viene il residuo"
+    },
+    "row_income": {
+      "value": "Entrate nette mensili di oggi"
+    },
+    "row_rent": {
+      "value": "− Affitto (e mutuo)"
+    },
+    "row_mortgage": {
+      "value": "− Rata del mutuo"
+    },
+    "row_bills": {
+      "value": "− Bollette"
+    },
+    "row_transport": {
+      "value": "− Trasporti"
+    },
+    "row_loans": {
+      "value": "− Rate di prestiti"
+    },
+    "row_insurance": {
+      "value": "− Assicurazioni"
+    },
+    "row_other": {
+      "value": "− Altre spese fisse"
+    },
+    "row_residuo": {
+      "value": "= Residuo per vivere"
+    },
+    "residuo_note": {
+      "value": "Il residuo è il tuo conto pratico: bollette, trasporti e rate non entrano nell'ISEE."
+    },
+    "residuo_missing_income": {
+      "value": "Non hai indicato le entrate nette mensili di oggi (passo 2): il residuo potrebbe non essere corretto."
+    },
+    "kpi_ordinario": {
+      "value": "ISEE ordinario 2027"
+    },
+    "kpi_ordinario_note": {
+      "value": "Vale per la maggior parte delle prestazioni: bonus sociali, Carta «Dedicata a te», servizi comunali."
+    },
+    "kpi_speciale": {
+      "value": "ISEE per prestazioni familiari e inclusione"
+    },
+    "kpi_speciale_note": {
+      "value": "Si usa per Assegno di Inclusione, Assegno Unico, bonus nido e bonus nuovi nati. Franchigia casa {franchigia} e maggiorazioni dai 2 figli."
+    },
+    "kpi_lower": {
+      "value": "È più basso dell'ordinario di {amount}."
+    },
+    "kpi_net_auu": {
+      "value": "Al netto dell'Assegno Unico (usato per AUU, nido e nuovi nati): **{amount}**"
+    },
+    "corrente_title": {
+      "value": "ISEE corrente stimato"
+    },
+    "corrente_ord": {
+      "value": "Corrente ordinario"
+    },
+    "corrente_ord_vs": {
+      "value": "contro {amount} dell'ordinario"
+    },
+    "corrente_spe": {
+      "value": "Corrente per prestazioni familiari"
+    },
+    "corrente_spe_vs": {
+      "value": "contro {amount}"
+    },
+    "corrente_var": {
+      "value": "Con un calo del reddito senza perdita del lavoro, l'ISEE corrente si può chiedere solo se l'indicatore reddituale scende di oltre il 25%. Qui la variazione stimata è del {pct}%."
+    },
+    "corrente_ok": {
+      "value": "L'ISEE corrente sembra conveniente. Prima devi avere un ISEE ordinario valido; il corrente dura 6 mesi (se cambi solo i redditi)."
+    },
+    "corrente_not_lower": {
+      "value": "Con questi dati l'ISEE corrente non risulta più basso dell'ordinario."
+    },
+    "corrente_x6": {
+      "value": "Hai usato i redditi degli ultimi 2 mesi moltiplicati per 6."
+    },
+    "benefits_title": {
+      "value": "Aiuti che puoi valutare nel 2027"
+    },
+    "benefits_intro": {
+      "value": "Le soglie sono quelle in vigore nel 2026, salvo dove indicato. Ogni aiuto ha altri requisiti oltre all'ISEE."
+    },
+    "benefits_using_corrente": {
+      "value": "Gli esiti qui sotto usano il tuo ISEE corrente stimato, che è più basso dell'ordinario."
+    },
+    "label_si": {
+      "value": "Probabile"
+    },
+    "label_forse": {
+      "value": "Da verificare"
+    },
+    "label_no": {
+      "value": "Soglia superata"
+    },
+    "threshold": {
+      "value": "Soglia:"
+    },
+    "amount_label": {
+      "value": "Quanto:"
+    },
+    "now_title": {
+      "value": "E adesso?"
+    },
+    "now_docs_title": {
+      "value": "Prepara i documenti"
+    },
+    "now_docs_text": {
+      "value": "Checklist DSU 2027."
+    },
+    "now_docs_text_corrente": {
+      "value": "Checklist DSU 2027 e ISEE corrente."
+    },
+    "now_opt_title": {
+      "value": "Come ottimizzare legalmente"
+    },
+    "now_opt_text": {
+      "value": "Le scelte permesse che abbassano l'ISEE."
+    },
+    "now_dir_title": {
+      "value": "Aiuti a cui puoi avere diritto"
+    },
+    "now_dir_text": {
+      "value": "Bonus e prestazioni pubbliche legate all'ISEE, con le fonti."
+    },
+    "edit": {
+      "value": "Modifica i dati"
+    },
+    "calc_summary": {
+      "value": "Come è calcolato"
+    },
+    "calc_redditi": {
+      "value": "Redditi 2025 considerati"
+    },
+    "calc_figurativo": {
+      "value": " (compreso il rendimento figurativo degli investimenti: {amount})"
+    },
+    "calc_detr_dip": {
+      "value": "− 20% dei redditi da lavoro (max 3.000 € a persona)"
+    },
+    "calc_detr_pens": {
+      "value": "− 20% delle pensioni (max 1.000 € a persona)"
+    },
+    "calc_mantenimento": {
+      "value": "− assegni di mantenimento versati"
+    },
+    "calc_affitto": {
+      "value": "− affitto con contratto registrato"
+    },
+    "calc_isr": {
+      "value": "= Indicatore reddituale (ISR)"
+    },
+    "calc_casa": {
+      "value": "Casa: {netto} al netto del mutuo, franchigia {franchigia}, conta 2/3 dell'eccedenza"
+    },
+    "calc_altri_imm": {
+      "value": "Altri immobili al netto del mutuo"
+    },
+    "calc_mobiliare": {
+      "value": "Patrimonio mobiliare {lordo}{esclusi} − franchigia {franchigia}"
+    },
+    "calc_titoli_esclusi": {
+      "value": " (titoli di Stato esclusi: {amount})"
+    },
+    "calc_isp": {
+      "value": "= Indicatore patrimoniale (ISP)"
+    },
+    "calc_ise": {
+      "value": "ISE = ISR + 20% dell'ISP"
+    },
+    "calc_scala": {
+      "value": "Scala di equivalenza: {parti}"
+    },
+    "calc_isee": {
+      "value": "ISEE = ISE ÷ scala"
+    },
+    "scala_componente": {
+      "value": "1 componente",
+      "note": "Usato se n = 1."
+    },
+    "scala_componenti": {
+      "value": "{n} componenti",
+      "note": "Usato se n ≠ 1."
+    },
+    "scala_figli": {
+      "value": "{n} figli nel nucleo"
+    },
+    "scala_minori_under3": {
+      "value": "figli minorenni, almeno uno sotto i 3 anni"
+    },
+    "scala_minori": {
+      "value": "figli minorenni"
+    },
+    "scala_disabili": {
+      "value": "{n} con disabilità"
+    }
+  },
+  "benefits": {
+    "adi_nome": {
+      "value": "Assegno di Inclusione (ADI)"
+    },
+    "adi_importo": {
+      "value": "Integra il reddito familiare fino a 6.500 € l'anno × scala ADI, più fino a 3.640 € se in affitto"
+    },
+    "adi_nota_si": {
+      "value": "Servono anche requisiti di reddito familiare, patrimonio, residenza e veicoli."
+    },
+    "adi_nota_no": {
+      "value": "Spetta solo se nel nucleo c'è un minorenne, una persona con disabilità, una persona con almeno 60 anni o in carico ai servizi socio-sanitari."
+    },
+    "adi_soglia": {
+      "value": "ISEE per prestazioni familiari fino a {amount}"
+    },
+    "adi_offerta": {
+      "value": "Integra il reddito familiare fino a 6.500 € l'anno × scala ADI (8.190 € se il nucleo è composto da persone di almeno 67 anni, o da over 67 e familiari con disabilità grave o non autosufficienza), più fino a 3.640 € l'anno se in affitto (1.950 € negli stessi nuclei).",
+      "note": "Importi ufficiali INPS: non modificarli."
+    },
+    "adi_chi": {
+      "value": "Nuclei con almeno un minorenne, una persona con disabilità, una persona di almeno 60 anni o in carico ai servizi socio-sanitari."
+    },
+    "auu_nome": {
+      "value": "Assegno Unico per i figli"
+    },
+    "auu_nota": {
+      "value": "Spetta a tutti, anche senza ISEE (importo minimo). Valori 2026: quelli 2027 vengono rivalutati con l'inflazione a inizio anno."
+    },
+    "auu_soglia": {
+      "value": "Importo pieno fino a {min}; minimo da {max}"
+    },
+    "auu_offerta": {
+      "value": "Da {min} a {max} al mese per figlio minorenne"
+    },
+    "bonus_nome": {
+      "value": "Bonus sociali luce, gas, acqua e TARI"
+    },
+    "bonus_importo": {
+      "value": "Sconto automatico in bolletta; 25% sulla TARI"
+    },
+    "bonus_nota": {
+      "value": "Arriva in automatico se presenti la DSU e il contratto è intestato a un componente del nucleo. Soglia aggiornata da ARERA ogni tre anni (dal 2026)."
+    },
+    "bonus_soglia": {
+      "value": "ISEE fino a {isee} ({fam} con 4+ figli a carico)"
+    },
+    "bonus_offerta": {
+      "value": "Automatici con la DSU"
+    },
+    "bonus_stato": {
+      "value": "Verificato (aggiornamento triennale dal 2026)"
+    },
+    "dedicata_nome": {
+      "value": "Carta «Dedicata a te»"
+    },
+    "dedicata_nota": {
+      "value": "Non si fa domanda: la lista dei beneficiari 2026-2027 è unica e la compilano INPS e Comuni con l'ISEE 2026. Esclusi chi ha ADI, Carta Acquisti, NASpI, CIG e simili."
+    },
+    "dedicata_soglia": {
+      "value": "ISEE ordinario fino a {amount}"
+    },
+    "dedicata_offerta": {
+      "value": "{amount} l'anno, lista unica 2026-2027"
+    },
+    "acquisti_nome": {
+      "value": "Carta Acquisti"
+    },
+    "acquisti_importo": {
+      "value": "Carta prepagata ricaricata ogni due mesi"
+    },
+    "acquisti_nota": {
+      "value": "Per bambini sotto i 3 anni e persone dai 65 anni in su, con limiti anche di reddito. Soglia 2026, rivalutata ogni anno."
+    },
+    "acquisti_soglia": {
+      "value": "ISEE fino a {amount}"
+    },
+    "acquisti_offerta": {
+      "value": "Bambini sotto i 3 anni e persone da 65 anni"
+    },
+    "acquisti_stato": {
+      "value": "Valore 2026, rivalutato ogni anno"
+    },
+    "nido_nome": {
+      "value": "Bonus asilo nido"
+    },
+    "nido_nota": {
+      "value": "Si usa l'ISEE minorenni al netto dell'Assegno Unico. Importi 2026, da confermare per il 2027."
+    },
+    "nido_soglia": {
+      "value": "Importo pieno con ISEE minorenni fino a {amount}"
+    },
+    "nido_offerta": {
+      "value": "3.600 € per i nati dal 2024; 3.000/2.500/1.500 € per i nati prima",
+      "note": "Importi ufficiali: non modificarli."
+    },
+    "nuovinati_nome": {
+      "value": "Bonus nuovi nati"
+    },
+    "nuovinati_nota": {
+      "value": "Domanda entro 120 giorni dalla nascita o adozione. Confermato per i nati nel 2026: per il 2027 da confermare."
+    },
+    "nuovinati_soglia": {
+      "value": "ISEE fino a {amount}"
+    },
+    "nuovinati_offerta": {
+      "value": "{amount} una tantum"
+    },
+    "nuovinati_stato": {
+      "value": "Confermato per il 2026, da confermare per il 2027"
+    },
+    "affitto_nome": {
+      "value": "Contributo affitto (Comune o Regione)"
+    },
+    "affitto_soglia": {
+      "value": "Soglie diverse in ogni bando"
+    },
+    "affitto_importo": {
+      "value": "Rimborso parziale del canone"
+    },
+    "affitto_nota": {
+      "value": "Serve un contratto registrato. In Veneto il Fondo affitti passa dai bandi dei Comuni: controlla requisiti e scadenze sul sito del tuo Comune."
+    },
+    "affitto_offerta": {
+      "value": "In Veneto: Fondo affitti tramite i bandi comunali"
+    },
+    "affitto_stato": {
+      "value": "Da verificare nel bando"
+    },
+    "thing_offer": {
+      "value": "Cosa offre:"
+    },
+    "thing_who": {
+      "value": "Chi può chiederlo:"
+    }
+  },
+  "docs": {
+    "intro": {
+      "value": "Spunta quello che hai già. La lista resta salvata su questo dispositivo."
+    },
+    "h2_all": {
+      "value": "Per tutti"
+    },
+    "h2_corrente": {
+      "value": "In più, per l'ISEE corrente"
+    },
+    "outro": {
+      "value": "Puoi presentare la DSU da solo sul [portale ISEE dell'INPS]({portale}), con l'app INPS Mobile o gratis tramite un CAF. Prima puoi fare il [calcolo ISEE 2027](/stima) e vedere i [bonus e aiuti pubblici](/diritti-pa) collegati.",
+      "note": "{portale} viene sostituito con l'URL ufficiale INPS: lasciarlo."
+    },
+    "d1": {
+      "value": "Documenti d'identità e codici fiscali di tutti i componenti del nucleo"
+    },
+    "d2": {
+      "value": "SPID, CIE o CNS di ogni maggiorenne, se vuoi usare la DSU precompilata"
+    },
+    "d3": {
+      "value": "Contratto d'affitto registrato (estremi di registrazione) e canone annuo"
+    },
+    "d4": {
+      "value": "Redditi 2025: Certificazione Unica 2026, modello 730/2026 o Redditi PF 2026 di ogni componente"
+    },
+    "d5": {
+      "value": "Redditi 2025 non tassati o a imposta sostitutiva (es. borse di studio, redditi esteri, forfettari)"
+    },
+    "d6": {
+      "value": "Assegni di mantenimento ricevuti o versati nel 2025 (sentenza o accordo)"
+    },
+    "d7": {
+      "value": "Saldo al 31/12/2025 e giacenza media 2025 di ogni conto, carta prepagata con IBAN e libretto"
+    },
+    "d8": {
+      "value": "Valore al 31/12/2025 di titoli, buoni postali, fondi, azioni e polizze vita (estratti della banca o di Poste)"
+    },
+    "d9": {
+      "value": "Visure catastali o rendite di case e terreni posseduti al 31/12/2025"
+    },
+    "d10": {
+      "value": "Certificato del mutuo residuo al 31/12/2025"
+    },
+    "d11": {
+      "value": "Targhe di auto, moto e imbarcazioni intestate ai componenti"
+    },
+    "d12": {
+      "value": "Verbali di disabilità o non autosufficienza"
+    },
+    "d13": {
+      "value": "ISEE ordinario già attestato (serve prima di chiedere il corrente)"
+    },
+    "d14": {
+      "value": "Lettera di licenziamento, fine contratto, chiusura della partita IVA o comunicazione di interruzione del sussidio"
+    },
+    "d15": {
+      "value": "Buste paga, cedolini e incassi degli ultimi 12 mesi (o degli ultimi 2 mesi, se ammesso)"
+    },
+    "d16": {
+      "value": "Importi di NASpI, cassa integrazione o altri sussidi degli ultimi 12 mesi"
+    }
+  },
+  "ottimizzazione": {
+    "h2_due": {
+      "value": "Residuo pratico e ISEE sono due cose diverse"
+    },
+    "p_due": {
+      "value": "Il residuo è quanto ti resta davvero ogni mese. L'ISEE invece guarda ai redditi 2025 e al patrimonio al 31/12/2025: bollette, trasporti, rate di prestiti e assicurazioni **non** lo abbassano."
+    },
+    "h2_scelte": {
+      "value": "Scelte permesse che contano"
+    },
+    "t1": {
+      "value": "**Registra il contratto d'affitto** e tieni a portata gli estremi di registrazione: solo così il canone si sottrae dai redditi (fino a 7.000 € l'anno, +500 € per ogni figlio dopo il secondo)."
+    },
+    "t2": {
+      "value": "**Indica il mutuo residuo al 31/12/2025** per ogni immobile: si sottrae dal valore della casa. Chiedi alla banca la certificazione del debito residuo."
+    },
+    "t3": {
+      "value": "**Casa di proprietà**: nell'ISEE per prestazioni familiari e inclusione la franchigia è di 91.500 € (120.000 € nei capoluoghi delle città metropolitane), +2.500 € per ogni figlio convivente dopo il primo. Lo calcola l'INPS in automatico, non devi fare nulla."
+    },
+    "t4": {
+      "value": "**Titoli di Stato, buoni fruttiferi e libretti postali** sono esclusi fino a 50.000 € in tutto per il nucleo (DPCM 13/2025). Dichiarali comunque: l'esclusione la applica il calcolo."
+    },
+    "t5": {
+      "value": "**Conti correnti**: conta il valore più alto tra saldo al 31/12 e giacenza media annua. Controlla bene entrambi sull'estratto conto."
+    },
+    "t6": {
+      "value": "**Disabilità**: dichiara le certificazioni di disabilità media, grave o non autosufficienza: ogni persona aggiunge 0,5 alla scala, e i trattamenti legati alla disabilità non tassati non contano nei redditi."
+    },
+    "t7": {
+      "value": "**Usa la DSU precompilata** sul portale INPS: riduce gli errori e le difformità che bloccano gli aiuti."
+    },
+    "h2_corrente": {
+      "value": "Quando conviene l'ISEE corrente"
+    },
+    "c1": {
+      "value": "Hai perso o ridotto un lavoro a tempo indeterminato, ti è finito un contratto a termine (almeno 120 giorni negli ultimi 12 mesi) o hai chiuso un'attività autonoma."
+    },
+    "c2": {
+      "value": "Si è interrotto un sussidio pubblico (per esempio la NASpI)."
+    },
+    "c3": {
+      "value": "Il tuo indicatore reddituale è calato di oltre il 25% rispetto a quello dell'ISEE ordinario."
+    },
+    "c_note": {
+      "value": "Serve prima un ISEE ordinario valido. Se aggiorni solo i redditi, il corrente vale 6 mesi. Dal 1° aprile puoi aggiornare anche il patrimonio, se è cambiato di oltre il 20%."
+    },
+    "h2_mai": {
+      "value": "Cosa non fare mai"
+    },
+    "n1": {
+      "value": "Non omettere componenti del nucleo, conti, investimenti o immobili: i dati vengono incrociati con Agenzia delle Entrate e INPS."
+    },
+    "n2": {
+      "value": "Non spostare la residenza in modo fittizio per dividere il nucleo."
+    },
+    "n3": {
+      "value": "Non intestare beni ad altri o nascondere patrimonio: oltre a perdere gli aiuti, la DSU falsa ha conseguenze penali e si restituisce quanto ricevuto."
+    },
+    "n_note": {
+      "value": "Per casi particolari (separazioni, figli non conviventi, eredità, imprese) rivolgiti a un CAF o a un patronato."
+    },
+    "see_also": {
+      "value": "Vedi anche gli [aiuti pubblici legati all'ISEE](/diritti-pa), la [checklist dei documenti](/checklist-dsu) e le [fonti usate](/fonti)."
+    }
+  },
+  "diritti": {
+    "intro": {
+      "value": "Ogni aiuto ha altri requisiti (residenza, cittadinanza, età, patrimonio). Apri la fonte ufficiale prima di fare domanda. Come verifichiamo i valori è spiegato in [Fonti e regole usate](/fonti) e in [Metodo e fonti](/metodo)."
+    },
+    "h2_auu": {
+      "value": "Quale ISEE serve per l'Assegno Unico",
+      "note": "H2 richiesto; la FAQ visibile deve usare lo stesso testo della domanda faq.quale_q oppure questa sezione deve contenere la risposta."
+    },
+    "p_auu1": {
+      "value": "Per l'Assegno Unico si usa l'**ISEE per prestazioni familiari e inclusione**, non l'ISEE ordinario. È lo stesso indicatore previsto dalla L. 199/2025, in genere più favorevole se hai casa di proprietà o almeno due figli. Vale anche, al netto dell'Assegno Unico già percepito, per il bonus nido e il bonus nuovi nati."
+    },
+    "p_auu2": {
+      "value": "Dal 2026 l'INPS calcola questo ISEE in automatico. Si usa solo per ADI, Supporto per la formazione e il lavoro, Assegno Unico, bonus nido e bonus nuovi nati. Per tutto il resto (bonus sociali, Carta «Dedicata a te», molti servizi comunali) vale l'ISEE ordinario."
+    },
+    "cta_stima": {
+      "value": "Calcola il tuo ISEE"
+    },
+    "h2_manovra": {
+      "value": "Manovra 2027 (in discussione)"
+    },
+    "p_manovra": {
+      "value": "Il disegno di legge di bilancio 2027 (A.C. 3174) è all'esame del Parlamento e **non è ancora legge**. Alcune misure e soglie legate all'ISEE potrebbero cambiare: le ricontrolleremo quando il testo diventerà legge."
+    },
+    "manovra_fonte": {
+      "value": "[Fonte ufficiale: scheda A.C. 3174 sul sito del Senato](https://www.senato.it/leggi-e-documenti/disegni-di-legge/scheda-ddl?did=60577)."
+    }
+  },
+  "fonti": {
+    "intro": {
+      "value": "Ogni valore usato nel simulatore ha uno stato (verificato, valore 2026 da confermare per il 2027, oppure da confermare) e un collegamento alla fonte. Il metodo è spiegato in [Metodo e fonti](/metodo)."
+    },
+    "h2_norme": {
+      "value": "Norme e istruzioni"
+    },
+    "h2_aiuti": {
+      "value": "Schede e delibere sugli aiuti"
+    },
+    "lead": {
+      "value": "Regole e fonti ufficiali usate da DirittiOk per la stima ISEE 2027, il residuo per vivere e gli aiuti pubblici."
+    },
+    "src_dpcm159": {
+      "value": "DPCM 5 dicembre 2013, n. 159 (testo vigente, Normattiva)",
+      "note": "Titolo ufficiale di un documento o di una scheda istituzionale italiana. Lasciare il titolo in italiano; si può aggiungere una breve spiegazione nella lingua di arrivo."
+    },
+    "src_inps102": {
+      "value": "INPS, Messaggio n. 102 del 12/01/2026 (L. 199/2025, art. 1 c. 208)",
+      "note": "Titolo ufficiale di un documento o di una scheda istituzionale italiana. Lasciare il titolo in italiano; si può aggiungere una breve spiegazione nella lingua di arrivo."
+    },
+    "src_dsu2026": {
+      "value": "Ministero del Lavoro, Decreto direttoriale n. 3 del 02/03/2026 (modelli DSU)",
+      "note": "Titolo ufficiale di un documento o di una scheda istituzionale italiana. Lasciare il titolo in italiano; si può aggiungere una breve spiegazione nella lingua di arrivo."
+    },
+    "src_adi": {
+      "value": "INPS, scheda Assegno di Inclusione",
+      "note": "Titolo ufficiale di un documento o di una scheda istituzionale italiana. Lasciare il titolo in italiano; si può aggiungere una breve spiegazione nella lingua di arrivo."
+    },
+    "src_auu": {
+      "value": "INPS, Circolare n. 7 del 30/01/2026 (Assegno Unico 2026)",
+      "note": "Titolo ufficiale di un documento o di una scheda istituzionale italiana. Lasciare il titolo in italiano; si può aggiungere una breve spiegazione nella lingua di arrivo."
+    },
+    "src_arera": {
+      "value": "ARERA, delibera 2/2026/R/com (bonus sociali)",
+      "note": "Titolo ufficiale di un documento o di una scheda istituzionale italiana. Lasciare il titolo in italiano; si può aggiungere una breve spiegazione nella lingua di arrivo."
+    },
+    "src_dedicata": {
+      "value": "INPS, Carta «Dedicata a te» 2026-2027",
+      "note": "Titolo ufficiale di un documento o di una scheda istituzionale italiana. Lasciare il titolo in italiano; si può aggiungere una breve spiegazione nella lingua di arrivo."
+    },
+    "src_cartaAcquisti": {
+      "value": "MEF, Carta Acquisti: limiti 2026",
+      "note": "Titolo ufficiale di un documento o di una scheda istituzionale italiana. Lasciare il titolo in italiano; si può aggiungere una breve spiegazione nella lingua di arrivo."
+    },
+    "src_nido": {
+      "value": "INPS, Circolare n. 29 del 27/03/2026 (bonus asilo nido)",
+      "note": "Titolo ufficiale di un documento o di una scheda istituzionale italiana. Lasciare il titolo in italiano; si può aggiungere una breve spiegazione nella lingua di arrivo."
+    },
+    "src_nuoviNati": {
+      "value": "INPS, scheda Bonus nuovi nati",
+      "note": "Titolo ufficiale di un documento o di una scheda istituzionale italiana. Lasciare il titolo in italiano; si può aggiungere una breve spiegazione nella lingua di arrivo."
+    },
+    "src_venetoAffitti": {
+      "value": "Regione del Veneto, Fondo affitti",
+      "note": "Titolo ufficiale di un documento o di una scheda istituzionale italiana. Lasciare il titolo in italiano; si può aggiungere una breve spiegazione nella lingua di arrivo."
+    },
+    "src_portaleIsee": {
+      "value": "INPS, Portale unico ISEE",
+      "note": "Titolo ufficiale di un documento o di una scheda istituzionale italiana. Lasciare il titolo in italiano; si può aggiungere una breve spiegazione nella lingua di arrivo."
+    }
+  },
+  "metodo": {
+    "p1": {
+      "value": "DirittiOk (DirittiChiari 2027) è un servizio di **Pi.Gi Service**. Offre una stima orientativa dell'ISEE, di quanto ti resta per vivere e degli aiuti pubblici, per capirli con calma prima di andare al CAF o sul portale INPS."
+    },
+    "h2_come": {
+      "value": "Come facciamo la stima"
+    },
+    "p_come1": {
+      "value": "I calcoli seguono le regole del DPCM 159/2013 e gli aggiornamenti successivi, tra cui la legge 199/2025 sull'ISEE per prestazioni familiari e inclusione. Le soglie e i parametri arrivano da fonti ufficiali: INPS, ARERA, Ministero del Lavoro, Ministero dell'Economia e delle Finanze, Normattiva."
+    },
+    "p_come2": {
+      "value": "Ogni valore usato nel simulatore ha uno stato: verificato, valore 2026 da confermare per il 2027, oppure da confermare. L'elenco completo, con il collegamento a ogni fonte, è nella pagina [Fonti e regole usate](/fonti)."
+    },
+    "h2_non": {
+      "value": "Cosa non è questa stima"
+    },
+    "p_non": {
+      "value": "Non è una DSU e non sostituisce l'attestazione INPS, il CAF o una consulenza. I calcoli restano solo sul tuo dispositivo. Quando una norma è ancora in discussione in Parlamento, lo indichiamo in pagina e la ricontrolliamo quando diventa legge."
+    },
+    "h2_chi": {
+      "value": "Chi la cura"
+    },
+    "p_chi": {
+      "value": "Autore del servizio: **Pi.Gi Service**. Per una domanda: [modulo contatti](/contatti) oppure [info@pigiservice.com](mailto:info@pigiservice.com)."
+    }
+  },
+  "privacy": {
+    "p_titolare": {
+      "value": "DirittiOk (DirittiChiari 2027) è un servizio di **Pi.Gi Service di Gheoca Paula** (titolare del trattamento). Per qualsiasi domanda: [info@pigiservice.com](mailto:info@pigiservice.com).",
+      "note": "Il nome del titolare e «Pi.Gi Service di Gheoca Paula» non si traducono."
+    },
+    "h2_local": {
+      "value": "I calcoli restano sul tuo dispositivo"
+    },
+    "p_local": {
+      "value": "La stima ISEE, il residuo per vivere, gli aiuti e la checklist si calcolano e si salvano solo su questo telefono o computer, in locale. Non li inviamo a nessun server, non chiediamo una registrazione, non facciamo tracciamento e non usiamo intelligenza artificiale."
+    },
+    "p_delete": {
+      "value": "Puoi cancellare tutto in qualsiasi momento con «Cancella i miei dati», in fondo alla pagina."
+    },
+    "h2_form": {
+      "value": "Modulo contatti"
+    },
+    "p_form": {
+      "value": "Se ci scrivi dal [modulo contatti](/contatti), inviamo soltanto quello che inserisci tu: nome, email, eventuale telefono o attività, il messaggio, il consenso e la pagina da cui scrivi. Questi dati servono solo per risponderti. Non viene mai incluso nessun dato della stima ISEE o del percorso guidato."
+    },
+    "p_retention": {
+      "value": "Il messaggio arriva a [info@pigiservice.com](mailto:info@pigiservice.com). Lo conserviamo il tempo necessario per darti una risposta e per eventuali obblighi di legge."
+    }
+  },
+  "contatti": {
+    "intro": {
+      "value": "Una domanda su DirittiOk? Scrivici: ti rispondiamo via email."
+    },
+    "form_title": {
+      "value": "Scrivici"
+    },
+    "form_intro": {
+      "value": "Compila il modulo: ti rispondiamo via email, in genere entro un giorno lavorativo. Partono soltanto le informazioni che scrivi tu: i dati della stima ISEE restano sul tuo dispositivo."
+    },
+    "nome": {
+      "value": "Nome e cognome"
+    },
+    "email": {
+      "value": "Email"
+    },
+    "telefono": {
+      "value": "Telefono"
+    },
+    "azienda": {
+      "value": "Azienda o attività"
+    },
+    "messaggio": {
+      "value": "Messaggio"
+    },
+    "messaggio_aiuto": {
+      "value": "Raccontaci in poche righe di cosa hai bisogno."
+    },
+    "consenso_prima": {
+      "value": "Ho letto l'"
+    },
+    "consenso_link": {
+      "value": "informativa privacy"
+    },
+    "consenso_dopo": {
+      "value": " e acconsento all'uso dei miei dati per ricevere una risposta."
+    },
+    "invia": {
+      "value": "Invia il messaggio"
+    },
+    "invio": {
+      "value": "Invio in corso…"
+    },
+    "ok": {
+      "value": "Messaggio inviato. Grazie!"
+    },
+    "ok_dettaglio": {
+      "value": "Ti risponderemo all'indirizzo email che hai indicato."
+    },
+    "altro": {
+      "value": "Scrivi un altro messaggio"
+    },
+    "err_nome": {
+      "value": "Scrivi il tuo nome."
+    },
+    "err_email": {
+      "value": "Controlla l'indirizzo email."
+    },
+    "err_messaggio": {
+      "value": "Scrivi un messaggio di almeno qualche parola."
+    },
+    "err_consenso": {
+      "value": "Per inviare il messaggio serve il consenso alla privacy."
+    },
+    "err_troppi": {
+      "value": "Hai inviato diversi messaggi in poco tempo. Riprova tra qualche minuto."
+    },
+    "err_rete": {
+      "value": "Sei offline o la connessione è instabile. Riprova quando sei di nuovo online."
+    },
+    "err_generico": {
+      "value": "Il messaggio non è partito. Riprova tra poco oppure scrivi a"
+    },
+    "oppure": {
+      "value": "Preferisci l'email? Scrivi a"
+    },
+    "hp": {
+      "value": "Lascia vuoto",
+      "note": "Campo trappola antispam, nascosto: tradurre in modo naturale."
+    }
+  },
+  "notfound": {
+    "p": {
+      "value": "Questo indirizzo non corrisponde a una pagina di DirittiOk. Puoi tornare all'inizio o proseguire da qui:"
+    },
+    "cta_stima": {
+      "value": "Calcolo ISEE 2027"
+    },
+    "cta_docs": {
+      "value": "Checklist documenti DSU"
+    },
+    "back_home": {
+      "value": "Torna all'inizio"
+    }
+  },
+  "schema": {
+    "website_name": {
+      "value": "DirittiOk",
+      "note": "Nome dello schema.org WebSite. Non tradurre."
+    },
+    "website_alt": {
+      "value": "DirittiChiari 2027",
+      "note": "alternateName: non tradurre."
+    },
+    "webapp_name": {
+      "value": "DirittiOk",
+      "note": "Nome dello schema.org WebApplication. Non tradurre."
+    },
+    "crumb_home": {
+      "value": "Home",
+      "note": "Etichetta del primo elemento del breadcrumb. In inglese va bene Home; in bengalese tradurre."
+    },
+    "crumb_stima": {
+      "value": "Calcolo ISEE 2027"
+    },
+    "crumb_risultati": {
+      "value": "Risultati"
+    }
+  }
+}
