@@ -28,3 +28,43 @@
   [headers.values]
     Content-Type = "application/manifest+json"
     Cache-Control = "no-cache"
+
+# /index.html non deve restare visibile; le pagine pulite servono lo stesso guscio.
+[[redirects]]
+  from = "/index.html"
+  to = "/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/stima"
+  to = "/"
+  status = 200
+[[redirects]]
+  from = "/risultati"
+  to = "/"
+  status = 200
+[[redirects]]
+  from = "/ottimizzazione"
+  to = "/"
+  status = 200
+[[redirects]]
+  from = "/checklist-dsu"
+  to = "/"
+  status = 200
+[[redirects]]
+  from = "/diritti-pa"
+  to = "/"
+  status = 200
+[[redirects]]
+  from = "/fonti"
+  to = "/"
+  status = 200
+[[redirects]]
+  from = "/contatti"
+  to = "/"
+  status = 200
+[[redirects]]
+  from = "/privacy"
+  to = "/"
+  status = 200

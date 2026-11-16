@@ -51,7 +51,7 @@ def run_flow(browser, width):
     page = ctx.new_page()
     errors = []
     page.on('pageerror', lambda e: errors.append(str(e)))
-    page.goto(BASE + '/#/')
+    page.goto(BASE + '/')
     page.wait_for_selector('h1')
     check('ISEE 2027' in page.inner_text('h1'), f'{tag}: titolo home')
     check(page.locator('h1').count() == 1, f'{tag}: un solo h1 in home ({page.locator("h1").count()})')
@@ -61,6 +61,8 @@ def run_flow(browser, width):
     og = page.locator('meta[property="og:image"]').get_attribute('content') or ''
     check(og.endswith('/og-image.png') or 'og-image.png' in og, f'{tag}: og:image {og!r}')
     check(page.locator('a.skip[href="#app"]').count() == 1, f'{tag}: skip link')
+    check(re.search(r'https?://[^/]+/?$', page.url), f'{tag}: home url non è la radice {page.url}')
+    check('index.html' not in page.url and '#' not in page.url.split('/')[-1], f'{tag}: index.html o hash in home {page.url}')
     check(page.locator('.disclaimer').count() == 1, f'{tag}: disclaimer home ({page.locator(".disclaimer").count()}) {page.url}')
     check('Alcuni importi 2027 sono ancora stime.' in page.inner_text('.disclaimer'), f'{tag}: testo disclaimer')
     check(not page.is_visible('#update-banner'), f'{tag}: banner visibile alla prima visita')
@@ -69,7 +71,7 @@ def run_flow(browser, width):
     txt = page.inner_text('body').lower()
     check(not re.search(r'\bsemplice\b(?! da utilizzare)', txt), f'{tag}: parola "semplice" da sola')
 
-    page.click('a.btn-primary[href="#/stima"]')
+    page.click('a.btn-primary[href="/stima"]')
     # Passo 1
     page.wait_for_selector('#f-componenti')
     fill(page, 'componenti', 3); fill(page, 'figli', 1); fill(page, 'minori', 1)
@@ -129,13 +131,16 @@ def run_flow(browser, width):
     no_hscroll(page, f'{tag} risultati'); nav_visible(page, f'{tag} risultati')
     check(page.locator('[data-action=print]').count() == 1, f'{tag}: pulsante stampa')
     # Pagine secondarie
-    for r in ['consigli', 'documenti', 'diritti', 'fonti', 'contatti', 'privacy']:
-        page.goto(BASE + '/#/' + r); page.wait_for_selector('h1')
+    slugs = {'consigli': 'ottimizzazione', 'documenti': 'checklist-dsu', 'diritti': 'diritti-pa', 'fonti': 'fonti', 'contatti': 'contatti', 'privacy': 'privacy'}
+    for r, slug in slugs.items():
+        page.goto(BASE + '/' + slug); page.wait_for_selector('h1')
+        check(page.url.rstrip('/').endswith('/' + slug), f'{tag}: url {r} {page.url}')
+        check('index.html' not in page.url and '/#/' not in page.url, f'{tag}: url non pulita in {r} {page.url}')
         no_hscroll(page, f'{tag} {r}'); nav_visible(page, f'{tag} {r}')
         check(page.locator('.disclaimer').count() >= 1, f'{tag}: disclaimer in {r}')
         check(page.locator('h1').count() == 1, f'{tag}: un solo h1 in {r} ({page.locator("h1").count()})')
     # modulo contatti
-    page.goto(BASE + '/#/contatti'); page.wait_for_selector('form.mc-form, form:has(textarea[name=message])')
+    page.goto(BASE + '/contatti'); page.wait_for_selector('form.mc-form, form:has(textarea[name=message])')
     check('Contatti' in page.title(), f'{tag}: title contatti {page.title()!r}')
     form = page.locator('form').filter(has=page.locator('textarea[name=message]')).first
     check(form.locator('input[name=name]').count() == 1, f'{tag}: campo nome')
@@ -143,16 +148,26 @@ def run_flow(browser, width):
     check(form.locator('textarea[name=message]').count() == 1, f'{tag}: campo messaggio')
     check(form.locator('input[type=checkbox]').count() >= 1, f'{tag}: consenso privacy')
     check(page.locator('input[name=sito_web]').count() == 1, f'{tag}: honeypot assente')
-    check(page.locator('footer a[href="#/contatti"]').count() == 1, f'{tag}: link contatti nel footer')
-    check(page.locator('footer a[href="#/privacy"]').count() == 1, f'{tag}: link privacy nel footer')
+    check(page.locator('footer a[href="/contatti"]').count() == 1, f'{tag}: link contatti nel footer')
+    check(page.locator('footer a[href="/privacy"]').count() == 1, f'{tag}: link privacy nel footer')
     no_hscroll(page, f'{tag} form-contatti'); nav_visible(page, f'{tag} form-contatti')
+    # vecchi link #/contatti e /index.html devono arrivare alle URL pulite
+    page.goto(BASE + '/#/contatti'); page.wait_for_selector('form:has(textarea[name=message])')
+    check(page.url.rstrip('/').endswith('/contatti') and 'index.html' not in page.url, f'{tag}: hash #/contatti non convertito {page.url}')
+    page.goto(BASE + '/fonti'); page.wait_for_selector('h1')
+    page.click('footer a[href="/contatti"]'); page.wait_for_selector('form:has(textarea[name=message])')
+    page.go_back(); page.wait_for_selector('h1')
+    check('Fonti' in page.inner_text('h1'), f'{tag}: indietro del browser perso ({page.url} {page.inner_text("h1")[:40]!r})')
+    page.goto(BASE + '/index.html')
+    page.wait_for_selector('h1')
+    check(re.search(r'https?://[^/]+/?$', page.url) and 'index.html' not in page.url, f'{tag}: /index.html non reindirizza alla radice {page.url}')
     # checklist persistente
-    page.goto(BASE + '/#/documenti'); page.wait_for_selector('input[data-doc]')
+    page.goto(BASE + '/checklist-dsu'); page.wait_for_selector('input[data-doc]')
     page.locator('input[data-doc]').first.check()
     page.reload(); page.wait_for_selector('input[data-doc]')
     check(page.locator('input[data-doc]').first.is_checked(), f'{tag}: checklist non salvata')
     # pull-to-refresh: simula un trascinamento verso il basso in cima alla pagina
-    page.goto(BASE + '/#/consigli'); page.wait_for_selector('h1')
+    page.goto(BASE + '/ottimizzazione'); page.wait_for_selector('h1')
     page.evaluate('window.__marker = 1')
     page.evaluate('''() => { const ev = (type, y) => { const e = new Event(type); Object.defineProperty(e, 'touches', { value: y == null ? [] : [{ clientX: 100, clientY: y }] }); window.dispatchEvent(e); };
         ev('touchstart', 100); ev('touchmove', 180); ev('touchmove', 260); ev('touchend'); }''')
@@ -165,7 +180,7 @@ def run_flow(browser, width):
     page.click('footer [data-action=clear]')
     page.wait_for_selector('h1')
     check(page.evaluate("localStorage.getItem('dc2027:dati')") is None, f'{tag}: dati non cancellati')
-    page.goto(BASE + '/#/risultati'); page.wait_for_selector('h1')
+    page.goto(BASE + '/risultati'); page.wait_for_selector('h1')
     check(page.locator('.big-result').count() == 0, f'{tag}: risultati ancora presenti dopo la cancellazione')
     check(not errors, f'{tag}: errori JS {errors}')
     # robots e sitemap solo una volta per browser (prima larghezza)
@@ -173,7 +188,7 @@ def run_flow(browser, width):
         r = page.request.get(BASE + '/robots.txt')
         check(r.ok and 'Sitemap: https://dirittiok.com/sitemap.xml' in r.text(), f'{tag}: robots.txt {r.status} {r.text()[:120]!r}')
         s = page.request.get(BASE + '/sitemap.xml')
-        check(s.ok and 'https://dirittiok.com/' in s.text() and 'lovable.app' not in s.text() and 'netlify' not in s.text(), f'{tag}: sitemap.xml')
+        check(s.ok and 'https://dirittiok.com/contatti' in s.text() and '#/' not in s.text() and 'index.html' not in s.text() and 'lovable.app' not in s.text() and 'netlify' not in s.text(), f'{tag}: sitemap.xml')
     ctx.close()
 
 def sw_and_banner(browser, base_dir):
@@ -182,7 +197,7 @@ def sw_and_banner(browser, base_dir):
     print('▶', tag)
     ctx = browser.new_context(viewport={'width': 390, 'height': 740})
     page = ctx.new_page()
-    page.goto(BASE + '/#/')
+    page.goto(BASE + '/')
     ctrl = '() => !!(navigator.serviceWorker && navigator.serviceWorker.controller)'
     if not poll(page, ctrl, 15):
         page.reload(); page.wait_for_selector('h1')
@@ -215,8 +230,8 @@ def main():
         tmp = tempfile.mkdtemp(prefix='dc2027-')
         shutil.copytree(ROOT, os.path.join(tmp, 'site'), ignore=shutil.ignore_patterns('.git', 'tests', 'node_modules'))
         site = os.path.join(tmp, 'site')
-        server = subprocess.Popen([sys.executable, '-m', 'http.server', '4321', '--bind', '127.0.0.1'], cwd=site, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
-        BASE = 'http://localhost:4321'; time.sleep(1)
+        server = subprocess.Popen([sys.executable, os.path.join(ROOT, 'scripts/serve.py'), '4321', site], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+        BASE = 'http://127.0.0.1:4321'; time.sleep(1)
     else:
         site = None
     try:

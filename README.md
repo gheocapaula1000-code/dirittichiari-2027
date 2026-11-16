@@ -28,7 +28,7 @@ Un servizio di **Pi.Gi Service** · info@pigiservice.com
 ```
 npm test            # test dei calcoli (node --test)
 npm run test:ui     # Playwright: Chromium + WebKit a 320/390/440 px
-npm run serve       # server locale su http://localhost:4321
+npm run serve       # server locale su http://127.0.0.1:4321 (URL pulite)
 ```
 
 ## Pubblicare una nuova versione
@@ -37,3 +37,16 @@ npm run serve       # server locale su http://localhost:4321
 3. Il banner "nuova versione" appare una sola volta per versione, mai alla prima visita.
 
 Avvertenza: stima orientativa basata sulle regole note a novembre 2026. I valori ufficiali si ottengono solo con la DSU presentata a INPS o CAF. Alcuni importi 2027 sono ancora stime.
+
+## Pagine (URL pulite)
+- https://dirittiok.com/
+- https://dirittiok.com/stima
+- https://dirittiok.com/risultati
+- https://dirittiok.com/ottimizzazione
+- https://dirittiok.com/checklist-dsu
+- https://dirittiok.com/diritti-pa
+- https://dirittiok.com/fonti
+- https://dirittiok.com/contatti
+- https://dirittiok.com/privacy
+
+I vecchi indirizzi `/index.html` e `#/contatti` (ecc.) vengono portati alle nuove URL.

@@ -1,10 +1,10 @@
 /*!
- * DirittiChiari 2027 — interfaccia (router a hash, wizard, risultati, PWA).
+ * DirittiChiari 2027 — interfaccia (router a URL pulite, wizard, risultati, PWA).
  * I calcoli restano in localStorage su questo dispositivo. L'unica chiamata di rete è il modulo contatti, con le parole scritte dalla persona.
  */
 (function () {
   'use strict';
-  const APP_VERSION = '1.2.0';             // tenere allineato con VERSION in sw.js
+  const APP_VERSION = '1.3.0';             // tenere allineato con VERSION in sw.js
   const STORE_KEY = 'dc2027:dati';
   const STEP_KEY = 'dc2027:passo';
   const CHECK_KEY = 'dc2027:checklist';
@@ -17,6 +17,42 @@
   const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 
   const SITE = 'https://dirittiok.com/';
+  const SLUG_BY_ROUTE = { '': '', stima: 'stima', risultati: 'risultati', consigli: 'ottimizzazione', documenti: 'checklist-dsu', diritti: 'diritti-pa', fonti: 'fonti', contatti: 'contatti', privacy: 'privacy' };
+  const ROUTE_BY_SLUG = { '': '', stima: 'stima', risultati: 'risultati', ottimizzazione: 'consigli', 'checklist-dsu': 'documenti', 'diritti-pa': 'diritti', fonti: 'fonti', contatti: 'contatti', privacy: 'privacy' };
+  function pathFromRoute(r) {
+    const slug = Object.prototype.hasOwnProperty.call(SLUG_BY_ROUTE, r) ? SLUG_BY_ROUTE[r] : '';
+    return slug ? '/' + slug : '/';
+  }
+  function routeFromPath(pathname) {
+    const p = (pathname || '/').replace(/\/index\.html$/i, '/').replace(/\/+$/, '') || '/';
+    const slug = p === '/' ? '' : p.replace(/^\//, '');
+    return Object.prototype.hasOwnProperty.call(ROUTE_BY_SLUG, slug) ? ROUTE_BY_SLUG[slug] : null;
+  }
+  function route() {
+    const fromHash = (location.hash || '').replace(/^#\/?/, '').split('?')[0].toLowerCase();
+    if (location.hash && (fromHash === '' || Object.prototype.hasOwnProperty.call(SLUG_BY_ROUTE, fromHash))) return fromHash;
+    const r = routeFromPath(location.pathname);
+    return r === null ? '' : r;
+  }
+  function go(path, replace) {
+    if (replace || location.pathname + location.search !== path) {
+      if (replace) history.replaceState(null, '', path);
+      else history.pushState(null, '', path);
+    }
+    render();
+  }
+  function syncLegacyUrl() {
+    const fromHash = (location.hash || '').replace(/^#\/?/, '').split('?')[0].toLowerCase();
+    let r = null;
+    if (location.hash && (fromHash === '' || Object.prototype.hasOwnProperty.call(SLUG_BY_ROUTE, fromHash))) r = fromHash;
+    else r = routeFromPath(location.pathname);
+    if (r === null) return;
+    const target = pathFromRoute(r) + location.search;
+    if (location.hash || /\/index\.html$/i.test(location.pathname) || location.pathname + location.search !== target) {
+      history.replaceState(null, '', target);
+    }
+  }
+
   const SEO = {
     '': {
       title: 'DirittiChiari 2027 · Stima ISEE, residuo per vivere e aiuti',
@@ -26,42 +62,42 @@
     stima: {
       title: 'Stima ISEE 2027 · DirittiChiari',
       desc: 'Percorso guidato in 5 passi per stimare l\'ISEE ordinario, familiare e corrente, con redditi 2025 e patrimonio al 31/12/2025.',
-      url: SITE + '#/stima'
+      url: SITE + 'stima'
     },
     risultati: {
       title: 'Risultati della stima ISEE · DirittiChiari',
       desc: 'Vedi la stima del tuo ISEE 2027, il residuo mensile per vivere e gli aiuti pubblici da valutare, con le fonti di ogni soglia.',
-      url: SITE + '#/risultati'
+      url: SITE + 'risultati'
     },
     consigli: {
       title: 'Come ottimizzare legalmente l\'ISEE · DirittiChiari',
       desc: 'Cosa conta davvero nell\'ISEE, le scelte permesse che possono abbassarlo e cosa non fare mai. Spiegato con calma, prima del CAF.',
-      url: SITE + '#/consigli'
+      url: SITE + 'ottimizzazione'
     },
     documenti: {
       title: 'Documenti per la DSU 2027 · DirittiChiari',
       desc: 'Checklist dei documenti per la DSU 2027, da spuntare e stampare prima di andare al CAF o sul portale ISEE dell\'INPS.',
-      url: SITE + '#/documenti'
+      url: SITE + 'checklist-dsu'
     },
     diritti: {
       title: 'Diritti e aiuti pubblici legati all\'ISEE · DirittiChiari',
       desc: 'Assegno di Inclusione, Assegno Unico, bonus sociali e altri aiuti legati all\'ISEE, con le soglie e le fonti ufficiali.',
-      url: SITE + '#/diritti'
+      url: SITE + 'diritti-pa'
     },
     fonti: {
       title: 'Fonti e regole usate · DirittiChiari',
       desc: 'Regole e fonti ufficiali usate da DirittiChiari per la stima ISEE 2027, con lo stato di ogni valore.',
-      url: SITE + '#/fonti'
+      url: SITE + 'fonti'
     },
     contatti: {
       title: 'Contatti · DirittiChiari 2027',
       desc: 'Scrivi a DirittiChiari: ti rispondiamo via email. Dal modulo partono solo le informazioni che inserisci tu, non i dati della stima.',
-      url: SITE + '#/contatti'
+      url: SITE + 'contatti'
     },
     privacy: {
       title: 'Privacy · DirittiChiari 2027',
       desc: 'Come trattiamo i dati su DirittiChiari 2027: i calcoli restano sul tuo dispositivo. Il modulo contatti serve solo per risponderti.',
-      url: SITE + '#/privacy'
+      url: SITE + 'privacy'
     }
   };
   function setMeta(key, value, attr) {
@@ -101,8 +137,7 @@
   function clearAll() {
     if (!confirm('Vuoi cancellare tutti i dati inseriti su questo dispositivo?')) return;
     [STORE_KEY, STEP_KEY, CHECK_KEY].forEach((k) => localStorage.removeItem(k));
-    location.hash = '#/';
-    render();
+    go('/', true);
     announce('Dati cancellati.');
   }
   function announce(msg) {
@@ -201,7 +236,6 @@
 
   /* ---------------- Router ---------------- */
   const ROUTES = { '': viewHome, stima: viewStima, risultati: viewRisultati, consigli: viewConsigli, documenti: viewDocumenti, diritti: viewDiritti, fonti: viewFonti, contatti: viewContatti, privacy: viewPrivacy };
-  function route() { return (location.hash.replace(/^#\/?/, '').split('?')[0] || '').toLowerCase(); }
   function render() {
     const r = route();
     const view = ROUTES[r] || viewHome;
@@ -230,17 +264,17 @@
         <p>In 5 passi stimi l'ISEE ordinario, quello per le prestazioni familiari e l'eventuale ISEE corrente, scopri quanto ti resta ogni mese per vivere e quali aiuti puoi chiedere.</p>
         <p class="muted">Gratis, senza registrazione, facile da utilizzare. I calcoli restano solo sul tuo telefono. Se ci scrivi dal modulo contatti, partono soltanto le informazioni che inserisci tu.</p>
         <div class="btn-row">
-          <a class="btn btn-primary" href="#/stima">${ripresa ? 'Riprendi la stima' : 'Inizia la stima'}</a>
-          ${ripresa ? '<a class="btn btn-ghost" href="#/risultati">Vedi i risultati</a>' : ''}
+          <a class="btn btn-primary" href="/stima">${ripresa ? 'Riprendi la stima' : 'Inizia la stima'}</a>
+          ${ripresa ? '<a class="btn btn-ghost" href="/risultati">Vedi i risultati</a>' : ''}
         </div>
       </section>
       ${DISCLAIMER}
       <h2>Da dove vuoi partire?</h2>
       <div class="paths">
-        <a class="path" href="#/stima"><span class="ico" aria-hidden="true">🧭</span><span><strong>Stima ISEE e residuo</strong><span class="muted">Nucleo, redditi 2025, spese, patrimonio al 31/12/2025.</span></span></a>
-        <a class="path" href="#/diritti"><span class="ico" aria-hidden="true">🏛️</span><span><strong>Diritti e aiuti pubblici</strong><span class="muted">Assegno di Inclusione, Assegno Unico, bonus sociali e altri, con le soglie.</span></span></a>
-        <a class="path" href="#/consigli"><span class="ico" aria-hidden="true">💡</span><span><strong>Come ottimizzare legalmente</strong><span class="muted">Cosa conta davvero nell'ISEE e cosa non fare mai.</span></span></a>
-        <a class="path" href="#/documenti"><span class="ico" aria-hidden="true">📄</span><span><strong>Documenti per la DSU 2027</strong><span class="muted">Lista da spuntare e stampare prima del CAF.</span></span></a>
+        <a class="path" href="/stima"><span class="ico" aria-hidden="true">🧭</span><span><strong>Stima ISEE e residuo</strong><span class="muted">Nucleo, redditi 2025, spese, patrimonio al 31/12/2025.</span></span></a>
+        <a class="path" href="/diritti-pa"><span class="ico" aria-hidden="true">🏛️</span><span><strong>Diritti e aiuti pubblici</strong><span class="muted">Assegno di Inclusione, Assegno Unico, bonus sociali e altri, con le soglie.</span></span></a>
+        <a class="path" href="/ottimizzazione"><span class="ico" aria-hidden="true">💡</span><span><strong>Come ottimizzare legalmente</strong><span class="muted">Cosa conta davvero nell'ISEE e cosa non fare mai.</span></span></a>
+        <a class="path" href="/checklist-dsu"><span class="ico" aria-hidden="true">📄</span><span><strong>Documenti per la DSU 2027</strong><span class="muted">Lista da spuntare e stampare prima del CAF.</span></span></a>
       </div>
       <section class="card mt16">
         <h2>Quali anni contano per l'ISEE 2027?</h2>
@@ -251,7 +285,7 @@
         </ul>
         <p class="small muted">Lo prevede il DPCM 159/2013 (artt. 4 e 5): si guarda al secondo anno prima della DSU.</p>
       </section>
-      <p class="small">Una domanda su DirittiChiari? <a href="#/contatti">Scrivici dal modulo contatti</a>.</p>`;
+      <p class="small">Una domanda su DirittiChiari? <a href="/contatti">Scrivici dal modulo contatti</a>.</p>`;
   }
 
   /* -------- Wizard -------- */
@@ -376,7 +410,7 @@
       }
       const i = currentStep();
       if (i < STEPS.length - 1) { localStorage.setItem(STEP_KEY, String(i + 1)); render(); focusTitle(); }
-      else { location.hash = '#/risultati'; }
+      else { go('/risultati'); }
     });
     form.addEventListener('click', (ev) => {
       const a = ev.target.closest('[data-action]');
@@ -425,7 +459,7 @@
   }
 
   function viewRisultati() {
-    if (!hasData()) return `<section class="card"><h1>Risultati</h1><p>Non hai ancora inserito dati. Ci vogliono pochi minuti.</p><a class="btn btn-primary" href="#/stima">Inizia la stima</a></section>${DISCLAIMER}`;
+    if (!hasData()) return `<section class="card"><h1>Risultati</h1><p>Non hai ancora inserito dati. Ci vogliono pochi minuti.</p><a class="btn btn-primary" href="/stima">Inizia la stima</a></section>${DISCLAIMER}`;
     const ris = D.calcolaTutto(load());
     const d = ris.input;
     const res = ris.residuo;
@@ -500,12 +534,12 @@
 
       <section class="card no-print"><h2>E adesso?</h2>
         <div class="paths">
-          <a class="path" href="#/documenti"><span class="ico" aria-hidden="true">📄</span><span><strong>Prepara i documenti</strong><span class="muted">Checklist DSU 2027${c ? ' e ISEE corrente' : ''}.</span></span></a>
-          <a class="path" href="#/consigli"><span class="ico" aria-hidden="true">💡</span><span><strong>Come ottimizzare legalmente</strong><span class="muted">Le scelte permesse che abbassano l'ISEE.</span></span></a>
+          <a class="path" href="/checklist-dsu"><span class="ico" aria-hidden="true">📄</span><span><strong>Prepara i documenti</strong><span class="muted">Checklist DSU 2027${c ? ' e ISEE corrente' : ''}.</span></span></a>
+          <a class="path" href="/ottimizzazione"><span class="ico" aria-hidden="true">💡</span><span><strong>Come ottimizzare legalmente</strong><span class="muted">Le scelte permesse che abbassano l'ISEE.</span></span></a>
         </div>
         <div class="btn-row">
           <button type="button" class="btn btn-primary" data-action="print">Stampa o salva in PDF</button>
-          <a class="btn btn-ghost" href="#/stima" data-action="edit">Modifica i dati</a>
+          <a class="btn btn-ghost" href="/stima" data-action="edit">Modifica i dati</a>
         </div>
       </section>`;
   }
@@ -610,7 +644,7 @@
         <a class="small" href="${fo.url}" target="_blank" rel="noopener">Fonte: ${esc(fo.titolo)}</a></article>`).join('')}
       <section class="card"><h2>Quale ISEE si usa?</h2>
         <p>Dal 2026 l'INPS calcola anche l'<strong>ISEE per prestazioni familiari e inclusione</strong> (L. 199/2025), più favorevole per chi ha casa di proprietà o almeno 2 figli. Si usa solo per ADI, Supporto formazione e lavoro, Assegno Unico, bonus nido e bonus nuovi nati. Per tutto il resto vale l'ISEE ordinario.</p>
-        <a class="btn btn-primary btn-block" href="#/stima">Stima il tuo ISEE</a></section>`;
+        <a class="btn btn-primary btn-block" href="/stima">Stima il tuo ISEE</a></section>`;
   }
 
   /* -------- Fonti -------- */
@@ -650,7 +684,7 @@
         <h1>Contatti</h1>
         <p>Una domanda su DirittiChiari? Scrivici: ti rispondiamo via email.</p>
         <p class="small muted">I calcoli della stima restano sul tuo dispositivo. Da questo modulo partono soltanto le informazioni che scrivi tu, e le usiamo solo per risponderti. Non viene mai inviato nessun dato del percorso ISEE.</p>
-        <div data-modulo-contatti data-privacy="#/privacy" data-titolo="h2">
+        <div data-modulo-contatti data-privacy="/privacy" data-titolo="h2">
           <p>Per usare il modulo serve JavaScript. In alternativa scrivi a <a href="mailto:info@pigiservice.com">info@pigiservice.com</a>.</p>
         </div>
       </section>
@@ -671,7 +705,7 @@
         <p>La stima ISEE, il residuo per vivere, gli aiuti e la checklist si calcolano e si salvano solo su questo telefono o computer, in locale. Non li inviamo a nessun server, non chiediamo una registrazione, non facciamo tracciamento e non usiamo intelligenza artificiale.</p>
         <p>Puoi cancellare tutto in qualsiasi momento con «Cancella i miei dati», in fondo alla pagina.</p>
         <h2>Modulo contatti</h2>
-        <p>Se ci scrivi dal <a href="#/contatti">modulo contatti</a>, inviamo soltanto quello che inserisci tu: nome, email, eventuale telefono o attività, il messaggio, il consenso e la pagina da cui scrivi. Questi dati servono solo per risponderti. Non viene mai incluso nessun dato della stima ISEE o del percorso guidato.</p>
+        <p>Se ci scrivi dal <a href="/contatti">modulo contatti</a>, inviamo soltanto quello che inserisci tu: nome, email, eventuale telefono o attività, il messaggio, il consenso e la pagina da cui scrivi. Questi dati servono solo per risponderti. Non viene mai incluso nessun dato della stima ISEE o del percorso guidato.</p>
         <p>Il messaggio arriva a <a href="mailto:info@pigiservice.com">info@pigiservice.com</a>. Lo conserviamo il tempo necessario per darti una risposta e per eventuali obblighi di legge.</p>
         <p class="small muted">Aggiornata il 15 novembre 2026.</p>
       </section>
@@ -686,7 +720,31 @@
     if (a.dataset.action === 'print') window.print();
     if (a.dataset.action === 'edit') localStorage.setItem(STEP_KEY, '0');
   });
-  window.addEventListener('hashchange', render);
+  window.addEventListener('popstate', render);
+  window.addEventListener('hashchange', () => { syncLegacyUrl(); render(); });
+  document.addEventListener('click', (ev) => {
+    const a = ev.target.closest('a[href]');
+    if (!a || ev.defaultPrevented || ev.metaKey || ev.ctrlKey || ev.shiftKey || ev.altKey) return;
+    if (a.target && a.target !== '_self') return;
+    const href = a.getAttribute('href');
+    if (!href || href.startsWith('mailto:') || href.startsWith('tel:')) return;
+    if (href.startsWith('#') && !href.startsWith('#/')) return;
+    let path = null;
+    try {
+      const u = new URL(href, location.origin);
+      if (u.origin !== location.origin) return;
+      if (href.startsWith('#/')) {
+        const r = href.slice(2).split('?')[0].toLowerCase();
+        path = pathFromRoute(Object.prototype.hasOwnProperty.call(SLUG_BY_ROUTE, r) ? r : '') + u.search;
+      } else if (routeFromPath(u.pathname) !== null) {
+        path = pathFromRoute(routeFromPath(u.pathname)) + u.search;
+      }
+    } catch (e) { return; }
+    if (path == null) return;
+    ev.preventDefault();
+    go(path);
+  });
+
 
   /* ---------------- Pull-to-refresh (ricarica completa su ogni pagina) ---------------- */
   (function pullToRefresh() {
@@ -754,7 +812,7 @@
       });
     }
     window.addEventListener('load', () => {
-      navigator.serviceWorker.register('sw.js').then((reg) => {
+      navigator.serviceWorker.register('/sw.js').then((reg) => {
         if (reg.waiting) offer(reg.waiting);
         reg.addEventListener('updatefound', () => {
           const nw = reg.installing;
@@ -766,5 +824,6 @@
     });
   })();
 
+  syncLegacyUrl();
   render();
 })();

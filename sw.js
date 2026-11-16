@@ -1,10 +1,10 @@
 /* DirittiChiari 2027 — service worker.
  * Strategia: rete prima (contenuti sempre aggiornati), cache come riserva offline.
  * Il nuovo SW resta in attesa finché l'utente non tocca "Aggiorna" nel banner. */
-const VERSION = '1.2.0'; // tenere allineato con APP_VERSION in js/app.js
+const VERSION = '1.3.0'; // tenere allineato con APP_VERSION in js/app.js
 const CACHE = 'dc2027-' + VERSION;
-const SHELL = ['./', 'index.html', 'css/app.css?v=1.2.0', 'css/modulo-contatti.css?v=1.2.0', 'js/rules.js?v=1.2.0', 'js/modulo-contatti.js?v=1.2.0', 'js/app.js?v=1.2.0', 'manifest.webmanifest',
-  'icons/icon-192.png', 'icons/icon-512.png', 'icons/favicon.svg', 'icons/apple-touch-icon.png'];
+const SHELL = ['/', '/css/app.css?v=1.3.0', '/css/modulo-contatti.css?v=1.3.0', '/js/rules.js?v=1.3.0', '/js/modulo-contatti.js?v=1.3.0', '/js/app.js?v=1.3.0', '/manifest.webmanifest',
+  '/icons/icon-192.png', '/icons/icon-512.png', '/icons/favicon.svg', '/icons/apple-touch-icon.png'];
 
 self.addEventListener('install', (e) => {
   e.waitUntil(caches.open(CACHE).then((c) => c.addAll(SHELL)).catch(() => null));
@@ -25,6 +25,6 @@ self.addEventListener('fetch', (e) => {
     fetch(req, { cache: 'no-store' }).then((res) => {
       if (res && res.ok && res.type === 'basic') { const copy = res.clone(); caches.open(CACHE).then((c) => c.put(req, copy)); }
       return res;
-    }).catch(() => caches.match(req, { ignoreSearch: false }).then((m) => m || (req.mode === 'navigate' ? caches.match('index.html') : Response.error())))
+    }).catch(() => caches.match(req, { ignoreSearch: false }).then((m) => m || (req.mode === 'navigate' ? caches.match('/') : Response.error())))
   );
 });
