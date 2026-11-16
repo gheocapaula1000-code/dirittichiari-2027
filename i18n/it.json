@@ -259,6 +259,25 @@
     "step3_body": {
       "value": "Fatto: DirittiOk è sulla schermata Home, come le altre app."
     },
+    "android_step1_title": {
+      "value": "Tocca i tre puntini «⋮»",
+      "note": "Passo 1 della guida Android (menu del browser), non iOS."
+    },
+    "android_step1_body": {
+      "value": "Sono in alto a destra nella barra di Chrome. Su alcuni telefoni il menu si chiama «Menu»."
+    },
+    "android_step2_title": {
+      "value": "Scegli «Installa app»"
+    },
+    "android_step2_body": {
+      "value": "Può anche chiamarsi «Aggiungi alla schermata Home» o «Installa DirittiOk». Se non lo vedi, scorri il menu."
+    },
+    "android_step3_title": {
+      "value": "Conferma con «Installa»"
+    },
+    "android_step3_body": {
+      "value": "Fatto: DirittiOk è sulla schermata Home, come le altre app."
+    },
     "got_it": {
       "value": "Ho capito"
     },
@@ -1190,6 +1209,10 @@
     "auu_offerta": {
       "value": "Da {min} a {max} al mese per figlio minorenne"
     },
+    "auu_importo": {
+      "value": "Circa {amount} al mese per ogni figlio minorenne (importo base, senza maggiorazioni)",
+      "note": "Testo di /risultati con l'importo calcolato. {amount} è già formattato nella lingua."
+    },
     "bonus_nome": {
       "value": "Bonus sociali luce, gas, acqua e TARI"
     },
@@ -1250,6 +1273,14 @@
     "nido_offerta": {
       "value": "3.600 € per i nati dal 2024; 3.000/2.500/1.500 € per i nati prima",
       "note": "Importi ufficiali: non modificarli."
+    },
+    "nido_importo_alto": {
+      "value": "{a} (nati dal 2024) oppure {b}/{c} (nati prima) l'anno",
+      "note": "Importo più alto del bonus nido in /risultati. {a} {b} {c} sono già formattati."
+    },
+    "nido_importo_basso": {
+      "value": "{amount} l'anno",
+      "note": "Importo più basso del bonus nido in /risultati. {amount} è già formattato."
     },
     "nuovinati_nome": {
       "value": "Bonus nuovi nati"

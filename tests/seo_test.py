@@ -116,7 +116,7 @@ def main():
         check('DC_VERSION = "1.5.0"' in ver, 'versione unica 1.5.0')
 
         # lingue
-        for lp, hrefl, h1 in (('/en', 'en', 'I tuoi aiuti in Italia'), ('/bn', 'bn', 'I tuoi aiuti in Italia')):
+        for lp, hrefl, h1 in (('/en', 'en', 'Your benefits in Italy'), ('/bn', 'bn', 'ইতালিতে আপনার সরকারি সহায়তা')):
             st, hd, bd = raw_headers(lp)
             tx = bd.decode('utf-8', 'replace')
             check(st == 200, f'{lp} è 200 ({st})')
@@ -128,7 +128,7 @@ def main():
         check(st == 301 and hd.get('location','').rstrip('/').endswith('/en/stima'), f'/en/stima/ 301 ({st} {hd.get("location")})')
         st, hd, bd = raw_headers('/en/pagina-inesistente-xyz')
         tx = bd.decode('utf-8', 'replace')
-        check(st == 404 and 'lang="en"' in tx and 'Pagina non trovata' in tx, f'/en sconosciuta 404 lingua ({st})')
+        check(st == 404 and 'lang="en"' in tx and 'Page not found' in tx, f'/en sconosciuta 404 lingua ({st})')
         sm_ok = 'https://dirittiok.com/en' in sm and 'https://dirittiok.com/bn/stima' in sm and 'hreflang="bn"' in sm
         check(sm_ok, 'sitemap contiene /en, /bn e hreflang')
         check('window.DC_MSG' in open(os.path.join(ROOT, 'js/messages.js'), encoding='utf-8').read(), 'messages.js presente')

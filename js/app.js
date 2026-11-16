@@ -12,8 +12,10 @@
   const D = window.DC;
   const R = D.RULES;
   const $app = document.getElementById('app');
-  const eur = (x) => D.fmtEuro(Math.round(Number(x) || 0));
-  const eur2 = (x) => D.fmtEuro(x, 2);
+  function numLoc() { return lang() === 'it' ? 'it' : 'en'; }
+  const eur = (x) => D.fmtEuro(Math.round(Number(x) || 0), null, numLoc());
+  const eur2 = (x) => D.fmtEuro(x, 2, numLoc());
+  const dec = (x) => D.fmtDec(x, numLoc());
   const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 
   const SITE = 'https://dirittiok.com/';
@@ -481,14 +483,14 @@
         ${riga(t('results.calc_mobiliare', { lordo: eur(p.mobiliare.lordo), esclusi: p.mobiliare.titoliEsclusi ? t('results.calc_titoli_esclusi', { amount: eur(p.mobiliare.titoliEsclusi) }) : '', franchigia: eur(p.mobiliare.franchigia) }), eur(p.mobiliare.netto))}
         ${riga(t('results.calc_isp'), eur(p.totale), 'tot')}
         ${riga(t('results.calc_ise'), eur(x.ise), 'tot')}
-        ${riga(t('results.calc_scala', { parti: x.scala.parti.map((q) => esc(q.voce) + ' ' + q.valore.toLocaleString(lang() === 'it' ? 'it-IT' : (lang() === 'bn' ? 'bn' : 'en'))).join(' + ') }), x.scala.valore.toLocaleString(lang() === 'it' ? 'it-IT' : (lang() === 'bn' ? 'bn' : 'en')))}
+        ${riga(t('results.calc_scala', { parti: x.scala.parti.map((q) => esc(q.voceKey ? t(q.voceKey, { n: q.n }) : q.voce) + ' ' + dec(q.valore)).join(' + ') }), dec(x.scala.valore))}
         ${riga(t('results.calc_isee'), eur2(x.isee), 'tot')}
       </table></details>`;
   }
 
   function viewRisultati() {
     if (!hasData()) return `<section class="card"><h1>${esc(t('seo.risultati_empty_h1'))}</h1><p>${esc(t('results.empty_p1'))}</p><p>${rich('results.empty_p2')}</p><a class="btn btn-primary" href="${u('/stima')}">${esc(t('results.empty_cta'))}</a></section>${disclaimer()}${updatedLine('risultati')}`;
-    const ris = D.calcolaTutto(load());
+    const ris = D.calcolaTutto(load(), { t, locale: numLoc() });
     const d = ris.input;
     const res = ris.residuo;
     const neg = res.mensile < 0;
@@ -542,7 +544,7 @@
         <div class="kpi"><span class="tag">${esc(t('results.kpi_ordinario'))}</span><span class="value">${eur(ris.ordinario.isee)}</span>
           <span class="muted">${esc(t('results.kpi_ordinario_note'))}</span>${dettaglioIsee(ris.ordinario)}</div>
         <div class="kpi"><span class="tag">${esc(t('results.kpi_speciale'))}</span><span class="value">${eur(ris.speciale.isee)}</span>
-          <span class="muted">${esc(t('results.kpi_speciale_note', { franchigia: d.capoluogoMetro ? '120.000 €' : '91.500 €' }))}</span>
+          <span class="muted">${esc(t('results.kpi_speciale_note', { franchigia: eur(d.capoluogoMetro ? R.casaSpeciale.franchigiaMetro : R.casaSpeciale.franchigia) }))}</span>
           ${gain > 0.5 ? `<div class="notice ok small mt8">${esc(t('results.kpi_lower', { amount: eur(gain) }))}</div>` : ''}
           ${ris.input.auu2025 > 0 ? `<p class="small">${rich('results.kpi_net_auu', { amount: eur(ris.specialeNeutralizzato) })}</p>` : ''}
           ${dettaglioIsee(ris.speciale)}</div>

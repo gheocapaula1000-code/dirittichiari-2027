@@ -250,6 +250,23 @@ def install_and_i18n(browser, width=390):
         page.wait_for_selector("h1")
         page.wait_for_timeout(400)
         check(page.is_visible("#install-banner"), f"{tag}: banner Android/Chromium non visibile quando installabile")
+        # prima visita reale: UA Android, niente ?installa=, storage vuoto, anche senza beforeinstallprompt
+        ctx0 = browser.new_context(
+            viewport={"width": width, "height": 844}, has_touch=True, is_mobile=True,
+            user_agent="Mozilla/5.0 (Linux; Android 14; Pixel 7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Mobile Safari/537.36",
+        )
+        page0 = ctx0.new_page()
+        page0.goto(BASE + "/")
+        page0.wait_for_selector("h1")
+        page0.wait_for_timeout(500)
+        check(page0.is_visible("#install-banner"), f"{tag}: banner assente alla prima visita Android (fallback)")
+        if page0.is_visible("#install-banner"):
+            txt = page0.inner_text("#install-banner")
+            check("Installa" in txt or "Install" in txt, f"{tag}: testo banner prima visita {txt!r}")
+        # la 7 giorni di chiusura non deve scattare da sola
+        dismissed = page0.evaluate("() => Object.keys(localStorage).filter(k => k.indexOf('installa-dismiss') !== -1)")
+        check(not dismissed, f"{tag}: dismiss già scritto alla prima visita {dismissed}")
+        ctx0.close()
         # standalone: nascosto
         ctx2 = browser.new_context(viewport={"width": width, "height": 844}, has_touch=True, is_mobile=True)
         page2 = ctx2.new_page()
@@ -284,6 +301,102 @@ def install_and_i18n(browser, width=390):
     page.wait_for_selector("h1")
     check(page.evaluate("() => document.documentElement.lang") == "bn", f"{tag}: lang bn")
     no_hscroll(page, f"{tag} bn")
+    ctx.close()
+
+
+LANGS = {
+    'it': {'prefix': '', 'h1': 'I tuoi aiuti in Italia', 'residuo': '1.180'},
+    'en': {'prefix': '/en', 'h1': 'Your benefits in Italy', 'residuo': '1,180'},
+    'bn': {'prefix': '/bn', 'h1': 'ইতালিতে আপনার সরকারি সহায়তা', 'residuo': '1,180'},
+}
+PAGES = ['', '/stima', '/ottimizzazione', '/checklist-dsu', '/diritti-pa', '/fonti', '/metodo', '/contatti', '/privacy', '/risultati']
+
+def lang_pages(browser, width, langs=None, estimator=False, form_check=False, desktop=False):
+    """Pagine IT/EN/BN: overflow, barra in basso, H1, stime e form (validazione, niente invio reale)."""
+    langs = langs or ('it', 'en', 'bn')
+    name = browser.browser_type.name
+    tag0 = f'{name}@{"1280" if desktop else width}'
+    print('▶', tag0, 'lingue', ','.join(langs))
+    ctx = browser.new_context(viewport={'width': width, 'height': 800}, has_touch=not desktop, is_mobile=(name == 'chromium' and not desktop))
+    page = ctx.new_page()
+    errors = []
+    page.on('pageerror', lambda e: errors.append(str(e)))
+    for code in langs:
+        info = LANGS[code]
+        pre = info['prefix']
+        slugs = PAGES if width in (390, 1280) else ['', '/stima', '/diritti-pa', '/contatti']
+        for slug in slugs:
+            url = BASE + (pre + slug if slug else (pre or '/'))
+            page.goto(url)
+            page.wait_for_selector('h1')
+            where = f'{tag0} {code} {slug or "/"}'
+            check(page.evaluate('() => document.documentElement.lang') == code, f'{where}: lang {code}')
+            check(page.locator('h1').count() == 1, f'{where}: un solo h1')
+            no_hscroll(page, where)
+            if not desktop:
+                nav_visible(page, where)
+            if slug in ('', '/'):
+                check(info['h1'] in page.inner_text('h1'), f'{where}: H1 {page.inner_text("h1")!r}')
+                check(page.locator('.lang-switch').count() == 1, f'{where}: switcher')
+            if code == 'bn' and slug in ('', '/'):
+                fam = page.evaluate('() => getComputedStyle(document.body).fontFamily')
+                check('Noto Sans Bengali' in fam or 'Nirmala' in fam or 'Noto Sans' in fam, f'{where}: font bengalese {fam!r}')
+                w = page.evaluate("() => { const s=document.createElement('span'); s.textContent='\u09b8\u09b9\u09be\u09af\u09bc\u09a4\u09be'; s.style.visibility='hidden'; document.body.appendChild(s); const w=s.getBoundingClientRect().width; s.remove(); return w; }")
+                check(w > 20, f'{where}: glifo bengalese troppo stretto ({w})')
+        if form_check:
+            page.goto(BASE + pre + '/contatti')
+            page.wait_for_selector('form:has(textarea[name=message])')
+            page.locator('form:has(textarea[name=message]) button[type=submit]').click()
+            invalids = page.locator('[aria-invalid="true"]').count()
+            errs = page.locator('.mc-e').count()
+            check(invalids >= 1 and errs >= 1, f'{tag0} {code} contatti: validazione assente (invalid={invalids} err={errs})')
+        if estimator:
+            page.evaluate("() => { localStorage.removeItem('dc2027:dati'); localStorage.removeItem('dc2027:passo'); }")
+            page.goto(BASE + pre + '/stima')
+            page.wait_for_selector('h1')
+            ok = poll(page, "() => !!document.getElementById('f-componenti')", 10)
+            if not ok:
+                check(False, f'{tag0} {code}: wizard non montato su {page.url} h1={page.inner_text("h1")[:80]!r} app={page.locator("#app").inner_text()[:120]!r}')
+                continue
+            page.wait_for_selector('#f-componenti')
+            fill(page, 'componenti', 3); fill(page, 'figli', 1); fill(page, 'minori', 1)
+            page.locator('#f-minori').dispatch_event('change')
+            page.wait_for_selector('input[name="genitoriLavorano"]')
+            radio(page, 'genitoriLavorano', 'si')
+            fill(page, 'under3', 1)
+            page.click('button[type=submit]')
+            page.wait_for_selector('#f-redditoDip')
+            fill(page, 'redditoDip', 30000); page.locator('#f-redditoDip').dispatch_event('change')
+            page.wait_for_selector('#f-nDip'); fill(page, 'nDip', 2)
+            fill(page, 'auu2025', 1500); fill(page, 'nettoMensile', 2100)
+            page.click('button[type=submit]')
+            page.wait_for_selector('input[name="abitazione"]')
+            radio(page, 'abitazione', 'proprieta')
+            page.wait_for_selector('#f-rataMutuo')
+            fill(page, 'rataMutuo', 550); fill(page, 'bollette', 180); fill(page, 'trasporti', 90); fill(page, 'prestiti', 100)
+            page.click('button[type=submit]')
+            page.wait_for_selector('#f-valoreCasa')
+            page.locator('details:has(#rendita) summary').click()
+            page.fill('#rendita', '800'); page.click('[data-action=rendita]')
+            check(page.input_value('#f-valoreCasa') == '134400', f'{tag0} {code}: rendita -> valore IMU ({page.input_value("#f-valoreCasa")})')
+            fill(page, 'mutuoCasa', 60000); fill(page, 'contiSaldo', 8000); fill(page, 'contiGiacenza', 6000)
+            page.click('button[type=submit]')
+            page.wait_for_selector('input[name="peggiorata"]')
+            radio(page, 'peggiorata', 'no')
+            page.click('button[type=submit]')
+            page.wait_for_selector('.big-result')
+            big = page.inner_text('.big-result')
+            check(info['residuo'] in big, f'{tag0} {code}: residuo atteso {info["residuo"]} -> {big!r}')
+            check(page.locator('.benefit').count() >= 5, f'{tag0} {code}: elenco aiuti')
+            adi = page.locator('#benefici article.benefit h3').all_inner_texts()
+            check(any('Assegno di Inclusione' in x or 'ADI' in x for x in adi), f'{tag0} {code}: nome ADI {adi!r}')
+            if code != 'it':
+                body = page.inner_text('#benefici')
+                check('10,140' in body, f'{tag0} {code}: soglia ADI non in formato locale {body[:240]!r}')
+            no_hscroll(page, f'{tag0} {code} risultati')
+            if not desktop:
+                nav_visible(page, f'{tag0} {code} risultati')
+    check(not errors, f'{tag0}: errori JS {errors}')
     ctx.close()
 
 
@@ -343,6 +456,11 @@ def main():
                 b = bt.launch()
                 for w in (320, 390, 440):
                     run_flow(b, w)
+                # EN/BN: overflow e nav a 320/390/440, stima e form a 390; desktop 1280 per tutte le lingue
+                lang_pages(b, 320, langs=('en', 'bn'))
+                lang_pages(b, 390, langs=('en', 'bn'), estimator=True, form_check=True)
+                lang_pages(b, 440, langs=('en', 'bn'))
+                lang_pages(b, 1280, langs=('it', 'en', 'bn'), desktop=True)
                 sw_and_banner(b, site)
                 install_and_i18n(b)
                 b.close()

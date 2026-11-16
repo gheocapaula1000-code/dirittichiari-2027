@@ -175,3 +175,23 @@ test('con ISEE corrente conveniente gli aiuti usano il corrente', () => {
   assert.equal(r.beneficiConCorrente, true);
   assert.equal(r.benefici.find((b) => b.id === 'adi').esito, 'si');
 });
+
+test('fmtEuro segue la lingua: IT 7.000 €, EN/BN 7,000 € con cifre latine', () => {
+  assert.equal(D.fmtEuro(7000, 0, 'it'), '7.000 €');
+  assert.equal(D.fmtEuro(7000, 0, 'en'), '7,000 €');
+  assert.equal(D.fmtEuro(7000, 0, 'bn'), '7,000 €');
+  assert.equal(D.fmtEuro(17468.51, 2, 'it'), '17.468,51 €');
+  assert.equal(D.fmtEuro(17468.51, 2, 'en'), '17,468.51 €');
+  assert.equal(D.fmtEuro(0.5, 1, 'it'), '0,5 €');
+  assert.equal(D.fmtEuro(0.5, 1, 'en'), '0.5 €');
+  assert.equal(D.fmtDec(0.5, 'it'), '0,5');
+  assert.equal(D.fmtDec(1.57, 'en'), '1.57');
+  assert.equal(D.fmtDec(1.57, 'bn'), '1.57');
+  const en = D.calcolaTutto({ componenti: 2, figli: 1, minori: 1, genitoreSolo: true, redditoDip: 9000, nDip: 1 }, {
+    locale: 'en',
+    t: (k, p) => k === 'benefits.adi_nome' ? 'Assegno di Inclusione (ADI)' : (k + (p ? JSON.stringify(p) : '')),
+  });
+  const adi = en.benefici.find((b) => b.id === 'adi');
+  assert.ok(adi.soglia.includes('10,140 €'), adi.soglia);
+  assert.equal(adi.nome, 'Assegno di Inclusione (ADI)');
+});

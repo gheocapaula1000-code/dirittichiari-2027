@@ -6,7 +6,7 @@
  * chiudibile, ricordato 7 giorni. CTA anche in footer e in hero. */
 (function (w) {
   'use strict';
-  var KEY = 'dc2027:installa-dismiss';
+  var KEY = 'dc2027:installa-dismiss:v1.5';
   var RESHOW = 7 * 24 * 60 * 60 * 1000;
   var deferred = null;
   var installed = false;
@@ -29,6 +29,11 @@
     if (/iPhone|iPad|iPod/.test(ua)) return true;
     return /Macintosh/.test(ua) && (nav.maxTouchPoints || 0) > 1;
   }
+  /** Chrome/Edge/Samsung su Android: mostriamo il banner anche se beforeinstallprompt non arriva. */
+  function isAndroid() {
+    var ua = (w.navigator && w.navigator.userAgent) || '';
+    return /Android/i.test(ua);
+  }
   function preview() {
     try {
       var v = new URLSearchParams(w.location.search).get('installa');
@@ -42,6 +47,7 @@
     if (w.self !== w.top) return 'none';
     if (isIos()) return 'ios';
     if (deferred) return 'android';
+    if (isAndroid()) return 'android'; // fallback visibile se l'evento nativo non parte
     return 'none';
   }
   function dismissedRecently() {
@@ -74,6 +80,17 @@
   function shouldShowCta() { return surface() !== 'none'; }
 
   var SHARE = '<svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v11"/><path d="m8 7 4-4 4 4"/><path d="M7 11v8a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2v-8"/></svg>';
+  var MENU = '<svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" fill="currentColor"><circle cx="12" cy="5" r="1.7"/><circle cx="12" cy="12" r="1.7"/><circle cx="12" cy="19" r="1.7"/></svg>';
+  function stepsHtml() {
+    var android = surface() !== 'ios';
+    var p = android ? 'install.android_step' : 'install.step';
+    var icon = android ? MENU : SHARE;
+    return [1, 2, 3].map(function (n) {
+      var extra = n === 1 ? ' ' + icon : '';
+      return '<li><span class="n">' + n + '</span><span><strong>' + escapeHtml(t(p + n + '_title')) + '</strong>' + extra +
+        '<br><span class="muted">' + escapeHtml(t(p + n + '_body')) + '</span></span></li>';
+    }).join('');
+  }
 
   function fillBanner() {
     var el = document.getElementById('install-banner');
@@ -156,11 +173,7 @@
           '<button type="button" class="icon-btn" data-install-close aria-label="' + escapeHtml(t('install.close')) + '">×</button>' +
         '</div>' +
         '<p class="muted">' + escapeHtml(t('install.sheet_intro')) + '</p>' +
-        '<ol class="install-steps">' +
-          '<li><span class="n">1</span><span><strong>' + escapeHtml(t('install.step1_title')) + '</strong> ' + SHARE + '<br><span class="muted">' + escapeHtml(t('install.step1_body')) + '</span></span></li>' +
-          '<li><span class="n">2</span><span><strong>' + escapeHtml(t('install.step2_title')) + '</strong><br><span class="muted">' + escapeHtml(t('install.step2_body')) + '</span></span></li>' +
-          '<li><span class="n">3</span><span><strong>' + escapeHtml(t('install.step3_title')) + '</strong><br><span class="muted">' + escapeHtml(t('install.step3_body')) + '</span></span></li>' +
-        '</ol>' +
+        '<ol class="install-steps">' + stepsHtml() + '</ol>' +
         '<button type="button" class="btn btn-primary btn-block" data-install-close>' + escapeHtml(t('install.got_it')) + '</button>' +
       '</div>';
     document.body.appendChild(d);
@@ -210,6 +223,7 @@
     surface: surface,
     isStandalone: isStandalone,
     isIos: isIos,
+    isAndroid: isAndroid,
     shouldShowBanner: shouldShowBanner,
     shouldShowCta: shouldShowCta
   };

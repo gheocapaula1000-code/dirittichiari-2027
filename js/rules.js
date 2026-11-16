@@ -152,22 +152,37 @@
     const c = Math.max(1, i0(d.componenti));
     const t = RULES.scala;
     let p = c <= 5 ? t.base[c] : t.base[5] + t.extraOltre5 * (c - 5);
-    const parti = [{ voce: `${c} ${c === 1 ? 'componente' : 'componenti'}`, valore: p }];
+    const parti = [{
+      voce: `${c} ${c === 1 ? 'componente' : 'componenti'}`,
+      voceKey: c === 1 ? 'results.scala_componente' : 'results.scala_componenti',
+      n: c, valore: p
+    }];
 
     const f = i0(d.figli);
     const tab = tipo === 'speciale' ? RULES.maggFigliSpeciale : RULES.maggFigliOrdinario;
     const chiave = Math.min(f, 5);
-    if (tab[chiave]) { p += tab[chiave]; parti.push({ voce: `${f} figli nel nucleo`, valore: tab[chiave] }); }
+    if (tab[chiave]) {
+      p += tab[chiave];
+      parti.push({ voce: `${f} figli nel nucleo`, voceKey: 'results.scala_figli', n: f, valore: tab[chiave] });
+    }
 
     // lett. b) e c): figli minorenni con entrambi i genitori (o l'unico) al lavoro ≥ 6 mesi,
     // oppure genitore solo (anche non lavoratore) con figli minorenni
     if (i0(d.minori) > 0 && (d.genitoreSolo || d.genitoriLavorano)) {
       const m = i0(d.under3) > 0 ? RULES.maggUnder3 : RULES.maggMinori;
-      p += m; parti.push({ voce: i0(d.under3) > 0 ? 'figli minorenni, almeno uno sotto i 3 anni' : 'figli minorenni', valore: m });
+      p += m;
+      parti.push({
+        voce: i0(d.under3) > 0 ? 'figli minorenni, almeno uno sotto i 3 anni' : 'figli minorenni',
+        voceKey: i0(d.under3) > 0 ? 'results.scala_minori_under3' : 'results.scala_minori',
+        valore: m
+      });
     }
     // lett. c-bis): 0,5 per ogni componente con disabilità media, grave o non autosufficiente
     const dis = Math.min(i0(d.disabili), c);
-    if (dis > 0) { p += RULES.maggDisabile * dis; parti.push({ voce: `${dis} con disabilità`, valore: RULES.maggDisabile * dis }); }
+    if (dis > 0) {
+      p += RULES.maggDisabile * dis;
+      parti.push({ voce: `${dis} con disabilità`, voceKey: 'results.scala_disabili', n: dis, valore: RULES.maggDisabile * dis });
+    }
 
     return { valore: round2(p), parti };
   }
@@ -288,94 +303,103 @@
    * Elenco delle prestazioni con esito indicativo.
    * esito: 'si' (soglia ISEE rispettata), 'no' (soglia superata), 'forse' (servono altri requisiti / bando)
    */
-  function benefici(d, ris) {
+  function benefici(d, ris, i18n) {
     const ord = ris.ordinario.isee;
     const spe = ris.speciale.isee;
     const speN = ris.specialeNeutralizzato;
     const out = [];
     const f = RULES.fonti;
     const minori = i0(d.minori), figli = i0(d.figli);
-    const fmt = (x) => fmtEuro(x);
+    const locale = (i18n && i18n.locale) || 'it';
+    const fmt = (x, dec) => fmtEuro(x, dec, locale);
+    const tx = (key, params, fallback) => {
+      if (i18n && typeof i18n.t === 'function') return i18n.t(key, params);
+      return String(fallback || '').replace(/\{([a-zA-Z0-9_]+)\}/g, (_, k) => (params && params[k] != null ? String(params[k]) : ''));
+    };
 
     // Assegno di Inclusione — usa l'ISEE speciale (L. 199/2025)
     const adiTarget = minori > 0 || i0(d.disabili) > 0 || i0(d.over60) > 0;
     out.push({
-      id: 'adi', nome: 'Assegno di Inclusione (ADI)',
-      soglia: `ISEE per prestazioni familiari e inclusione fino a ${fmt(RULES.adi.isee)}`,
-      importo: 'Integra il reddito familiare fino a 6.500 € l\'anno × scala ADI, più fino a 3.640 € se in affitto',
+      id: 'adi', nome: tx('benefits.adi_nome', null, 'Assegno di Inclusione (ADI)'),
+      soglia: tx('benefits.adi_soglia', { amount: fmt(RULES.adi.isee) }, `ISEE per prestazioni familiari fino a ${fmt(RULES.adi.isee)}`),
+      importo: tx('benefits.adi_importo', null, 'Integra il reddito familiare fino a 6.500 € l\'anno × scala ADI, più fino a 3.640 € se in affitto'),
       esito: spe <= RULES.adi.isee ? (adiTarget ? 'si' : 'forse') : 'no',
-      nota: adiTarget ? 'Servono anche requisiti di reddito familiare, patrimonio, residenza e veicoli.' : 'Spetta solo se nel nucleo c\'è un minorenne, una persona con disabilità, una persona con almeno 60 anni o in carico ai servizi socio-sanitari.',
+      nota: adiTarget
+        ? tx('benefits.adi_nota_si', null, 'Servono anche requisiti di reddito familiare, patrimonio, residenza e veicoli.')
+        : tx('benefits.adi_nota_no', null, 'Spetta solo se nel nucleo c\'è un minorenne, una persona con disabilità, una persona con almeno 60 anni o in carico ai servizi socio-sanitari.'),
       stato: RULES.adi.stato, fonte: f.adi
     });
 
     if (figli > 0 || minori > 0) {
       const base = stimaAuuBase(speN);
       out.push({
-        id: 'auu', nome: 'Assegno Unico per i figli',
-        soglia: `Importo pieno fino a ${fmt(RULES.auu.iseeMin)}, minimo da ${fmt(RULES.auu.iseeMax)}`,
-        importo: `Circa ${fmt(base)} al mese per ogni figlio minorenne (importo base, senza maggiorazioni)`,
+        id: 'auu', nome: tx('benefits.auu_nome', null, 'Assegno Unico per i figli'),
+        soglia: tx('benefits.auu_soglia', { min: fmt(RULES.auu.iseeMin), max: fmt(RULES.auu.iseeMax) }, `Importo pieno fino a ${fmt(RULES.auu.iseeMin)}; minimo da ${fmt(RULES.auu.iseeMax)}`),
+        importo: tx('benefits.auu_importo', { amount: fmt(base) }, `Circa ${fmt(base)} al mese per ogni figlio minorenne (importo base, senza maggiorazioni)`),
         esito: 'si',
-        nota: 'Spetta a tutti, anche senza ISEE (importo minimo). Valori 2026: quelli 2027 vengono rivalutati con l\'inflazione a inizio anno.',
+        nota: tx('benefits.auu_nota', null, 'Spetta a tutti, anche senza ISEE (importo minimo). Valori 2026: quelli 2027 vengono rivalutati con l\'inflazione a inizio anno.'),
         stato: RULES.auu.stato, fonte: f.auu
       });
     }
 
     const sogliaBS = figli >= 4 ? RULES.bonusSociali.iseeFamNumerose : RULES.bonusSociali.isee;
     out.push({
-      id: 'bonus', nome: 'Bonus sociali luce, gas, acqua e TARI',
-      soglia: `ISEE ordinario fino a ${fmt(RULES.bonusSociali.isee)} (fino a ${fmt(RULES.bonusSociali.iseeFamNumerose)} con almeno 4 figli a carico)`,
-      importo: 'Sconto automatico in bolletta; 25% sulla TARI',
+      id: 'bonus', nome: tx('benefits.bonus_nome', null, 'Bonus sociali luce, gas, acqua e TARI'),
+      soglia: tx('benefits.bonus_soglia', { isee: fmt(RULES.bonusSociali.isee), fam: fmt(RULES.bonusSociali.iseeFamNumerose) }, `ISEE fino a ${fmt(RULES.bonusSociali.isee)} (${fmt(RULES.bonusSociali.iseeFamNumerose)} con 4+ figli a carico)`),
+      importo: tx('benefits.bonus_importo', null, 'Sconto automatico in bolletta; 25% sulla TARI'),
       esito: ord <= sogliaBS ? 'si' : 'no',
-      nota: 'Arriva in automatico se presenti la DSU e il contratto è intestato a un componente del nucleo. Soglia aggiornata da ARERA ogni tre anni (dal 2026).',
+      nota: tx('benefits.bonus_nota', null, 'Arriva in automatico se presenti la DSU e il contratto è intestato a un componente del nucleo. Soglia aggiornata da ARERA ogni tre anni (dal 2026).'),
       stato: RULES.bonusSociali.stato, fonte: f.arera
     });
 
     out.push({
-      id: 'dedicata', nome: 'Carta "Dedicata a te"',
-      soglia: `ISEE ordinario fino a ${fmt(RULES.cartaDedicata.isee)}`,
-      importo: `${fmt(RULES.cartaDedicata.importo)} l'anno per la spesa alimentare`,
+      id: 'dedicata', nome: tx('benefits.dedicata_nome', null, 'Carta «Dedicata a te»'),
+      soglia: tx('benefits.dedicata_soglia', { amount: fmt(RULES.cartaDedicata.isee) }, `ISEE ordinario fino a ${fmt(RULES.cartaDedicata.isee)}`),
+      importo: tx('benefits.dedicata_offerta', { amount: fmt(RULES.cartaDedicata.importo) }, `${fmt(RULES.cartaDedicata.importo)} l'anno, lista unica 2026-2027`),
       esito: ord <= RULES.cartaDedicata.isee ? 'forse' : 'no',
-      nota: 'Non si fa domanda: la lista dei beneficiari 2026-2027 è unica e la compilano INPS e Comuni con l\'ISEE 2026. Esclusi chi ha ADI, Carta Acquisti, NASpI, CIG e simili.',
+      nota: tx('benefits.dedicata_nota', null, 'Non si fa domanda: la lista dei beneficiari 2026-2027 è unica e la compilano INPS e Comuni con l\'ISEE 2026. Esclusi chi ha ADI, Carta Acquisti, NASpI, CIG e simili.'),
       stato: RULES.cartaDedicata.stato, fonte: f.dedicata
     });
 
     const caTarget = i0(d.under3) > 0 || i0(d.over67) > 0 || i0(d.over60) > 0;
     out.push({
-      id: 'acquisti', nome: 'Carta Acquisti',
-      soglia: `ISEE fino a ${fmt(RULES.cartaAcquisti.isee)}`,
-      importo: 'Carta prepagata ricaricata ogni due mesi',
+      id: 'acquisti', nome: tx('benefits.acquisti_nome', null, 'Carta Acquisti'),
+      soglia: tx('benefits.acquisti_soglia', { amount: fmt(RULES.cartaAcquisti.isee) }, `ISEE fino a ${fmt(RULES.cartaAcquisti.isee)}`),
+      importo: tx('benefits.acquisti_importo', null, 'Carta prepagata ricaricata ogni due mesi'),
       esito: ord <= RULES.cartaAcquisti.isee ? (caTarget ? 'forse' : 'no') : 'no',
-      nota: 'Per bambini sotto i 3 anni e persone dai 65 anni in su, con limiti anche di reddito. Soglia 2026, rivalutata ogni anno.',
+      nota: tx('benefits.acquisti_nota', null, 'Per bambini sotto i 3 anni e persone dai 65 anni in su, con limiti anche di reddito. Soglia 2026, rivalutata ogni anno.'),
       stato: RULES.cartaAcquisti.stato, fonte: f.cartaAcquisti
     });
 
     if (i0(d.under3) > 0) {
-      const imp = speN <= RULES.nido.soglia2 ? '3.600 € (nati dal 2024) oppure 3.000 €/2.500 € (nati prima)' : '1.500 €';
+      const imp = speN <= RULES.nido.soglia2
+        ? tx('benefits.nido_importo_alto', { a: fmt(3600), b: fmt(3000), c: fmt(2500) }, `${fmt(3600)} (nati dal 2024) oppure ${fmt(3000)}/${fmt(2500)} (nati prima) l'anno`)
+        : tx('benefits.nido_importo_basso', { amount: fmt(1500) }, `${fmt(1500)} l'anno`);
       out.push({
-        id: 'nido', nome: 'Bonus asilo nido',
-        soglia: `ISEE minorenni fino a ${fmt(RULES.nido.soglia2)} per l'importo più alto`,
-        importo: `${imp} l'anno`,
+        id: 'nido', nome: tx('benefits.nido_nome', null, 'Bonus asilo nido'),
+        soglia: tx('benefits.nido_soglia', { amount: fmt(RULES.nido.soglia2) }, `Importo pieno con ISEE minorenni fino a ${fmt(RULES.nido.soglia2)}`),
+        importo: imp,
         esito: 'si',
-        nota: 'Si usa l\'ISEE minorenni al netto dell\'Assegno Unico. Importi 2026, da confermare per il 2027.',
+        nota: tx('benefits.nido_nota', null, 'Si usa l\'ISEE minorenni al netto dell\'Assegno Unico. Importi 2026, da confermare per il 2027.'),
         stato: RULES.nido.stato, fonte: f.nido
       });
       out.push({
-        id: 'nuovinati', nome: 'Bonus nuovi nati',
-        soglia: `ISEE fino a ${fmt(RULES.nuoviNati.isee)}`,
-        importo: `${fmt(RULES.nuoviNati.importo)} una tantum per ogni nuovo nato`,
+        id: 'nuovinati', nome: tx('benefits.nuovinati_nome', null, 'Bonus nuovi nati'),
+        soglia: tx('benefits.nuovinati_soglia', { amount: fmt(RULES.nuoviNati.isee) }, `ISEE fino a ${fmt(RULES.nuoviNati.isee)}`),
+        importo: tx('benefits.nuovinati_offerta', { amount: fmt(RULES.nuoviNati.importo) }, `${fmt(RULES.nuoviNati.importo)} una tantum`),
         esito: speN <= RULES.nuoviNati.isee ? 'forse' : 'no',
-        nota: 'Domanda entro 120 giorni dalla nascita o adozione. Confermato per i nati nel 2026: per il 2027 da confermare.',
+        nota: tx('benefits.nuovinati_nota', null, 'Domanda entro 120 giorni dalla nascita o adozione. Confermato per i nati nel 2026: per il 2027 da confermare.'),
         stato: RULES.nuoviNati.stato, fonte: f.nuoviNati
       });
     }
 
     if (d.abitazione === 'affitto') {
       out.push({
-        id: 'affitto', nome: 'Contributo affitto (Comune o Regione)',
-        soglia: 'Soglie diverse in ogni bando',
-        importo: 'Rimborso parziale del canone',
+        id: 'affitto', nome: tx('benefits.affitto_nome', null, 'Contributo affitto (Comune o Regione)'),
+        soglia: tx('benefits.affitto_soglia', null, 'Soglie diverse in ogni bando'),
+        importo: tx('benefits.affitto_importo', null, 'Rimborso parziale del canone'),
         esito: 'forse',
-        nota: 'Serve un contratto registrato. In Veneto il Fondo affitti passa dai bandi dei Comuni: controlla requisiti e scadenze sul sito del tuo Comune.',
+        nota: tx('benefits.affitto_nota', null, 'Serve un contratto registrato. In Veneto il Fondo affitti passa dai bandi dei Comuni: controlla requisiti e scadenze sul sito del tuo Comune.'),
         stato: 'da_confermare', fonte: f.venetoAffitti
       });
     }
@@ -383,7 +407,7 @@
   }
 
   /** Calcolo completo usato dalla pagina Risultati. */
-  function calcolaTutto(input) {
+  function calcolaTutto(input, i18n) {
     const d = Object.assign({}, DEFAULT_INPUT, input || {});
     const ordinario = calcolaIsee(d, 'ordinario');
     const speciale = calcolaIsee(d, 'speciale');
@@ -408,23 +432,34 @@
     // Se l'ISEE corrente è ammesso e più basso, gli aiuti si valutano con quello (è l'ISEE che presenteresti)
     ris.beneficiConCorrente = !!(corrente && corrente.ammesso && corrente.conviene);
     ris.benefici = ris.beneficiConCorrente
-      ? benefici(d, { ordinario: corrente.ordinario, speciale: corrente.speciale, specialeNeutralizzato: corrente.speciale.isee })
-      : benefici(d, ris);
+      ? benefici(d, { ordinario: corrente.ordinario, speciale: corrente.speciale, specialeNeutralizzato: corrente.speciale.isee }, i18n)
+      : benefici(d, ris, i18n);
     return ris;
   }
 
-  /** Formattazione euro in italiano (es. 10.140 €). */
-  function fmtEuro(x, dec) {
-    // Formattazione manuale: separatore delle migliaia sempre presente (es. 1.270 €), uguale su tutti i browser
+  /** Formattazione di un numero con cifre latine. IT: 7.000 / 0,5; EN e BN: 7,000 / 0.5. */
+  function numberLocale(locale) { return locale === 'it' ? 'it' : 'en'; }
+  function fmtGrouped(x, dec, locale) {
+    const loc = numberLocale(locale);
     const v = Number(x) || 0;
     const d = dec == null ? (Number.isInteger(v) ? 0 : 2) : dec;
     const [int, frac] = Math.abs(v).toFixed(d).split('.');
-    const grouped = int.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
-    return (v < 0 ? '−' : '') + grouped + (frac ? ',' + frac : '') + ' €';
+    const grouped = int.replace(/\B(?=(\d{3})+(?!\d))/g, loc === 'it' ? '.' : ',');
+    return (v < 0 ? '−' : '') + grouped + (frac ? (loc === 'it' ? ',' : '.') + frac : '');
+  }
+  function fmtDec(x, locale) {
+    const v = Number(x) || 0;
+    const s = Math.abs(v).toFixed(4).replace(/0+$/, '').replace(/\.$/, '');
+    const dec = s.includes('.') ? s.split('.')[1].length : 0;
+    return fmtGrouped(v, dec, locale);
+  }
+  /** Formattazione euro (es. 10.140 € in italiano, 10,140 € in inglese e bengalese). */
+  function fmtEuro(x, dec, locale) {
+    return fmtGrouped(x, dec, locale) + ' €';
   }
 
   /** Valore IMU di un'abitazione (gruppo A, escluso A/10) partendo dalla rendita catastale: rendita × 1,05 × 160. */
   function valoreImuDaRendita(rendita) { return round2(n0(rendita) * 1.05 * 160); }
 
-  return { RULES, DEFAULT_INPUT, MOTIVI_CORRENTE, scalaEquivalenza, patrimonioMobiliare, casaAbitazione, isp, isr, detrazioneAffitto, calcolaIsee, redditiCorrenti, residuo, stimaAuuBase, benefici, calcolaTutto, fmtEuro, valoreImuDaRendita };
+  return { RULES, DEFAULT_INPUT, MOTIVI_CORRENTE, scalaEquivalenza, patrimonioMobiliare, casaAbitazione, isp, isr, detrazioneAffitto, calcolaIsee, redditiCorrenti, residuo, stimaAuuBase, benefici, calcolaTutto, fmtEuro, fmtDec, fmtGrouped, valoreImuDaRendita };
 });

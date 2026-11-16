@@ -112,3 +112,47 @@ def page_url(lang: str, path: str, site="https://dirittiok.com") -> str:
 
 def count_leaves(flat: dict) -> int:
     return len(flat)
+
+
+def number_locale(lang: str) -> str:
+    """IT usa 7.000 / 0,5; EN e BN (cifre latine) usano 7,000 / 0.5."""
+    return "it" if lang == "it" else "en"
+
+
+def fmt_grouped(value, lang: str = "it", dec=None) -> str:
+    """Formatta un numero con i separatori della lingua, sempre con cifre latine 0-9."""
+    loc = number_locale(lang)
+    try:
+        v = float(value)
+    except (TypeError, ValueError):
+        v = 0.0
+    if dec is None:
+        dec = 0 if float(v).is_integer() else 2
+    sign = "−" if v < 0 else ""
+    body = f"{abs(v):.{int(dec)}f}"
+    intp, _, frac = body.partition(".")
+    if loc == "it":
+        grouped = re.sub(r"\B(?=(\d{3})+(?!\d))", ".", intp)
+        return sign + grouped + (("," + frac) if dec else "")
+    grouped = re.sub(r"\B(?=(\d{3})+(?!\d))", ",", intp)
+    return sign + grouped + (("." + frac) if dec else "")
+
+
+def fmt_euro(value, lang: str = "it", dec=None) -> str:
+    return fmt_grouped(value, lang, dec) + " €"
+
+
+def fmt_dec(value, lang: str = "it") -> str:
+    """Scala e decimali senza zeri finali (0,5 / 0.5, 1,57 / 1.57)."""
+    try:
+        v = float(value)
+    except (TypeError, ValueError):
+        v = 0.0
+    s = f"{abs(v):.4f}".rstrip("0").rstrip(".")
+    if "." in s:
+        intp, frac = s.split(".", 1)
+        dec = len(frac)
+        raw = fmt_grouped(v, lang, dec)
+        # fmt_grouped already applied sign and separators
+        return raw
+    return fmt_grouped(v, lang, 0)

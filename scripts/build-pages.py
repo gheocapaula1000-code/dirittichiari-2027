@@ -9,7 +9,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from i18n_lib import (
     DEFAULT_LANG, DIR_ATTR, HTML_LANG, I18N_DIR, LANGS, LANG_PREFIX, LOCALE,
-    ROUTE_BY_SLUG, SLUG_BY_ROUTE, flatten, lang_path, load_catalog, page_url,
+    ROUTE_BY_SLUG, SLUG_BY_ROUTE, flatten, fmt_euro, lang_path, load_catalog, page_url,
     rich, t_map,
 )
 
@@ -307,31 +307,31 @@ def main_docs(m, lang, p):
 
 
 def main_diritti(m, lang, p):
-    # Testo statico senza importi calcolati in JS: stesse soglie ufficiali già nel catalogo
+    # Testo statico: stesse soglie ufficiali, importi formattati nella lingua della pagina
+    e = lambda v, d=None: fmt_euro(v, lang, d)
     rows = [
-        ("benefits.adi_nome", "benefits.adi_soglia", "benefits.adi_offerta", "adi", "common.verified", "benefits.adi_chi", {"amount": "10.140 €"}),
-        ("benefits.auu_nome", "benefits.auu_soglia", "benefits.auu_offerta", "auu", "common.value_2026", None, {"min": "17.468,51 €", "max": "46.582,71 €"}),
-        ("benefits.bonus_nome", "benefits.bonus_soglia", "benefits.bonus_offerta", "arera", "benefits.bonus_stato", None, {"isee": "9.796 €", "fam": "20.000 €"}),
-        ("benefits.dedicata_nome", "benefits.dedicata_soglia", "benefits.dedicata_offerta", "dedicata", "common.verified", None, {"amount": "15.000 €"}),
-        ("benefits.acquisti_nome", "benefits.acquisti_soglia", "benefits.acquisti_offerta", "cartaAcquisti", "benefits.acquisti_stato", None, {"amount": "8.230,81 €"}),
-        ("benefits.nido_nome", "benefits.nido_soglia", "benefits.nido_offerta", "nido", "common.value_2026", None, {"amount": "40.000 €"}),
-        ("benefits.nuovinati_nome", "benefits.nuovinati_soglia", "benefits.nuovinati_offerta", "nuoviNati", "benefits.nuovinati_stato", None, {"amount": "1.000 €"}),
+        ("benefits.adi_nome", "benefits.adi_soglia", "benefits.adi_offerta", "adi", "common.verified", "benefits.adi_chi", {"amount": e(10140)}),
+        ("benefits.auu_nome", "benefits.auu_soglia", "benefits.auu_offerta", "auu", "common.value_2026", None, {"min": e(17468.51, 2), "max": e(46582.71, 2)}),
+        ("benefits.bonus_nome", "benefits.bonus_soglia", "benefits.bonus_offerta", "arera", "benefits.bonus_stato", None, {"isee": e(9796), "fam": e(20000)}),
+        ("benefits.dedicata_nome", "benefits.dedicata_soglia", "benefits.dedicata_offerta", "dedicata", "common.verified", None, {"amount": e(15000)}),
+        ("benefits.acquisti_nome", "benefits.acquisti_soglia", "benefits.acquisti_offerta", "cartaAcquisti", "benefits.acquisti_stato", None, {"amount": e(8230.81, 2)}),
+        ("benefits.nido_nome", "benefits.nido_soglia", "benefits.nido_offerta", "nido", "common.value_2026", None, {"amount": e(40000)}),
+        ("benefits.nuovinati_nome", "benefits.nuovinati_soglia", "benefits.nuovinati_offerta", "nuoviNati", "benefits.nuovinati_stato", None, {"amount": e(1000)}),
         ("benefits.affitto_nome", "benefits.affitto_soglia", "benefits.affitto_offerta", "venetoAffitti", "benefits.affitto_stato", None, {}),
     ]
-    # Fix auu offerta uses min/max as importi mensili in JS; in static the soglia uses min/max as ISEE and offerta uses different. Keep catalog as in JS view for offerta with monthly amounts:
-    # I'll special-case auu offerta params
+    # AUU: in soglia min/max sono le soglie ISEE; in offerta sono gli importi mensili
     articles = []
     for nome, soglia, offerta, src, stato, chi, params in rows:
         extra = dict(params)
         if nome == "benefits.auu_nome":
-            soglia_html = tv(m, soglia, min="17.468,51 €", max="46.582,71 €")
-            offerta_html = tv(m, offerta, min="58,30 €", max="203,80 €")
+            soglia_html = tv(m, soglia, min=e(17468.51, 2), max=e(46582.71, 2))
+            offerta_html = tv(m, offerta, min=e(58.30, 2), max=e(203.80, 2))
         elif nome == "benefits.dedicata_nome":
-            soglia_html = tv(m, soglia, amount="15.000 €")
-            offerta_html = tv(m, offerta, amount="500 €")
+            soglia_html = tv(m, soglia, amount=e(15000))
+            offerta_html = tv(m, offerta, amount=e(500))
         elif nome == "benefits.nuovinati_nome":
-            soglia_html = tv(m, soglia, amount="40.000 €")
-            offerta_html = tv(m, offerta, amount="1.000 €")
+            soglia_html = tv(m, soglia, amount=e(40000))
+            offerta_html = tv(m, offerta, amount=e(1000))
         else:
             soglia_html = tv(m, soglia, **extra)
             offerta_html = tv(m, offerta, **extra)

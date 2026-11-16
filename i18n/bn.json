@@ -1,5 +1,5 @@
 {
-  "$note": "PLACEHOLDER: i valori sono ancora in italiano, in attesa della traduzione professionale. Non pubblicare come testo finale. Copia strutturale di it.json, con i soli metadati lingua aggiornati. Catalogo stringhe di DirittiOk (DirittiChiari 2027). Ogni voce ha 'value' (italiano di partenza) e, se serve, 'note' per chi traduce. Non tradurre i nomi ufficiali ISEE, DSU, ADI, CAF, INPS, ARERA, MEF, NASpI, TARI, IMU, SPID, CIE, CNS: lasciarli in italiano e, se utile, aggiungere una breve spiegazione. Non inventare testimonianze, cifre o credenziali. Non usare la parola «semplice» da sola (va bene «facile da utilizzare»). I placeholder {cosi} vanno lasciati come sono. I link nel testo usano la forma [etichetta](/percorso) o [etichetta](https://…). **grassetto** resta con gli asterischi.",
+  "$note": "Catalogo stringhe di DirittiOk (DirittiChiari 2027), lingua: bengalese del Bangladesh (bn), scrittura bengalese. Traduzione dall'italiano con revisione interna, senza revisore madrelingua professionale esterno. Le 'note' restano quelle di it.json per chi mantiene il catalogo. Nomi ufficiali (ISEE, DSU, ADI, CAF, INPS, ARERA, MEF, NASpI, TARI, IMU, SPID, CIE, CNS, Assegno Unico, ecc.) restano in italiano. Cifre in numeri occidentali come in it.json. Placeholder {cosi}, link [etichetta](/percorso) e **grassetto** invariati.",
   "meta": {
     "language": {
       "value": "bn",
@@ -24,7 +24,7 @@
       "note": "Termine ufficiale italiano: lasciare invariato in tutte le lingue. Si può aggiungere una breve spiegazione tra parentesi nella lingua di arrivo, la prima volta che compare in pagina. Indicatore della Situazione Economica Equivalente: indicatore della situazione economica del nucleo, usato per accedere a molti aiuti in Italia."
     },
     "isee_explain": {
-      "value": "ISEE (indicatore della situazione economica del nucleo)",
+      "value": "ISEE (পরিবারের আর্থিক অবস্থার সরকারি সূচক)",
       "note": "Spiegazione breve da usare la prima volta, se nella lingua di arrivo il sigla non è nota. La sigla ISEE resta."
     },
     "dsu": {
@@ -32,7 +32,7 @@
       "note": "Termine ufficiale italiano: lasciare invariato in tutte le lingue. Si può aggiungere una breve spiegazione tra parentesi nella lingua di arrivo, la prima volta che compare in pagina. Dichiarazione Sostitutiva Unica: la dichiarazione con cui si chiede l'ISEE a INPS o CAF."
     },
     "dsu_explain": {
-      "value": "DSU (la dichiarazione per ottenere l'ISEE)",
+      "value": "DSU (ISEE পাওয়ার জন্য যে ঘোষণাপত্র জমা দিতে হয়)",
       "note": "Spiegazione breve opzionale; la sigla DSU resta."
     },
     "adi": {
@@ -48,7 +48,7 @@
       "note": "Termine ufficiale italiano: lasciare invariato in tutte le lingue. Si può aggiungere una breve spiegazione tra parentesi nella lingua di arrivo, la prima volta che compare in pagina. Centro di Assistenza Fiscale."
     },
     "caf_explain": {
-      "value": "CAF (centro di assistenza fiscale)",
+      "value": "CAF (কর সহায়তা কেন্দ্র)",
       "note": "Spiegazione breve opzionale; la sigla CAF resta."
     },
     "inps": {
@@ -98,7 +98,7 @@
       "note": "Marchio visibile, coerente con il dominio dirittiok.com. Non tradurre."
     },
     "tagline": {
-      "value": "I tuoi aiuti in Italia",
+      "value": "ইতালিতে আপনার সরকারি সহায়তা",
       "note": "Tagline in testata e H1 della home."
     },
     "product": {
@@ -114,46 +114,46 @@
       "note": "apple-mobile-web-app-title. Non tradurre."
     },
     "footer_owner": {
-      "value": "DirittiOk (DirittiChiari 2027) è un servizio di **Pi.Gi Service** · [info@pigiservice.com](mailto:info@pigiservice.com)",
+      "value": "DirittiOk (DirittiChiari 2027) **Pi.Gi Service**-এর একটি সেবা · [info@pigiservice.com](mailto:info@pigiservice.com)",
       "note": "Pi.Gi Service è il nome del titolare: non tradurlo."
     },
     "footer_legal": {
-      "value": "Stima indicativa, non sostituisce la DSU, l'attestazione INPS, il CAF o una consulenza. Nessuna registrazione, nessun tracciamento: i calcoli e i dati della stima restano solo su questo dispositivo. Dal modulo contatti partono soltanto le informazioni che scrivi tu, per ricevere una risposta.",
+      "value": "এটি শুধু একটি আনুমানিক হিসাব। এটি DSU (ISEE-এর ঘোষণাপত্র), INPS-এর সরকারি সনদ, CAF (কর সহায়তা কেন্দ্র) বা পেশাদার পরামর্শের বিকল্প নয়। কোনো রেজিস্ট্রেশন নেই, কোনো ট্র্যাকিং নেই: হিসাব আর তথ্য শুধু এই ডিভাইসেই থাকে। যোগাযোগ ফর্ম থেকে শুধু আপনি যা লেখেন সেটুকুই আমাদের কাছে আসে, যাতে আমরা উত্তর দিতে পারি।",
       "note": "DSU, INPS e CAF restano in italiano; si può aggiungere una breve spiegazione."
     },
     "og_image_alt": {
-      "value": "DirittiOk: aiuti pubblici in Italia, residuo per vivere e stima ISEE. Un servizio di Pi.Gi Service.",
+      "value": "DirittiOk: ইতালিতে সরকারি সহায়তা, মাস শেষে হাতে থাকা টাকা এবং ISEE-এর আনুমানিক হিসাব। Pi.Gi Service-এর একটি সেবা।",
       "note": "Testo alternativo dell'immagine di condivisione."
     }
   },
   "chrome": {
     "skip": {
-      "value": "Vai al contenuto"
+      "value": "মূল অংশে যান"
     },
     "nav_label": {
-      "value": "Navigazione principale"
+      "value": "প্রধান মেনু"
     },
     "nav_home": {
-      "value": "Inizio"
+      "value": "শুরু"
     },
     "nav_stima": {
-      "value": "Stima"
+      "value": "হিসাব"
     },
     "nav_risultati": {
-      "value": "Risultati"
+      "value": "ফলাফল"
     },
     "nav_consigli": {
-      "value": "Consigli"
+      "value": "পরামর্শ"
     },
     "nav_documenti": {
-      "value": "Documenti"
+      "value": "কাগজপত্র"
     },
     "lang_label": {
-      "value": "Lingua",
+      "value": "ভাষা",
       "note": "Etichetta accessibile del selettore di lingua."
     },
     "lang_it": {
-      "value": "Italiano",
+      "value": "ইতালীয়",
       "note": "Nome della lingua italiana, nella lingua di questa interfaccia."
     },
     "lang_en": {
@@ -177,168 +177,187 @@
       "note": "Etichetta breve del bengalese nel selettore. Non sostituire con una sigla latina se non serve per lo spazio."
     },
     "footer_fonti": {
-      "value": "Fonti e regole usate"
+      "value": "উৎস ও ব্যবহৃত নিয়ম"
     },
     "footer_metodo": {
-      "value": "Metodo e fonti"
+      "value": "পদ্ধতি ও উৎস"
     },
     "footer_diritti": {
-      "value": "Diritti e aiuti"
+      "value": "অধিকার ও সহায়তা"
     },
     "footer_contatti": {
-      "value": "Contatti"
+      "value": "যোগাযোগ"
     },
     "footer_privacy": {
-      "value": "Privacy"
+      "value": "গোপনীয়তা"
     },
     "footer_clear": {
-      "value": "Cancella i miei dati"
+      "value": "আমার তথ্য মুছে দিন"
     },
     "footer_install": {
-      "value": "Installa l'app"
+      "value": "অ্যাপটি ইনস্টল করুন"
     },
     "version": {
-      "value": "Versione {version}",
+      "value": "অ্যাপের সংস্করণ {version}",
       "note": "Non tradurre la parola «versione» in un modo che confonda con le versioni dell'ISEE. {version} resta."
     },
     "clear_confirm": {
-      "value": "Vuoi cancellare tutti i dati inseriti su questo dispositivo?"
+      "value": "এই ডিভাইসে আপনার দেওয়া সব তথ্য মুছে দিতে চান?"
     },
     "clear_done": {
-      "value": "Dati cancellati."
+      "value": "তথ্য মুছে ফেলা হয়েছে।"
     }
   },
   "install": {
     "cta": {
-      "value": "Installa l'app",
+      "value": "অ্যাপটি ইনস্টল করুন",
       "note": "Pulsante visibile su Android/Chromium (finestra nativa) e nel footer. Su iPhone può comparire anche «Metti in home» (install.cta_ios)."
     },
     "cta_ios": {
-      "value": "Metti in home",
+      "value": "হোম স্ক্রিনে যোগ করুন",
       "note": "Etichetta del pulsante su iPhone/iPad Safari."
     },
     "cta_short": {
-      "value": "Installa",
+      "value": "ইনস্টল",
       "note": "Etichetta breve del pulsante nel banner, accanto a Installa l'app."
     },
     "banner_title": {
-      "value": "Installa l'app"
+      "value": "অ্যাপটি ইনস্টল করুন"
     },
     "banner_lead": {
-      "value": "Tieni DirittiOk in home: un tocco, come le altre app.",
+      "value": "DirittiOk হোম স্ক্রিনে রাখুন: অন্য অ্যাপের মতোই এক ট্যাপে খুলবে।",
       "note": "DirittiOk non si traduce."
     },
     "dismiss": {
-      "value": "Non ora"
+      "value": "এখন না"
     },
     "dismiss_aria": {
-      "value": "Chiudi il suggerimento di installazione"
+      "value": "ইনস্টলের পরামর্শটি বন্ধ করুন"
     },
     "sheet_title": {
-      "value": "Metti DirittiOk nella schermata Home",
+      "value": "DirittiOk হোম স্ক্রিনে যোগ করুন",
       "note": "Titolo del foglio guida su iPhone/iPad. DirittiOk non si traduce."
     },
     "sheet_intro": {
-      "value": "Così la apri con un tocco, come le altre app. Bastano tre passi:"
+      "value": "তাহলে অন্য অ্যাপের মতোই এক ট্যাপে খুলতে পারবেন। মাত্র তিনটি ধাপ:"
     },
     "step1_title": {
-      "value": "Tocca il tasto Condividi"
+      "value": "শেয়ার বোতামে ট্যাপ করুন"
     },
     "step1_body": {
-      "value": "È il quadrato con la freccia in su, in basso (su iPad in alto). Se non lo vedi, tocca prima i tre puntini «⋯»."
+      "value": "এটি একটি চৌকো ঘর, যার ভেতর থেকে তীর ওপরের দিকে উঠেছে। এটি স্ক্রিনের নিচে থাকে (iPad-এ ওপরে)। ফোন ইতালীয় ভাষায় থাকলে এর নাম «Condividi», ইংরেজিতে «Share»। দেখতে না পেলে আগে তিনটি বিন্দু «⋯»-তে ট্যাপ করুন।"
     },
     "step2_title": {
-      "value": "Scegli «Aggiungi alla schermata Home»"
+      "value": "«হোম স্ক্রিনে যোগ করুন» বেছে নিন"
     },
     "step2_body": {
-      "value": "Se non lo vedi, scorri il menu verso il basso."
+      "value": "ফোন ইংরেজিতে থাকলে লেখা থাকে «Add to Home Screen», ইতালীয়তে «Aggiungi alla schermata Home»। দেখতে না পেলে মেনুটি নিচের দিকে স্ক্রল করুন।"
     },
     "step3_title": {
-      "value": "Tocca «Aggiungi»"
+      "value": "«যোগ করুন» (Add / Aggiungi)-এ ট্যাপ করুন"
     },
     "step3_body": {
-      "value": "Fatto: DirittiOk è sulla schermata Home, come le altre app."
+      "value": "হয়ে গেছে: অন্য অ্যাপের মতোই DirittiOk এখন আপনার হোম স্ক্রিনে।"
+    },
+    "android_step1_title": {
+      "value": "তিনটি বিন্দু «⋮»-এ ট্যাপ করুন",
+      "note": "Passo 1 della guida Android (menu del browser), non iOS."
+    },
+    "android_step1_body": {
+      "value": "Chrome-এর বারের উপরের ডানদিকে এগুলো থাকে। কিছু ফোনে মেনুটি শুধু «Menu» নামে দেখা যায়।"
+    },
+    "android_step2_title": {
+      "value": "«Installa app» বা “Install app” বেছে নিন"
+    },
+    "android_step2_body": {
+      "value": "এটি «Aggiungi alla schermata Home» বা “Install DirittiOk” নামেও থাকতে পারে। না দেখলে মেনুটি স্ক্রল করুন।"
+    },
+    "android_step3_title": {
+      "value": "«Installa» বা “Install” দিয়ে নিশ্চিত করুন"
+    },
+    "android_step3_body": {
+      "value": "হয়ে গেল: DirittiOk এখন হোম স্ক্রিনে, অন্য অ্যাপগুলোর মতো।"
     },
     "got_it": {
-      "value": "Ho capito"
+      "value": "বুঝেছি"
     },
     "close": {
-      "value": "Chiudi"
+      "value": "বন্ধ করুন"
     }
   },
   "update": {
     "message": {
-      "value": "È disponibile una nuova versione di DirittiOk."
+      "value": "DirittiOk-এর নতুন সংস্করণ এসেছে।"
     },
     "apply": {
-      "value": "Aggiorna"
+      "value": "আপডেট করুন"
     },
     "later": {
-      "value": "Più tardi"
+      "value": "পরে"
     }
   },
   "ptr": {
     "pull": {
-      "value": "↓ Tira per aggiornare"
+      "value": "↓ আপডেট করতে নিচে টানুন"
     },
     "release": {
-      "value": "↻ Rilascia per aggiornare"
+      "value": "↻ আপডেট করতে ছেড়ে দিন"
     },
     "updating": {
-      "value": "Aggiornamento…"
+      "value": "আপডেট হচ্ছে…"
     }
   },
   "common": {
     "yes": {
-      "value": "Sì"
+      "value": "হ্যাঁ"
     },
     "no": {
-      "value": "No"
+      "value": "না"
     },
     "optional": {
-      "value": "facoltativo"
+      "value": "ঐচ্ছিক"
     },
     "source": {
-      "value": "Fonte: {title}"
+      "value": "উৎস: {title}"
     },
     "verified": {
-      "value": "Verificato"
+      "value": "যাচাই করা"
     },
     "value_2026": {
-      "value": "Valore 2026, da confermare per il 2027"
+      "value": "2026 সালের মান, 2027-এর জন্য এখনো নিশ্চিত নয়"
     },
     "to_confirm": {
-      "value": "Da confermare"
+      "value": "এখনো নিশ্চিত নয়"
     },
     "updated": {
-      "value": "Ultimo aggiornamento: {date}."
+      "value": "সর্বশেষ আপডেট: {date}।"
     },
     "updated_sources": {
-      "value": "Ultimo aggiornamento: {date} · fonti verificate su INPS, ARERA, MEF.",
+      "value": "সর্বশেষ আপডেট: {date} · উৎস যাচাই করা হয়েছে INPS, ARERA, MEF-এ।",
       "note": "INPS, ARERA, MEF restano in italiano."
     },
     "date_2026_11_16": {
-      "value": "16 novembre 2026",
+      "value": "16 নভেম্বর 2026",
       "note": "Data visibile. In inglese, ad esempio: 16 November 2026."
     },
     "date_2026_11_15": {
-      "value": "15 novembre 2026"
+      "value": "15 নভেম্বর 2026"
     },
     "disclaimer": {
-      "value": "**Attenzione:** Stima orientativa basata sulle regole note a novembre 2026. I valori ufficiali si ottengono solo con la DSU presentata a INPS o CAF. Alcuni importi 2027 sono ancora stime.",
+      "value": "**খেয়াল করুন:** এটি নভেম্বর 2026 পর্যন্ত জানা নিয়মের ভিত্তিতে একটি আনুমানিক হিসাব। সরকারি মান পাওয়া যায় শুধু INPS বা CAF (কর সহায়তা কেন্দ্র)-এ DSU (ISEE-এর ঘোষণাপত্র) জমা দিলে। 2027 সালের কিছু অঙ্ক এখনো আনুমানিক।",
       "note": "DSU, INPS e CAF restano; si può spiegare tra parentesi."
     },
     "back": {
-      "value": "Indietro"
+      "value": "পেছনে"
     },
     "next": {
-      "value": "Avanti"
+      "value": "পরের ধাপ"
     },
     "print": {
-      "value": "Stampa o salva in PDF"
+      "value": "প্রিন্ট করুন বা PDF হিসেবে সেভ করুন"
     },
     "print_list": {
-      "value": "Stampa la lista o salvala in PDF"
+      "value": "তালিকাটি প্রিন্ট করুন বা PDF হিসেবে সেভ করুন"
     }
   },
   "home": {
@@ -347,812 +366,812 @@
       "note": "Marchio sopra il titolo nell'hero. Non tradurre."
     },
     "h1": {
-      "value": "I tuoi aiuti in Italia",
+      "value": "ইতালিতে আপনার সরকারি সহায়তা",
       "note": "H1 della home e tagline. Deve restare allineato a brand.tagline."
     },
     "lead": {
-      "value": "Scopri i bonus e gli aiuti pubblici che ti spettano in Italia: Assegno di Inclusione (ADI), Assegno Unico, bonus sociali, Carta Dedicata a te, bonus nido, contributi per l'affitto. Vedi quanto ti resta ogni mese, prepara i documenti per la DSU e conosci i tuoi diritti con la pubblica amministrazione. La stima ISEE 2027 è lo strumento che sta dietro, per capirlo prima di andare al CAF.",
+      "value": "ইতালিতে কোন কোন বোনাস ও সরকারি সহায়তা আপনি পেতে পারেন, তা জেনে নিন: Assegno di Inclusione (ADI, আয় সহায়তা), Assegno Unico (সন্তানের জন্য মাসিক ভাতা), bonus sociali (বিলে ছাড়), Carta Dedicata a te, bonus nido (ডে-কেয়ার বোনাস), বাড়িভাড়ার সহায়তা। প্রতি মাসে আপনার হাতে কত টাকা থাকে দেখুন, DSU (ISEE-এর ঘোষণাপত্র)-এর কাগজপত্র তৈরি রাখুন এবং সরকারি অফিসে আপনার অধিকারগুলো জানুন। এসবের পেছনে আছে ISEE 2027-এর আনুমানিক হিসাব (ISEE হলো পরিবারের আর্থিক অবস্থার সরকারি সূচক), যাতে CAF (কর সহায়তা কেন্দ্র)-এ যাওয়ার আগেই বিষয়টি বুঝতে পারেন।",
       "note": "Tenere ISEE, DSU, ADI, CAF. Elenco di aiuti: i nomi ufficiali restano in italiano, con spiegazione se serve."
     },
     "trust_line": {
-      "value": "Gratis, senza registrazione, facile da utilizzare. I calcoli restano solo sul tuo telefono."
+      "value": "বিনা খরচে, রেজিস্ট্রেশন ছাড়া, ব্যবহার করা সহজ। হিসাব শুধু আপনার ফোনেই থাকে।"
     },
     "cta_primary": {
-      "value": "Scopri i tuoi aiuti",
+      "value": "আপনার সহায়তা খুঁজে দেখুন",
       "note": "Pulsante principale della home, porta al percorso di stima."
     },
     "cta_resume": {
-      "value": "Riprendi il percorso",
+      "value": "যেখানে থেমেছিলেন সেখান থেকে শুরু করুন",
       "note": "Se la persona ha già iniziato la stima."
     },
     "cta_results": {
-      "value": "Vedi i risultati"
+      "value": "ফলাফল দেখুন"
     },
     "services_title": {
-      "value": "Cosa puoi fare"
+      "value": "আপনি যা করতে পারেন"
     },
     "card_aiuti_title": {
-      "value": "Aiuti e bonus"
+      "value": "সহায়তা ও বোনাস"
     },
     "card_aiuti_text": {
-      "value": "Assegno di Inclusione (ADI), Assegno Unico, bonus sociali, Carta Dedicata a te, bonus nido, contributi per l'affitto: soglie e fonti ufficiali."
+      "value": "Assegno di Inclusione (ADI), Assegno Unico, bonus sociali, Carta Dedicata a te, bonus nido, বাড়িভাড়ার সহায়তা: সীমা ও সরকারি উৎস।"
     },
     "card_aiuti_cta": {
-      "value": "Vedi gli aiuti"
+      "value": "সহায়তাগুলো দেখুন"
     },
     "card_residuo_title": {
-      "value": "Quanto ti resta al mese"
+      "value": "মাসে হাতে কত থাকে"
     },
     "card_residuo_text": {
-      "value": "Il residuo per vivere: le entrate di oggi meno affitto, bollette e altre spese fisse."
+      "value": "সংসার চালানোর জন্য হাতে থাকা টাকা: আজকের আয় থেকে বাড়িভাড়া, বিল আর অন্যান্য নিয়মিত খরচ বাদ দিয়ে।"
     },
     "card_residuo_cta": {
-      "value": "Calcola il residuo"
+      "value": "হাতে থাকা টাকা হিসাব করুন"
     },
     "card_isee_title": {
-      "value": "Stima ISEE 2027"
+      "value": "ISEE 2027-এর আনুমানিক হিসাব"
     },
     "card_isee_text": {
-      "value": "In 5 passi stimi l'ISEE ordinario, quello per le prestazioni familiari e l'eventuale ISEE corrente."
+      "value": "5টি ধাপে হিসাব করুন সাধারণ ISEE, পারিবারিক সুবিধার ISEE এবং দরকার হলে চলতি ISEE (ISEE corrente)।"
     },
     "card_isee_cta": {
-      "value": "Inizia la stima"
+      "value": "হিসাব শুরু করুন"
     },
     "card_docs_title": {
-      "value": "Documenti per la DSU"
+      "value": "DSU-এর কাগজপত্র"
     },
     "card_docs_text": {
-      "value": "La lista da spuntare e stampare prima di andare al CAF o sul portale INPS."
+      "value": "CAF-এ যাওয়ার আগে বা INPS-এর ওয়েবসাইট ব্যবহারের আগে টিক দেওয়ার ও প্রিন্ট করার তালিকা।"
     },
     "card_docs_cta": {
-      "value": "Apri la checklist"
+      "value": "চেকলিস্ট খুলুন"
     },
     "card_diritti_title": {
-      "value": "Diritti con la PA"
+      "value": "সরকারি অফিসে আপনার অধিকার"
     },
     "card_diritti_text": {
-      "value": "Cosa puoi chiedere alla pubblica amministrazione e quale ISEE serve per ciascun aiuto."
+      "value": "সরকারি অফিসে আপনি কী চাইতে পারেন, আর কোন সহায়তার জন্য কোন ISEE লাগে।"
     },
     "card_diritti_cta": {
-      "value": "Conosci i tuoi diritti"
+      "value": "আপনার অধিকার জানুন"
     },
     "card_consigli_title": {
-      "value": "Consigli legali"
+      "value": "আইনসম্মত পরামর্শ"
     },
     "card_consigli_text": {
-      "value": "Cosa conta davvero nell'ISEE, le scelte permesse e cosa non fare mai."
+      "value": "ISEE-তে আসলে কী হিসাবে ধরা হয়, কোন সিদ্ধান্তগুলো বৈধ, আর কী কখনো করবেন না।"
     },
     "card_consigli_cta": {
-      "value": "Leggi i consigli"
+      "value": "পরামর্শ পড়ুন"
     },
     "how_title": {
-      "value": "Come funziona"
+      "value": "কীভাবে কাজ করে"
     },
     "how1_title": {
-      "value": "Racconta la tua situazione"
+      "value": "আপনার অবস্থা জানান"
     },
     "how1_text": {
-      "value": "In 5 passi inserisci nucleo, redditi, spese e patrimonio. I dati restano su questo dispositivo."
+      "value": "5টি ধাপে পরিবার, আয়, খরচ আর সম্পদের তথ্য দিন। তথ্য এই ডিভাইসেই থাকে।"
     },
     "how2_title": {
-      "value": "Vedi aiuti e residuo"
+      "value": "সহায়তা আর হাতে থাকা টাকা দেখুন"
     },
     "how2_text": {
-      "value": "Scopri quanto ti resta ogni mese e quali bonus o aiuti pubblici puoi valutare, con il collegamento alla fonte."
+      "value": "প্রতি মাসে আপনার হাতে কত থাকে আর কোন বোনাস বা সরকারি সহায়তা যাচাই করে দেখতে পারেন, তা উৎসের লিংকসহ জেনে নিন।"
     },
     "how3_title": {
-      "value": "Prepara documenti e diritti"
+      "value": "কাগজপত্র তৈরি রাখুন, অধিকার জানুন"
     },
     "how3_text": {
-      "value": "Usa la checklist della DSU e le pagine sui diritti con la pubblica amministrazione, prima del CAF."
+      "value": "CAF-এ যাওয়ার আগে DSU-এর চেকলিস্ট আর সরকারি অফিসে আপনার অধিকার নিয়ে পাতাগুলো ব্যবহার করুন।"
     },
     "trust_title": {
-      "value": "Perché puoi fidarti"
+      "value": "কেন আমাদের ওপর ভরসা করতে পারেন"
     },
     "trust_free_title": {
-      "value": "Gratis, senza registrazione"
+      "value": "বিনা খরচে, রেজিস্ট্রেশন ছাড়া"
     },
     "trust_free_text": {
-      "value": "Non chiediamo un account e non facciamo tracciamento."
+      "value": "আমরা অ্যাকাউন্ট খুলতে বলি না এবং কোনো ট্র্যাকিং করি না।"
     },
     "trust_device_title": {
-      "value": "I dati restano sul telefono"
+      "value": "তথ্য আপনার ফোনেই থাকে"
     },
     "trust_device_text": {
-      "value": "I calcoli della stima si salvano solo su questo dispositivo. Se ci scrivi, partono soltanto le parole che inserisci tu."
+      "value": "হিসাব শুধু এই ডিভাইসেই সেভ হয়। আমাদের লিখলে শুধু আপনার লেখা কথাগুলোই আমাদের কাছে আসে।"
     },
     "trust_sources_title": {
-      "value": "Fonti ufficiali"
+      "value": "সরকারি উৎস"
     },
     "trust_sources_text": {
-      "value": "Le regole e le soglie arrivano da INPS, ARERA, ministeri e Normattiva. Spieghiamo il metodo in [Metodo e fonti](/metodo) e l'elenco in [Fonti e regole usate](/fonti)."
+      "value": "নিয়ম আর সীমাগুলো নেওয়া হয়েছে INPS, ARERA, বিভিন্ন মন্ত্রণালয় এবং Normattiva (ইতালির আইনের সরকারি ডেটাবেস) থেকে। আমাদের পদ্ধতি বুঝিয়ে বলা আছে [পদ্ধতি ও উৎস](/metodo) পাতায়, আর পুরো তালিকা আছে [উৎস ও ব্যবহৃত নিয়ম](/fonti) পাতায়।"
     },
     "trust_updated_title": {
-      "value": "Aggiornato"
+      "value": "হালনাগাদ"
     },
     "trust_updated_text": {
-      "value": "Aggiornato al {date}."
+      "value": "সর্বশেষ হালনাগাদ: {date}।"
     },
     "faq_title": {
-      "value": "Domande frequenti"
+      "value": "সাধারণ প্রশ্ন"
     },
     "final_title": {
-      "value": "Pronto a scoprire i tuoi aiuti?"
+      "value": "আপনার সহায়তা খুঁজে দেখতে প্রস্তুত?"
     },
     "final_text": {
-      "value": "Inizia dalla stima: è gratis e i dati restano sul tuo telefono. Poi puoi installare l'app per riaverla a portata di tocco."
+      "value": "হিসাব দিয়ে শুরু করুন: এটি বিনা খরচে, আর তথ্য আপনার ফোনেই থাকে। এরপর চাইলে অ্যাপটি ইনস্টল করে নিতে পারেন, যাতে এক ট্যাপেই আবার খুলতে পারেন।"
     },
     "final_contact": {
-      "value": "Una domanda? [Scrivici dal modulo contatti](/contatti)."
+      "value": "কোনো প্রশ্ন আছে? [যোগাযোগ ফর্মে আমাদের লিখুন](/contatti)।"
     },
     "seo_title": {
-      "value": "DirittiOk · I tuoi aiuti in Italia: bonus, ISEE e diritti",
+      "value": "DirittiOk · ইতালিতে আপনার সহায়তা: বোনাস, ISEE ও অধিকার",
       "note": "Title della home, circa 50-60 caratteri. DirittiOk e ISEE restano."
     },
     "seo_desc": {
-      "value": "Scopri bonus e aiuti pubblici in Italia (ADI, Assegno Unico, bonus sociali), quanto ti resta al mese e la stima ISEE 2027. Gratis, dati sul tuo telefono.",
+      "value": "ইতালিতে বোনাস ও সরকারি সহায়তা (ADI, Assegno Unico, বিলে ছাড়) খুঁজুন, মাসে হাতে কত থাকে দেখুন, ISEE 2027 হিসাব করুন। বিনা খরচে, তথ্য আপনার ফোনেই।",
       "note": "Meta description, 120-160 caratteri. ADI e ISEE restano."
     }
   },
   "faq": {
     "aiuti_q": {
-      "value": "Quali aiuti posso scoprire con DirittiOk?"
+      "value": "DirittiOk দিয়ে কোন কোন সহায়তার কথা জানতে পারি?"
     },
     "aiuti_a": {
-      "value": "Puoi vedere, con le soglie e il collegamento alle fonti ufficiali, l'Assegno di Inclusione (ADI), l'Assegno Unico, i bonus sociali luce, gas, acqua e TARI, la Carta Dedicata a te, il bonus nido, il bonus nuovi nati e i contributi per l'affitto. Ogni aiuto ha altri requisiti oltre all'ISEE: i dettagli sono nella pagina [Diritti e aiuti](/diritti-pa)."
+      "value": "সীমা আর সরকারি উৎসের লিংকসহ দেখতে পারবেন: Assegno di Inclusione (ADI), Assegno Unico (সন্তানের ভাতা), বিদ্যুৎ, গ্যাস, পানি ও TARI (ময়লা কর)-এর bonus sociali, Carta Dedicata a te, bonus nido (ডে-কেয়ার বোনাস), bonus nuovi nati (নবজাতক বোনাস) এবং বাড়িভাড়ার সহায়তা। প্রতিটি সহায়তার জন্য ISEE ছাড়াও অন্য শর্ত আছে: বিস্তারিত পাবেন [অধিকার ও সহায়তা](/diritti-pa) পাতায়।"
     },
     "dati_q": {
-      "value": "Devo registrarmi? Dove restano i miei dati?"
+      "value": "রেজিস্ট্রেশন করতে হবে? আমার তথ্য কোথায় থাকে?"
     },
     "dati_a": {
-      "value": "No, non serve una registrazione. I calcoli della stima ISEE, il residuo e la checklist restano solo su questo telefono o computer. Non facciamo tracciamento. Se ci scrivi dal modulo contatti, partono soltanto le informazioni che inserisci tu."
+      "value": "না, রেজিস্ট্রেশন লাগে না। ISEE-এর হিসাব, হাতে থাকা টাকা আর চেকলিস্ট শুধু এই ফোন বা কম্পিউটারেই থাকে। আমরা কোনো ট্র্যাকিং করি না। যোগাযোগ ফর্ম থেকে লিখলে শুধু আপনার দেওয়া তথ্যটুকুই আমাদের কাছে আসে।"
     },
     "anni_q": {
-      "value": "Quali anni contano per l'ISEE 2027?",
+      "value": "ISEE 2027-এর জন্য কোন কোন বছর হিসাবে ধরা হয়?",
       "note": "Domanda visibile in home e in /stima; deve coincidere con il JSON-LD FAQPage."
     },
     "anni_a": {
-      "value": "Redditi del 2025, cioè quelli della CU 2026 o del 730/2026. Patrimonio al 31 dicembre 2025: conti, investimenti, case. Affitto: il canone del contratto registrato, fino a 7.000 € l'anno. Lo prevede il DPCM 159/2013 (artt. 4 e 5): si guarda al secondo anno prima della DSU."
+      "value": "2025 সালের আয়, মানে CU 2026 বা 730/2026-এ যে আয় দেখানো আছে। 31 ডিসেম্বর 2025 তারিখের সম্পদ: ব্যাংক অ্যাকাউন্ট, বিনিয়োগ, বাড়ি। বাড়িভাড়া: নিবন্ধিত চুক্তিতে লেখা ভাড়া, বছরে 7,000 € পর্যন্ত। এটি DPCM 159/2013 (ধারা 4 ও 5)-এ বলা আছে: DSU জমা দেওয়ার বছরের দুই বছর আগের হিসাব দেখা হয়।"
     },
     "gratis_q": {
-      "value": "L'app è gratis?"
+      "value": "অ্যাপটি কি বিনা খরচে?"
     },
     "gratis_a": {
-      "value": "Sì, DirittiOk è gratis. Non chiediamo un account e non facciamo tracciamento. I calcoli restano sul tuo dispositivo."
+      "value": "হ্যাঁ, DirittiOk বিনা খরচে ব্যবহার করা যায়। আমরা অ্যাকাউন্ট খুলতে বলি না এবং কোনো ট্র্যাকিং করি না। হিসাব আপনার ডিভাইসেই থাকে।"
     },
     "quale_q": {
-      "value": "Quale ISEE si usa?",
+      "value": "কোন ISEE ব্যবহার করা হয়?",
       "note": "Domanda visibile in /diritti-pa; deve coincidere con il JSON-LD FAQPage di quella pagina."
     },
     "quale_a": {
-      "value": "Dal 2026 l'INPS calcola anche l'ISEE per prestazioni familiari e inclusione (L. 199/2025), più favorevole per chi ha casa di proprietà o almeno 2 figli. Si usa solo per ADI, Supporto formazione e lavoro, Assegno Unico, bonus nido e bonus nuovi nati. Per tutto il resto vale l'ISEE ordinario."
+      "value": "2026 থেকে INPS পারিবারিক ও অন্তর্ভুক্তি সুবিধার ISEE-ও হিসাব করে (L. 199/2025)। নিজের বাড়ি থাকলে বা অন্তত 2টি সন্তান থাকলে এটি বেশি সুবিধাজনক। এটি শুধু ADI, Supporto per la formazione e il lavoro (প্রশিক্ষণ ও কাজের সহায়তা), Assegno Unico, bonus nido আর bonus nuovi nati-এর জন্য ব্যবহার হয়। বাকি সব কিছুর জন্য সাধারণ ISEE প্রযোজ্য।"
     }
   },
   "seo": {
     "stima_title": {
-      "value": "Simulatore ISEE 2027 online gratis: calcolo in 5 passi · DirittiOk"
+      "value": "ISEE 2027 অনলাইন ক্যালকুলেটর, বিনা খরচে: 5টি ধাপ · DirittiOk"
     },
     "stima_desc": {
-      "value": "Calcola l'ISEE 2027 online in 5 passi: ordinario, per prestazioni familiari e corrente, con redditi 2025 e patrimonio al 31/12/2025. Gratis, sul tuo telefono.",
+      "value": "5টি ধাপে অনলাইনে ISEE 2027 হিসাব করুন: সাধারণ, পারিবারিক সুবিধার ও চলতি ISEE, 2025 সালের আয় আর 31/12/2025-এর সম্পদ দিয়ে। বিনা খরচে, আপনার ফোনেই।",
       "note": "120-160 caratteri. Tenere ISEE."
     },
     "stima_h1": {
-      "value": "Calcolo ISEE 2027: simulatore online gratuito"
+      "value": "ISEE 2027 হিসাব: বিনা খরচে অনলাইন ক্যালকুলেটর"
     },
     "risultati_title": {
-      "value": "Risultati della stima ISEE · DirittiOk"
+      "value": "ISEE হিসাবের ফলাফল · DirittiOk"
     },
     "risultati_desc": {
-      "value": "Qui vedi la stima del tuo ISEE 2027, il residuo mensile per vivere e gli aiuti da valutare. I risultati restano sul tuo dispositivo, non vengono pubblicati."
+      "value": "এখানে দেখবেন আপনার ISEE 2027-এর আনুমানিক হিসাব, মাসে হাতে থাকা টাকা আর যাচাই করার মতো সহায়তা। ফলাফল আপনার ডিভাইসেই থাকে, কোথাও প্রকাশ হয় না।"
     },
     "risultati_h1": {
-      "value": "I tuoi risultati",
+      "value": "আপনার ফলাফল",
       "note": "H1 quando ci sono dati. Lo stato vuoto usa risultati.empty_h1."
     },
     "risultati_empty_h1": {
-      "value": "Risultati"
+      "value": "ফলাফল"
     },
     "ott_title": {
-      "value": "Come abbassare l'ISEE in modo legale · DirittiOk"
+      "value": "আইনসম্মতভাবে ISEE কীভাবে কমানো যায় · DirittiOk"
     },
     "ott_desc": {
-      "value": "Cosa conta davvero nell'ISEE, le scelte permesse che possono abbassarlo e cosa non fare mai. Spiegato con calma, prima del CAF."
+      "value": "ISEE-তে আসলে কী ধরা হয়, কোন বৈধ সিদ্ধান্তে তা কমতে পারে, আর কী কখনো করবেন না। CAF-এ যাওয়ার আগে ধীরে-সুস্থে বুঝিয়ে বলা।"
     },
     "ott_h1": {
-      "value": "Come abbassare l'ISEE in modo legale: cosa conta davvero"
+      "value": "আইনসম্মতভাবে ISEE কমানো: আসলে কী গুরুত্বপূর্ণ"
     },
     "ott_crumb": {
-      "value": "Ottimizzazione ISEE"
+      "value": "আইনসম্মতভাবে ISEE কমানো"
     },
     "chk_title": {
-      "value": "Documenti ISEE 2027 per la DSU: checklist da stampare · DirittiOk"
+      "value": "DSU-এর জন্য ISEE 2027-এর কাগজপত্র: প্রিন্টযোগ্য চেকলিস্ট · DirittiOk"
     },
     "chk_desc": {
-      "value": "Checklist dei documenti per la DSU e l'ISEE 2027, da spuntare e stampare prima del CAF o del portale INPS. Resta salvata sul tuo dispositivo."
+      "value": "DSU ও ISEE 2027-এর কাগজপত্রের চেকলিস্ট। CAF বা INPS-এর ওয়েবসাইটে যাওয়ার আগে টিক দিন আর প্রিন্ট করুন। তালিকাটি আপনার ডিভাইসে সেভ থাকে।"
     },
     "chk_h1": {
-      "value": "Documenti necessari per la DSU e l'ISEE 2027"
+      "value": "DSU ও ISEE 2027-এর জন্য যে কাগজপত্র লাগে"
     },
     "dir_title": {
-      "value": "Bonus e aiuti con ISEE 2027: soglie e fonti ufficiali · DirittiOk"
+      "value": "ISEE 2027-এর বোনাস ও সহায়তা: সীমা ও সরকারি উৎস · DirittiOk"
     },
     "dir_desc": {
-      "value": "Assegno di Inclusione, Assegno Unico, bonus sociali e altri aiuti pubblici: soglie ISEE 2027 e fonti ufficiali, spiegati con calma."
+      "value": "Assegno di Inclusione, Assegno Unico, বিলে ছাড় এবং অন্যান্য সরকারি সহায়তা: ISEE 2027-এর সীমা ও সরকারি উৎস, ধীরে-সুস্থে বুঝিয়ে বলা।"
     },
     "dir_h1": {
-      "value": "Bonus ISEE 2027: aiuti pubblici, soglie e fonti"
+      "value": "ISEE 2027-এর বোনাস: সরকারি সহায়তা, সীমা ও উৎস"
     },
     "fonti_title": {
-      "value": "Fonti e regole usate · DirittiOk"
+      "value": "উৎস ও ব্যবহৃত নিয়ম · DirittiOk"
     },
     "fonti_desc": {
-      "value": "Regole e fonti ufficiali usate da DirittiOk per la stima ISEE 2027, il residuo per vivere e gli aiuti pubblici. Collegamenti a INPS, ARERA e norme."
+      "value": "ISEE 2027-এর হিসাব, হাতে থাকা টাকা আর সরকারি সহায়তার জন্য DirittiOk যে নিয়ম ও সরকারি উৎস ব্যবহার করে। INPS, ARERA ও আইনের লিংকসহ।"
     },
     "fonti_h1": {
-      "value": "Fonti e regole usate"
+      "value": "উৎস ও ব্যবহৃত নিয়ম"
     },
     "metodo_title": {
-      "value": "Metodo e fonti · DirittiOk"
+      "value": "পদ্ধতি ও উৎস · DirittiOk"
     },
     "metodo_desc": {
-      "value": "Come DirittiOk stima l'ISEE 2027: regole seguite, fonti ufficiali, limiti della stima e chi cura il servizio. Autore: Pi.Gi Service."
+      "value": "DirittiOk কীভাবে ISEE 2027 হিসাব করে: কোন নিয়ম মানা হয়, সরকারি উৎস, হিসাবের সীমাবদ্ধতা এবং সেবাটি কে চালায়। নির্মাতা: Pi.Gi Service।"
     },
     "metodo_h1": {
-      "value": "Metodo e fonti"
+      "value": "পদ্ধতি ও উৎস"
     },
     "contatti_title": {
-      "value": "Contatti · DirittiOk"
+      "value": "যোগাযোগ · DirittiOk"
     },
     "contatti_desc": {
-      "value": "Scrivi a DirittiOk: ti rispondiamo via email. Dal modulo partono solo le informazioni che inserisci tu, non i dati della stima ISEE."
+      "value": "DirittiOk-কে লিখুন, আমরা ইমেইলে উত্তর দেব, সাধারণত এক কর্মদিবসের মধ্যে। ফর্ম থেকে শুধু আপনার লেখা তথ্যই আসে, ISEE হিসাবের কোনো তথ্য নয়।"
     },
     "contatti_h1": {
-      "value": "Contatti"
+      "value": "যোগাযোগ"
     },
     "privacy_title": {
-      "value": "Privacy · DirittiOk"
+      "value": "গোপনীয়তা · DirittiOk"
     },
     "privacy_desc": {
-      "value": "Come trattiamo i dati su DirittiOk: i calcoli restano sul telefono. Nessuna registrazione né tracciamento. Se ci scrivi, usiamo solo quello che inserisci tu.",
+      "value": "DirittiOk তথ্য কীভাবে ব্যবহার করে: হিসাব আপনার ফোনেই থাকে। রেজিস্ট্রেশন বা ট্র্যাকিং নেই। আমাদের লিখলে শুধু আপনার লেখাটুকুই ব্যবহার করি।",
       "note": "Meta description, 120-160 caratteri."
     },
     "privacy_h1": {
-      "value": "Privacy"
+      "value": "গোপনীয়তা"
     },
     "notfound_title": {
-      "value": "Pagina non trovata · DirittiOk"
+      "value": "পাতাটি পাওয়া যায়নি · DirittiOk"
     },
     "notfound_desc": {
-      "value": "Questa pagina non esiste. Puoi scoprire i tuoi aiuti, calcolare l'ISEE 2027 o aprire la checklist dei documenti per la DSU."
+      "value": "এই পাতাটি নেই। আপনি আপনার সহায়তা খুঁজে দেখতে পারেন, ISEE 2027 হিসাব করতে পারেন বা DSU-এর কাগজপত্রের চেকলিস্ট খুলতে পারেন।"
     },
     "notfound_h1": {
-      "value": "Pagina non trovata"
+      "value": "পাতাটি পাওয়া যায়নি"
     }
   },
   "wizard": {
     "step_label": {
-      "value": "Passo {current} di {total}"
+      "value": "ধাপ {current} / {total}"
     },
     "progress_aria": {
-      "value": "Avanzamento"
+      "value": "অগ্রগতি"
     },
     "submit_last": {
-      "value": "Calcola i risultati"
+      "value": "ফলাফল দেখুন"
     },
     "intro_js": {
-      "value": "Per usare il percorso guidato serve JavaScript attivo nel browser. I dati che inserisci restano su questo dispositivo."
+      "value": "ধাপে ধাপে এগোতে ব্রাউজারে JavaScript চালু থাকতে হবে। আপনার দেওয়া তথ্য এই ডিভাইসেই থাকে।"
     },
     "noscript": {
-      "value": "Attiva JavaScript per compilare i 5 passi, oppure scrivici dal [modulo contatti](/contatti)."
+      "value": "5টি ধাপ পূরণ করতে JavaScript চালু করুন, অথবা [যোগাযোগ ফর্মে](/contatti) আমাদের লিখুন।"
     },
     "stima_lead1": {
-      "value": "Questo simulatore ti guida in 5 passi per stimare l'ISEE 2027: l'ordinario, quello per le prestazioni familiari e inclusione e, se ti è utile, l'ISEE corrente. Inserisci il nucleo, i redditi del 2025, le spese fisse di oggi e il patrimonio al 31 dicembre 2025. Alla fine vedi una stima dell'indicatore, quanto ti resta ogni mese per vivere e quali aiuti pubblici puoi valutare, con il collegamento alla fonte di ogni soglia."
+      "value": "এই ক্যালকুলেটর আপনাকে 5টি ধাপে ISEE 2027-এর আনুমানিক হিসাব করতে সাহায্য করে: সাধারণ ISEE, পারিবারিক ও অন্তর্ভুক্তি সুবিধার ISEE, এবং দরকার হলে চলতি ISEE (ISEE corrente)। আপনি দেবেন পরিবারের তথ্য, 2025 সালের আয়, আজকের নিয়মিত খরচ আর 31 ডিসেম্বর 2025 তারিখের সম্পদ। শেষে দেখবেন সূচকের আনুমানিক মান, সংসার চালাতে প্রতি মাসে হাতে কত থাকে, আর কোন সরকারি সহায়তা যাচাই করে দেখতে পারেন। প্রতিটি সীমার সঙ্গে উৎসের লিংক থাকে।"
     },
     "stima_lead2": {
-      "value": "Il percorso è gratis e senza registrazione. I calcoli restano solo su questo telefono o computer: non inviamo i dati della stima a nessun server. I valori ufficiali si ottengono solo con la DSU presentata all'INPS o a un CAF. Questa è una stima orientativa, basata sulle regole note a novembre 2026."
+      "value": "ধাপগুলো বিনা খরচে, রেজিস্ট্রেশনও লাগে না। হিসাব শুধু এই ফোন বা কম্পিউটারেই থাকে: আমরা হিসাবের তথ্য কোনো সার্ভারে পাঠাই না। সরকারি মান পাওয়া যায় শুধু INPS বা CAF (কর সহায়তা কেন্দ্র)-এ DSU (ISEE-এর ঘোষণাপত্র) জমা দিলে। এটি নভেম্বর 2026 পর্যন্ত জানা নিয়মের ভিত্তিতে একটি আনুমানিক হিসাব।"
     },
     "stima_lead3": {
-      "value": "I cinque passi riguardano: il nucleo familiare; i redditi 2025 e le entrate di oggi; casa e spese fisse; il patrimonio; e l'eventuale calo di reddito per l'ISEE corrente. Prima di andare al CAF puoi anche consultare la [checklist dei documenti per la DSU](/checklist-dsu) e la pagina sui [bonus e gli aiuti pubblici legati all'ISEE](/diritti-pa)."
+      "value": "পাঁচটি ধাপ হলো: আপনার পরিবার; 2025 সালের আয় আর আজকের আয়; বাড়ি ও নিয়মিত খরচ; সম্পদ; আর চলতি ISEE-এর জন্য আয় কমে গিয়ে থাকলে তার তথ্য। CAF-এ যাওয়ার আগে দেখে নিতে পারেন [DSU-এর কাগজপত্রের চেকলিস্ট](/checklist-dsu) এবং [ISEE-এর সঙ্গে যুক্ত বোনাস ও সরকারি সহায়তা](/diritti-pa)-র পাতা।"
     },
     "stima_start": {
-      "value": "Inizia i 5 passi"
+      "value": "5টি ধাপ শুরু করুন"
     },
     "stima_foot": {
-      "value": "I dati della stima vengono salvati solo su questo dispositivo mentre scrivi. Prima del CAF puoi vedere la [checklist dei documenti](/checklist-dsu) e i [bonus e aiuti pubblici](/diritti-pa)."
+      "value": "লেখার সময় হিসাবের তথ্য শুধু এই ডিভাইসেই সেভ হয়। CAF-এ যাওয়ার আগে দেখে নিতে পারেন [কাগজপত্রের চেকলিস্ট](/checklist-dsu) আর [বোনাস ও সরকারি সহায়তা](/diritti-pa)।"
     },
     "s1_title": {
-      "value": "Il tuo nucleo familiare"
+      "value": "আপনার পরিবার"
     },
     "s1_intro": {
-      "value": "Il nucleo ISEE è chi risulta nello stato di famiglia, più il coniuge e i figli a carico anche se vivono altrove."
+      "value": "ISEE-এর হিসাবে পরিবার মানে পৌরসভার পারিবারিক নিবন্ধনে (stato di famiglia) যাঁদের নাম আছে, সঙ্গে স্বামী বা স্ত্রী এবং নির্ভরশীল সন্তানেরা, তাঁরা অন্য কোথাও থাকলেও।"
     },
     "s1_componenti": {
-      "value": "Quante persone ci sono nel nucleo?"
+      "value": "পরিবারে মোট কতজন আছেন?"
     },
     "s1_figli": {
-      "value": "Quanti sono figli (di qualsiasi età)?"
+      "value": "এঁদের মধ্যে কতজন সন্তান (যেকোনো বয়সের)?"
     },
     "s1_figli_help": {
-      "value": "Servono per le maggiorazioni della scala e per le franchigie."
+      "value": "স্কেলের বাড়তি পয়েন্ট আর ছাড়ের হিসাবে এটি লাগে।"
     },
     "s1_minori": {
-      "value": "Quanti hanno meno di 18 anni?"
+      "value": "কতজনের বয়স 18 বছরের কম?"
     },
     "s1_under3": {
-      "value": "Di questi, quanti hanno meno di 3 anni?"
+      "value": "এঁদের মধ্যে কতজনের বয়স 3 বছরের কম?"
     },
     "s1_over60": {
-      "value": "Quanti hanno 60 anni o più?"
+      "value": "কতজনের বয়স 60 বছর বা তার বেশি?"
     },
     "s1_over67": {
-      "value": "Di questi, quanti hanno 67 anni o più?"
+      "value": "এঁদের মধ্যে কতজনের বয়স 67 বছর বা তার বেশি?"
     },
     "s1_disabili": {
-      "value": "Quanti hanno una disabilità media, grave o non autosufficienza certificata?"
+      "value": "কতজনের মাঝারি বা গুরুতর প্রতিবন্ধিতার, বা পরনির্ভরশীলতার সরকারি সনদ আছে?"
     },
     "s1_disabili_help": {
-      "value": "Ogni persona aggiunge 0,5 alla scala di equivalenza."
+      "value": "এমন প্রতিজন সমতুল্য স্কেলে 0.5 যোগ করেন।"
     },
     "s1_genitoreSolo": {
-      "value": "C'è un solo genitore con figli minorenni?"
+      "value": "18 বছরের কম বয়সী সন্তানদের সঙ্গে কি শুধু একজন অভিভাবক আছেন?"
     },
     "s1_genitoriLavorano": {
-      "value": "Nel 2025 entrambi i genitori (o l'unico) hanno lavorato almeno 6 mesi?"
+      "value": "2025 সালে মা-বাবা দুজনেই (বা একমাত্র অভিভাবক) কি অন্তত 6 মাস কাজ করেছেন?"
     },
     "err_figli": {
-      "value": "I figli devono essere meno dei componenti (c'è almeno un genitore)."
+      "value": "সন্তানের সংখ্যা পরিবারের মোট সদস্যের চেয়ে কম হতে হবে (অন্তত একজন অভিভাবক থাকেন)।"
     },
     "err_minori": {
-      "value": "Non possono essere più dei componenti."
+      "value": "এই সংখ্যা পরিবারের মোট সদস্যের চেয়ে বেশি হতে পারে না।"
     },
     "err_under3": {
-      "value": "Non possono essere più dei minorenni."
+      "value": "এই সংখ্যা 18 বছরের কম বয়সীদের চেয়ে বেশি হতে পারে না।"
     },
     "err_over60": {
-      "value": "Minorenni e over 60 insieme superano i componenti."
+      "value": "18 বছরের কম বয়সী আর 60 বছরের বেশি বয়সী মিলিয়ে পরিবারের মোট সদস্যের চেয়ে বেশি হয়ে যাচ্ছে।"
     },
     "err_over67": {
-      "value": "Non possono essere più degli over 60."
+      "value": "এই সংখ্যা 60 বছরের বেশি বয়সীদের চেয়ে বেশি হতে পারে না।"
     },
     "err_disabili": {
-      "value": "Non possono essere più dei componenti."
+      "value": "এই সংখ্যা পরিবারের মোট সদস্যের চেয়ে বেশি হতে পারে না।"
     },
     "err_number": {
-      "value": "Inserisci un numero uguale o maggiore di zero."
+      "value": "শূন্য বা তার বেশি একটি সংখ্যা লিখুন।"
     },
     "err_max": {
-      "value": "Massimo {max}."
+      "value": "সর্বোচ্চ {max}।"
     },
     "err_fields": {
-      "value": "Controlla i campi segnalati."
+      "value": "চিহ্নিত ঘরগুলো একবার দেখে নিন।"
     },
     "s2_title": {
-      "value": "Redditi 2025"
+      "value": "2025 সালের আয়"
     },
     "s2_intro": {
-      "value": "Per l'ISEE 2027 contano i redditi del 2025 (quelli della CU 2026 o del 730/2026). Somma i valori di tutto il nucleo."
+      "value": "ISEE 2027-এর জন্য 2025 সালের আয় ধরা হয় (CU 2026 বা 730/2026-এ যে আয় আছে)। পুরো পরিবারের অঙ্কগুলো যোগ করুন।"
     },
     "s2_redditoDip": {
-      "value": "Redditi da lavoro dipendente o assimilati 2025"
+      "value": "2025 সালে চাকরি বা সমজাতীয় কাজ থেকে আয়"
     },
     "s2_redditoDip_help": {
-      "value": "Il reddito della CU (non lo stipendio netto in busta paga)."
+      "value": "CU-তে লেখা আয় (বেতনের স্লিপে লেখা হাতে পাওয়া নিট বেতন নয়)।"
     },
     "s2_nDip": {
-      "value": "Quante persone li hanno percepiti?"
+      "value": "কতজন এই আয় পেয়েছেন?"
     },
     "s2_redditoPens": {
-      "value": "Pensioni 2025"
+      "value": "2025 সালের পেনশন"
     },
     "s2_nPens": {
-      "value": "Quante persone hanno una pensione?"
+      "value": "কতজন পেনশন পান?"
     },
     "s2_redditoAltri": {
-      "value": "Altri redditi 2025 (lavoro autonomo, affitti incassati, redditi a imposta sostitutiva)"
+      "value": "2025 সালের অন্যান্য আয় (নিজের ব্যবসা বা স্বাধীন কাজ, পাওয়া বাড়িভাড়া, বিকল্প করের আওতার আয়)"
     },
     "s2_redditoAltri_help": {
-      "value": "Per la partita IVA forfettaria indica il reddito imponibile."
+      "value": "ফ্ল্যাট-রেট কর ব্যবস্থার partita IVA (partita IVA forfettaria) থাকলে করযোগ্য আয় লিখুন।"
     },
     "s2_trattamentiEsenti": {
-      "value": "Aiuti e sussidi non tassati incassati nel 2025 (escluso l'Assegno Unico)"
+      "value": "2025 সালে পাওয়া করমুক্ত সহায়তা ও ভাতা (Assegno Unico বাদে)"
     },
     "s2_trattamentiEsenti_help": {
-      "value": "Non inserire quelli legati alla disabilità: non contano nell'ISEE."
+      "value": "প্রতিবন্ধিতার সঙ্গে যুক্ত ভাতা লিখবেন না: সেগুলো ISEE-তে ধরা হয় না।"
     },
     "s2_auu2025": {
-      "value": "Assegno Unico incassato nel 2025"
+      "value": "2025 সালে পাওয়া Assegno Unico"
     },
     "s2_mantenimentoVersato": {
-      "value": "Assegni di mantenimento versati nel 2025 all'ex coniuge o per i figli"
+      "value": "2025 সালে সাবেক স্বামী/স্ত্রী বা সন্তানদের জন্য দেওয়া ভরণপোষণের টাকা"
     },
     "s2_nettoMensile": {
-      "value": "Quanto entra oggi in famiglia, al netto, ogni mese?"
+      "value": "আজ প্রতি মাসে পরিবারে কর কাটার পর কত টাকা আসে?"
     },
     "s2_nettoMensile_help": {
-      "value": "Stipendi, pensioni e aiuti di adesso: serve per calcolare il residuo per vivere."
+      "value": "এখনকার বেতন, পেনশন আর ভাতা: সংসার চালাতে হাতে কত থাকে তা হিসাব করতে এটি লাগে।"
     },
     "s3_title": {
-      "value": "Spese fisse di oggi"
+      "value": "আজকের নিয়মিত খরচ"
     },
     "s3_intro": {
-      "value": "Queste spese servono per il residuo per vivere. Nell'ISEE conta solo l'affitto con contratto registrato."
+      "value": "এই খরচগুলো দিয়ে হাতে থাকা টাকা হিসাব করা হয়। ISEE-তে শুধু নিবন্ধিত চুক্তির বাড়িভাড়া ধরা হয়।"
     },
     "s3_abitazione": {
-      "value": "Dove vivete?"
+      "value": "আপনারা কোথায় থাকেন?"
     },
     "s3_affitto": {
-      "value": "In affitto"
+      "value": "ভাড়া বাড়িতে"
     },
     "s3_proprieta": {
-      "value": "In una casa di proprietà"
+      "value": "নিজেদের বাড়িতে"
     },
     "s3_altro": {
-      "value": "Altro (comodato, ospiti)"
+      "value": "অন্যভাবে (বিনা ভাড়ায় দেওয়া বাড়ি, কারও সঙ্গে থাকা)"
     },
     "s3_affittoMensile": {
-      "value": "Affitto mensile"
+      "value": "মাসিক বাড়িভাড়া"
     },
     "s3_contrattoRegistrato": {
-      "value": "Il contratto d'affitto è registrato?"
+      "value": "বাড়িভাড়ার চুক্তি কি নিবন্ধিত?"
     },
     "s3_contrattoRegistrato_help": {
-      "value": "Solo il canone di un contratto registrato si sottrae nell'ISEE (fino a 7.000 € l'anno)."
+      "value": "ISEE-তে শুধু নিবন্ধিত চুক্তির ভাড়াই বাদ দেওয়া হয় (বছরে 7,000 € পর্যন্ত)।"
     },
     "s3_rataMutuo": {
-      "value": "Rata mensile del mutuo"
+      "value": "বাড়ির ঋণের মাসিক কিস্তি"
     },
     "s3_bollette": {
-      "value": "Bollette (luce, gas, acqua, internet), media mensile"
+      "value": "বিল (বিদ্যুৎ, গ্যাস, পানি, ইন্টারনেট), মাসিক গড়"
     },
     "s3_trasporti": {
-      "value": "Trasporti per lavoro o scuola, al mese"
+      "value": "কাজ বা স্কুলে যাতায়াতের খরচ, মাসে"
     },
     "s3_prestiti": {
-      "value": "Rate di prestiti o finanziamenti, al mese"
+      "value": "ঋণ বা কিস্তিতে কেনার কিস্তি, মাসে"
     },
     "s3_assicurazioni": {
-      "value": "Assicurazioni, media mensile"
+      "value": "বীমা, মাসিক গড়"
     },
     "s3_altreSpese": {
-      "value": "Altre spese fisse (mensa, cure, rette), al mese"
+      "value": "অন্যান্য নিয়মিত খরচ (স্কুলের খাবার, চিকিৎসা, ফি), মাসে"
     },
     "s4_title": {
-      "value": "Patrimonio al 31/12/2025"
+      "value": "31/12/2025 তারিখের সম্পদ"
     },
     "s4_intro": {
-      "value": "Indica la situazione al 31 dicembre 2025 di tutto il nucleo."
+      "value": "31 ডিসেম্বর 2025 তারিখে পুরো পরিবারের অবস্থা লিখুন।"
     },
     "s4_valoreCasa": {
-      "value": "Valore IMU della casa in cui vivete"
+      "value": "যে বাড়িতে থাকেন তার IMU মূল্য"
     },
     "s4_valoreCasa_help": {
-      "value": "Non è il prezzo di mercato. Se non lo sai, calcolalo qui sotto dalla rendita catastale."
+      "value": "এটি বাজারদর নয়। না জানলে নিচে ক্যাডাস্ট্রাল আয় (rendita catastale) থেকে হিসাব করে নিন।"
     },
     "s4_rendita_summary": {
-      "value": "Calcola dalla rendita catastale"
+      "value": "ক্যাডাস্ট্রাল আয় থেকে হিসাব করুন"
     },
     "s4_rendita_label": {
-      "value": "Rendita catastale (dalla visura)"
+      "value": "ক্যাডাস্ট্রাল আয় (rendita catastale, visura catastale নথিতে থাকে)"
     },
     "s4_rendita_help": {
-      "value": "Per le abitazioni (categorie A, escluso A/10): rendita × 1,05 × 160."
+      "value": "বসতবাড়ির জন্য (A শ্রেণি, A/10 বাদে): আয় × 1.05 × 160।"
     },
     "s4_rendita_btn": {
-      "value": "Usa questo valore"
+      "value": "এই মানটি ব্যবহার করুন"
     },
     "s4_rendita_done": {
-      "value": "Valore IMU inserito: {value}"
+      "value": "IMU মূল্য বসানো হয়েছে: {value}"
     },
     "s4_mutuoCasa": {
-      "value": "Mutuo residuo sulla casa al 31/12/2025"
+      "value": "31/12/2025 তারিখে বাড়ির ঋণের বাকি টাকা"
     },
     "s4_capoluogoMetro": {
-      "value": "La casa è in un capoluogo di città metropolitana?"
+      "value": "বাড়িটি কি কোনো মেট্রোপলিটন এলাকার প্রধান শহরে?"
     },
     "s4_capoluogoMetro_help": {
-      "value": "Sono {elenco}. Qui la franchigia dell'ISEE per prestazioni familiari sale a 120.000 €.",
+      "value": "শহরগুলো হলো: {elenco}। এসব শহরে পারিবারিক সুবিধার ISEE-তে বাড়ির ছাড় বেড়ে 120,000 € হয়।",
       "note": "{elenco} è la lista dei capoluoghi, nomi propri italiani: non tradurre i nomi delle città."
     },
     "s4_altriImmobili": {
-      "value": "Valore IMU di altri immobili o terreni"
+      "value": "অন্যান্য বাড়ি বা জমির IMU মূল্য"
     },
     "s4_mutuoAltri": {
-      "value": "Mutuo residuo su questi altri immobili"
+      "value": "এসব অন্যান্য সম্পত্তির ঋণের বাকি টাকা"
     },
     "s4_contiSaldo": {
-      "value": "Conti correnti e carte: saldo al 31/12/2025 (somma)"
+      "value": "ব্যাংক অ্যাকাউন্ট ও কার্ড: 31/12/2025 তারিখের ব্যালান্স (মোট)"
     },
     "s4_contiGiacenza": {
-      "value": "Conti correnti e carte: giacenza media 2025 (somma)"
+      "value": "ব্যাংক অ্যাকাউন্ট ও কার্ড: 2025 সালের গড় ব্যালান্স (মোট)"
     },
     "s4_contiGiacenza_help": {
-      "value": "La trovi nell'estratto conto o la chiedi alla banca. Si usa il valore più alto tra saldo e giacenza media."
+      "value": "এটি ব্যাংক স্টেটমেন্টে পাবেন, অথবা ব্যাংকের কাছে চাইতে পারেন। ব্যালান্স আর গড় ব্যালান্সের মধ্যে যেটি বেশি, সেটিই ধরা হয়।"
     },
     "s4_titoliStato": {
-      "value": "Titoli di Stato, buoni fruttiferi e libretti postali"
+      "value": "সরকারি বন্ড, পোস্ট অফিসের সঞ্চয় বন্ড ও পোস্টাল সঞ্চয় বই"
     },
     "s4_titoliStato_help": {
-      "value": "Sono esclusi dall'ISEE fino a 50.000 € in tutto."
+      "value": "মোট 50,000 € পর্যন্ত এগুলো ISEE-তে ধরা হয় না।"
     },
     "s4_altriInvestimenti": {
-      "value": "Altri investimenti (fondi, azioni, polizze vita, conti deposito)"
+      "value": "অন্যান্য বিনিয়োগ (ফান্ড, শেয়ার, জীবন বীমা পলিসি, সঞ্চয়ী ডিপোজিট অ্যাকাউন্ট)"
     },
     "s5_title": {
-      "value": "ISEE corrente (facoltativo)"
+      "value": "চলতি ISEE (ঐচ্ছিক)"
     },
     "s5_intro": {
-      "value": "Se oggi guadagni molto meno del 2025, l'ISEE corrente può usare i redditi più recenti."
+      "value": "2025 সালের তুলনায় আজ যদি অনেক কম আয় করেন, তাহলে চলতি ISEE (ISEE corrente) সাম্প্রতিক আয় দিয়ে হিসাব করতে পারে।"
     },
     "s5_peggiorata": {
-      "value": "La tua situazione è peggiorata dopo il 2025?"
+      "value": "2025 সালের পর কি আপনার অবস্থা খারাপ হয়েছে?"
     },
     "s5_motivo": {
-      "value": "Che cosa è successo?"
+      "value": "কী হয়েছে?"
     },
     "motivo_lavoro_indeterminato": {
-      "value": "Ho perso o ridotto un lavoro a tempo indeterminato"
+      "value": "স্থায়ী চাকরি হারিয়েছি বা কাজের সময় কমে গেছে"
     },
     "motivo_lavoro_determinato": {
-      "value": "Mi è finito un contratto a termine o flessibile (almeno 120 giorni negli ultimi 12 mesi)"
+      "value": "নির্দিষ্ট মেয়াদের বা অস্থায়ী চুক্তি শেষ হয়ে গেছে (গত 12 মাসে অন্তত 120 দিন কাজ)"
     },
     "motivo_autonomo": {
-      "value": "Ho chiuso un'attività autonoma (svolta per almeno 12 mesi)"
+      "value": "নিজের স্বাধীন ব্যবসা বন্ধ করেছি (অন্তত 12 মাস চালানোর পর)"
     },
     "motivo_trattamenti": {
-      "value": "Si è interrotto un sussidio o trattamento pubblico (es. NASpI)"
+      "value": "কোনো সরকারি ভাতা বা সহায়তা বন্ধ হয়ে গেছে (যেমন NASpI, বেকার ভাতা)"
     },
     "motivo_calo": {
-      "value": "Il reddito è calato, senza perdere il lavoro"
+      "value": "চাকরি না হারিয়েও আয় কমে গেছে"
     },
     "s5_modoCorrente": {
-      "value": "Quali redditi vuoi usare?"
+      "value": "কোন আয় ব্যবহার করতে চান?"
     },
     "s5_12mesi": {
-      "value": "Ultimi 12 mesi"
+      "value": "গত 12 মাস"
     },
     "s5_2mesi": {
-      "value": "Ultimi 2 mesi (moltiplicati per 6)"
+      "value": "গত 2 মাস (6 দিয়ে গুণ করে)"
     },
     "s5_correnteLD": {
-      "value": "Lavoro dipendente e pensioni nel periodo scelto (tutto il nucleo)"
+      "value": "বেছে নেওয়া সময়ে চাকরির আয় ও পেনশন (পুরো পরিবার)"
     },
     "s5_correnteLD_help": {
-      "value": "Importi lordi, come nelle buste paga o nel cedolino."
+      "value": "কর কাটার আগের অঙ্ক, যেমন বেতনের স্লিপ বা পেনশনের স্লিপে লেখা থাকে।"
     },
     "s5_correnteLA": {
-      "value": "Lavoro autonomo nel periodo (incassi meno spese)"
+      "value": "এই সময়ে স্বাধীন কাজের আয় (আয় থেকে খরচ বাদ দিয়ে)"
     },
     "s5_correnteTR": {
-      "value": "Sussidi pubblici nel periodo (es. NASpI, Assegno Unico)"
+      "value": "এই সময়ে সরকারি ভাতা (যেমন NASpI, Assegno Unico)"
     }
   },
   "results": {
     "empty_p1": {
-      "value": "Non hai ancora inserito dati. Ci vogliono pochi minuti."
+      "value": "আপনি এখনো কোনো তথ্য দেননি। মাত্র কয়েক মিনিট লাগে।"
     },
     "empty_p2": {
-      "value": "Dopo il percorso guidato trovi qui la stima dell'ISEE, il residuo per vivere e gli [aiuti a cui puoi avere diritto](/diritti-pa)."
+      "value": "ধাপগুলো শেষ করার পর এখানে পাবেন ISEE-এর আনুমানিক হিসাব, হাতে থাকা টাকা আর [যেসব সহায়তা আপনি পেতে পারেন](/diritti-pa)।"
     },
     "empty_cta": {
-      "value": "Inizia la stima"
+      "value": "হিসাব শুরু করুন"
     },
     "missing_neg": {
-      "value": "Ogni mese ti mancano circa"
+      "value": "প্রতি মাসে আপনার ঘাটতি প্রায়"
     },
     "missing_pos": {
-      "value": "Ti rimangono circa"
+      "value": "আপনার হাতে থাকে প্রায়"
     },
     "per_month": {
-      "value": "{amount} al mese"
+      "value": "মাসে {amount}"
     },
     "to_cover": {
-      "value": "per coprire le spese fisse."
+      "value": "নিয়মিত খরচ মেটাতে।"
     },
     "to_live": {
-      "value": "per vivere, dopo le spese fisse."
+      "value": "নিয়মিত খরচের পর সংসার চালানোর জন্য।"
     },
     "per_person": {
-      "value": "(circa {amount} a persona)"
+      "value": "(মাথাপিছু প্রায় {amount})"
     },
     "from_title": {
-      "value": "Da dove viene il residuo"
+      "value": "এই অঙ্ক কীভাবে এল"
     },
     "row_income": {
-      "value": "Entrate nette mensili di oggi"
+      "value": "আজকের মাসিক নিট আয়"
     },
     "row_rent": {
-      "value": "− Affitto (e mutuo)"
+      "value": "− বাড়িভাড়া (ও বাড়ির ঋণ)"
     },
     "row_mortgage": {
-      "value": "− Rata del mutuo"
+      "value": "− বাড়ির ঋণের কিস্তি"
     },
     "row_bills": {
-      "value": "− Bollette"
+      "value": "− বিল"
     },
     "row_transport": {
-      "value": "− Trasporti"
+      "value": "− যাতায়াত"
     },
     "row_loans": {
-      "value": "− Rate di prestiti"
+      "value": "− ঋণের কিস্তি"
     },
     "row_insurance": {
-      "value": "− Assicurazioni"
+      "value": "− বীমা"
     },
     "row_other": {
-      "value": "− Altre spese fisse"
+      "value": "− অন্যান্য নিয়মিত খরচ"
     },
     "row_residuo": {
-      "value": "= Residuo per vivere"
+      "value": "= সংসার চালানোর জন্য হাতে থাকা টাকা"
     },
     "residuo_note": {
-      "value": "Il residuo è il tuo conto pratico: bollette, trasporti e rate non entrano nell'ISEE."
+      "value": "এটি আপনার সংসারের বাস্তব হিসাব: বিল, যাতায়াত আর কিস্তি ISEE-তে ধরা হয় না।"
     },
     "residuo_missing_income": {
-      "value": "Non hai indicato le entrate nette mensili di oggi (passo 2): il residuo potrebbe non essere corretto."
+      "value": "আপনি আজকের মাসিক নিট আয় লেখেননি (ধাপ 2): হাতে থাকা টাকার হিসাব ঠিক না-ও হতে পারে।"
     },
     "kpi_ordinario": {
-      "value": "ISEE ordinario 2027"
+      "value": "সাধারণ ISEE 2027"
     },
     "kpi_ordinario_note": {
-      "value": "Vale per la maggior parte delle prestazioni: bonus sociali, Carta «Dedicata a te», servizi comunali."
+      "value": "বেশিরভাগ সুবিধার জন্য এটিই লাগে: bonus sociali (বিলে ছাড়), Carta «Dedicata a te», পৌরসভার সেবা।"
     },
     "kpi_speciale": {
-      "value": "ISEE per prestazioni familiari e inclusione"
+      "value": "পারিবারিক ও অন্তর্ভুক্তি সুবিধার ISEE"
     },
     "kpi_speciale_note": {
-      "value": "Si usa per Assegno di Inclusione, Assegno Unico, bonus nido e bonus nuovi nati. Franchigia casa {franchigia} e maggiorazioni dai 2 figli."
+      "value": "এটি লাগে Assegno di Inclusione, Assegno Unico, bonus nido আর bonus nuovi nati-এর জন্য। বাড়ির ছাড় {franchigia}, আর 2টি সন্তান থেকে শুরু করে বাড়তি পয়েন্ট।"
     },
     "kpi_lower": {
-      "value": "È più basso dell'ordinario di {amount}."
+      "value": "এটি সাধারণ ISEE-এর চেয়ে {amount} কম।"
     },
     "kpi_net_auu": {
-      "value": "Al netto dell'Assegno Unico (usato per AUU, nido e nuovi nati): **{amount}**"
+      "value": "Assegno Unico বাদ দিয়ে (Assegno Unico, ডে-কেয়ার ও নবজাতক বোনাসের জন্য ব্যবহার হয়): **{amount}**"
     },
     "corrente_title": {
-      "value": "ISEE corrente stimato"
+      "value": "চলতি ISEE-এর আনুমানিক হিসাব"
     },
     "corrente_ord": {
-      "value": "Corrente ordinario"
+      "value": "চলতি সাধারণ ISEE"
     },
     "corrente_ord_vs": {
-      "value": "contro {amount} dell'ordinario"
+      "value": "সাধারণ ISEE {amount}-এর তুলনায়"
     },
     "corrente_spe": {
-      "value": "Corrente per prestazioni familiari"
+      "value": "পারিবারিক সুবিধার চলতি ISEE"
     },
     "corrente_spe_vs": {
-      "value": "contro {amount}"
+      "value": "{amount}-এর তুলনায়"
     },
     "corrente_var": {
-      "value": "Con un calo del reddito senza perdita del lavoro, l'ISEE corrente si può chiedere solo se l'indicatore reddituale scende di oltre il 25%. Qui la variazione stimata è del {pct}%."
+      "value": "চাকরি না হারিয়ে শুধু আয় কমে থাকলে, আয়ের সূচক 25%-এর বেশি কমলে তবেই চলতি ISEE চাওয়া যায়। এখানে আনুমানিক পরিবর্তন {pct}%।"
     },
     "corrente_ok": {
-      "value": "L'ISEE corrente sembra conveniente. Prima devi avere un ISEE ordinario valido; il corrente dura 6 mesi (se cambi solo i redditi)."
+      "value": "চলতি ISEE আপনার জন্য সুবিধাজনক মনে হচ্ছে। আগে একটি বৈধ সাধারণ ISEE থাকতে হবে; শুধু আয় বদলালে চলতি ISEE 6 মাস বৈধ থাকে।"
     },
     "corrente_not_lower": {
-      "value": "Con questi dati l'ISEE corrente non risulta più basso dell'ordinario."
+      "value": "এই তথ্য অনুযায়ী চলতি ISEE সাধারণ ISEE-এর চেয়ে কম হচ্ছে না।"
     },
     "corrente_x6": {
-      "value": "Hai usato i redditi degli ultimi 2 mesi moltiplicati per 6."
+      "value": "আপনি গত 2 মাসের আয় 6 দিয়ে গুণ করে ব্যবহার করেছেন।"
     },
     "benefits_title": {
-      "value": "Aiuti che puoi valutare nel 2027"
+      "value": "2027 সালে যেসব সহায়তা যাচাই করে দেখতে পারেন"
     },
     "benefits_intro": {
-      "value": "Le soglie sono quelle in vigore nel 2026, salvo dove indicato. Ogni aiuto ha altri requisiti oltre all'ISEE."
+      "value": "অন্যভাবে বলা না থাকলে সীমাগুলো 2026 সালে চালু থাকা সীমা। প্রতিটি সহায়তার জন্য ISEE ছাড়াও অন্য শর্ত আছে।"
     },
     "benefits_using_corrente": {
-      "value": "Gli esiti qui sotto usano il tuo ISEE corrente stimato, che è più basso dell'ordinario."
+      "value": "নিচের ফলাফলে আপনার চলতি ISEE-এর আনুমানিক হিসাব ব্যবহার করা হয়েছে, যা সাধারণ ISEE-এর চেয়ে কম।"
     },
     "label_si": {
-      "value": "Probabile"
+      "value": "সম্ভাবনা আছে"
     },
     "label_forse": {
-      "value": "Da verificare"
+      "value": "যাচাই করুন"
     },
     "label_no": {
-      "value": "Soglia superata"
+      "value": "সীমার বেশি"
     },
     "threshold": {
-      "value": "Soglia:"
+      "value": "সীমা:"
     },
     "amount_label": {
-      "value": "Quanto:"
+      "value": "কত:"
     },
     "now_title": {
-      "value": "E adesso?"
+      "value": "এখন কী করবেন?"
     },
     "now_docs_title": {
-      "value": "Prepara i documenti"
+      "value": "কাগজপত্র তৈরি রাখুন"
     },
     "now_docs_text": {
-      "value": "Checklist DSU 2027."
+      "value": "DSU 2027-এর চেকলিস্ট।"
     },
     "now_docs_text_corrente": {
-      "value": "Checklist DSU 2027 e ISEE corrente."
+      "value": "DSU 2027 ও চলতি ISEE-এর চেকলিস্ট।"
     },
     "now_opt_title": {
-      "value": "Come ottimizzare legalmente"
+      "value": "আইনসম্মতভাবে কীভাবে কমাবেন"
     },
     "now_opt_text": {
-      "value": "Le scelte permesse che abbassano l'ISEE."
+      "value": "যেসব বৈধ সিদ্ধান্তে ISEE কমে।"
     },
     "now_dir_title": {
-      "value": "Aiuti a cui puoi avere diritto"
+      "value": "যেসব সহায়তা আপনি পেতে পারেন"
     },
     "now_dir_text": {
-      "value": "Bonus e prestazioni pubbliche legate all'ISEE, con le fonti."
+      "value": "ISEE-এর সঙ্গে যুক্ত বোনাস ও সরকারি সুবিধা, উৎসসহ।"
     },
     "edit": {
-      "value": "Modifica i dati"
+      "value": "তথ্য বদলান"
     },
     "calc_summary": {
-      "value": "Come è calcolato"
+      "value": "কীভাবে হিসাব করা হয়েছে"
     },
     "calc_redditi": {
-      "value": "Redditi 2025 considerati"
+      "value": "হিসাবে ধরা 2025 সালের আয়"
     },
     "calc_figurativo": {
-      "value": " (compreso il rendimento figurativo degli investimenti: {amount})"
+      "value": " (বিনিয়োগের ধরে নেওয়া মুনাফাসহ: {amount})"
     },
     "calc_detr_dip": {
-      "value": "− 20% dei redditi da lavoro (max 3.000 € a persona)"
+      "value": "− চাকরির আয়ের 20% (জনপ্রতি সর্বোচ্চ 3,000 €)"
     },
     "calc_detr_pens": {
-      "value": "− 20% delle pensioni (max 1.000 € a persona)"
+      "value": "− পেনশনের 20% (জনপ্রতি সর্বোচ্চ 1,000 €)"
     },
     "calc_mantenimento": {
-      "value": "− assegni di mantenimento versati"
+      "value": "− দেওয়া ভরণপোষণের টাকা"
     },
     "calc_affitto": {
-      "value": "− affitto con contratto registrato"
+      "value": "− নিবন্ধিত চুক্তির বাড়িভাড়া"
     },
     "calc_isr": {
-      "value": "= Indicatore reddituale (ISR)"
+      "value": "= আয়ের সূচক (ISR)"
     },
     "calc_casa": {
-      "value": "Casa: {netto} al netto del mutuo, franchigia {franchigia}, conta 2/3 dell'eccedenza"
+      "value": "বাড়ি: ঋণ বাদে {netto}, ছাড় {franchigia}, এর ওপরের অংশের 2/3 ধরা হয়"
     },
     "calc_altri_imm": {
-      "value": "Altri immobili al netto del mutuo"
+      "value": "অন্যান্য সম্পত্তি, ঋণ বাদে"
     },
     "calc_mobiliare": {
-      "value": "Patrimonio mobiliare {lordo}{esclusi} − franchigia {franchigia}"
+      "value": "সঞ্চয় ও বিনিয়োগ {lordo}{esclusi} − ছাড় {franchigia}"
     },
     "calc_titoli_esclusi": {
-      "value": " (titoli di Stato esclusi: {amount})"
+      "value": " (বাদ দেওয়া সরকারি বন্ড: {amount})"
     },
     "calc_isp": {
-      "value": "= Indicatore patrimoniale (ISP)"
+      "value": "= সম্পদের সূচক (ISP)"
     },
     "calc_ise": {
-      "value": "ISE = ISR + 20% dell'ISP"
+      "value": "ISE = ISR + ISP-এর 20%"
     },
     "calc_scala": {
-      "value": "Scala di equivalenza: {parti}"
+      "value": "সমতুল্য স্কেল: {parti}"
     },
     "calc_isee": {
-      "value": "ISEE = ISE ÷ scala"
+      "value": "ISEE = ISE ÷ স্কেল"
     },
     "scala_componente": {
-      "value": "1 componente",
+      "value": "1 জন সদস্য",
       "note": "Usato se n = 1."
     },
     "scala_componenti": {
-      "value": "{n} componenti",
+      "value": "{n} জন সদস্য",
       "note": "Usato se n ≠ 1."
     },
     "scala_figli": {
-      "value": "{n} figli nel nucleo"
+      "value": "পরিবারে {n}টি সন্তান"
     },
     "scala_minori_under3": {
-      "value": "figli minorenni, almeno uno sotto i 3 anni"
+      "value": "18 বছরের কম বয়সী সন্তান, অন্তত একজন 3 বছরের কম"
     },
     "scala_minori": {
-      "value": "figli minorenni"
+      "value": "18 বছরের কম বয়সী সন্তান"
     },
     "scala_disabili": {
-      "value": "{n} con disabilità"
+      "value": "প্রতিবন্ধিতাসহ {n} জন"
     }
   },
   "benefits": {
@@ -1160,307 +1179,319 @@
       "value": "Assegno di Inclusione (ADI)"
     },
     "adi_importo": {
-      "value": "Integra il reddito familiare fino a 6.500 € l'anno × scala ADI, più fino a 3.640 € se in affitto"
+      "value": "পরিবারের আয়কে বছরে সর্বোচ্চ 6,500 € × ADI স্কেল পর্যন্ত পূরণ করে দেয়, ভাড়া বাড়িতে থাকলে আরও সর্বোচ্চ 3,640 €"
     },
     "adi_nota_si": {
-      "value": "Servono anche requisiti di reddito familiare, patrimonio, residenza e veicoli."
+      "value": "পরিবারের আয়, সম্পদ, বসবাস আর যানবাহন নিয়েও শর্ত আছে।"
     },
     "adi_nota_no": {
-      "value": "Spetta solo se nel nucleo c'è un minorenne, una persona con disabilità, una persona con almeno 60 anni o in carico ai servizi socio-sanitari."
+      "value": "শুধু সেসব পরিবারের জন্য, যেখানে 18 বছরের কম বয়সী কেউ, প্রতিবন্ধী কেউ, 60 বছর বা তার বেশি বয়সী কেউ, বা সামাজিক ও স্বাস্থ্য সেবার তত্ত্বাবধানে থাকা কেউ আছেন।"
     },
     "adi_soglia": {
-      "value": "ISEE per prestazioni familiari fino a {amount}"
+      "value": "পারিবারিক সুবিধার ISEE {amount} পর্যন্ত"
     },
     "adi_offerta": {
-      "value": "Integra il reddito familiare fino a 6.500 € l'anno × scala ADI (8.190 € se il nucleo è composto da persone di almeno 67 anni, o da over 67 e familiari con disabilità grave o non autosufficienza), più fino a 3.640 € l'anno se in affitto (1.950 € negli stessi nuclei).",
+      "value": "পরিবারের আয়কে বছরে সর্বোচ্চ 6,500 € × ADI স্কেল পর্যন্ত পূরণ করে দেয় (পরিবারের সবাই অন্তত 67 বছর বয়সী হলে, অথবা 67 বছরের বেশি বয়সী ও গুরুতর প্রতিবন্ধী বা পরনির্ভরশীল সদস্য নিয়ে পরিবার গঠিত হলে 8,190 €), ভাড়া বাড়িতে থাকলে আরও বছরে সর্বোচ্চ 3,640 € (একই ধরনের পরিবারের জন্য 1,950 €)।",
       "note": "Importi ufficiali INPS: non modificarli."
     },
     "adi_chi": {
-      "value": "Nuclei con almeno un minorenne, una persona con disabilità, una persona di almeno 60 anni o in carico ai servizi socio-sanitari."
+      "value": "যেসব পরিবারে অন্তত একজন 18 বছরের কম বয়সী, প্রতিবন্ধী, অন্তত 60 বছর বয়সী, বা সামাজিক ও স্বাস্থ্য সেবার তত্ত্বাবধানে থাকা কেউ আছেন।"
     },
     "auu_nome": {
-      "value": "Assegno Unico per i figli"
+      "value": "Assegno Unico (সন্তানের জন্য ভাতা)"
     },
     "auu_nota": {
-      "value": "Spetta a tutti, anche senza ISEE (importo minimo). Valori 2026: quelli 2027 vengono rivalutati con l'inflazione a inizio anno."
+      "value": "সবাই পেতে পারেন, ISEE ছাড়াও (সর্বনিম্ন অঙ্ক)। এগুলো 2026 সালের মান: 2027 সালের মান বছরের শুরুতে মূল্যস্ফীতি অনুযায়ী বাড়ানো হয়।"
     },
     "auu_soglia": {
-      "value": "Importo pieno fino a {min}; minimo da {max}"
+      "value": "{min} পর্যন্ত পুরো অঙ্ক; {max} থেকে সর্বনিম্ন অঙ্ক"
     },
     "auu_offerta": {
-      "value": "Da {min} a {max} al mese per figlio minorenne"
+      "value": "18 বছরের কম বয়সী প্রতিটি সন্তানের জন্য মাসে {min} থেকে {max}"
+    },
+    "auu_importo": {
+      "value": "18 বছরের কম বয়সী প্রতিটি সন্তানের জন্য মাসে প্রায় {amount} (মূল অঙ্ক, অতিরিক্ত বৃদ্ধি ছাড়া)",
+      "note": "Testo di /risultati con l'importo calcolato. {amount} è già formattato nella lingua."
     },
     "bonus_nome": {
-      "value": "Bonus sociali luce, gas, acqua e TARI"
+      "value": "বিদ্যুৎ, গ্যাস, পানি ও TARI-এর bonus sociali"
     },
     "bonus_importo": {
-      "value": "Sconto automatico in bolletta; 25% sulla TARI"
+      "value": "বিলে স্বয়ংক্রিয় ছাড়; TARI (ময়লা কর)-এ 25% ছাড়"
     },
     "bonus_nota": {
-      "value": "Arriva in automatico se presenti la DSU e il contratto è intestato a un componente del nucleo. Soglia aggiornata da ARERA ogni tre anni (dal 2026)."
+      "value": "DSU জমা দিলে আর চুক্তিটি পরিবারের কোনো সদস্যের নামে থাকলে এটি নিজে থেকেই আসে। সীমাটি ARERA প্রতি তিন বছর পরপর হালনাগাদ করে (2026 থেকে)।"
     },
     "bonus_soglia": {
-      "value": "ISEE fino a {isee} ({fam} con 4+ figli a carico)"
+      "value": "ISEE {isee} পর্যন্ত (4 বা তার বেশি নির্ভরশীল সন্তান থাকলে {fam})"
     },
     "bonus_offerta": {
-      "value": "Automatici con la DSU"
+      "value": "DSU দিলে স্বয়ংক্রিয়ভাবে"
     },
     "bonus_stato": {
-      "value": "Verificato (aggiornamento triennale dal 2026)"
+      "value": "যাচাই করা (2026 থেকে প্রতি তিন বছরে হালনাগাদ)"
     },
     "dedicata_nome": {
       "value": "Carta «Dedicata a te»"
     },
     "dedicata_nota": {
-      "value": "Non si fa domanda: la lista dei beneficiari 2026-2027 è unica e la compilano INPS e Comuni con l'ISEE 2026. Esclusi chi ha ADI, Carta Acquisti, NASpI, CIG e simili."
+      "value": "আবেদন করতে হয় না: 2026-2027 সালের জন্য সুবিধাভোগীদের একটিই তালিকা, যা INPS ও পৌরসভাগুলো ISEE 2026 দিয়ে তৈরি করে। যাঁরা ADI, Carta Acquisti, NASpI, CIG (cassa integrazione) বা এ ধরনের সহায়তা পান, তাঁরা এর বাইরে।"
     },
     "dedicata_soglia": {
-      "value": "ISEE ordinario fino a {amount}"
+      "value": "সাধারণ ISEE {amount} পর্যন্ত"
     },
     "dedicata_offerta": {
-      "value": "{amount} l'anno, lista unica 2026-2027"
+      "value": "বছরে {amount}, 2026-2027-এর একটিই তালিকা"
     },
     "acquisti_nome": {
       "value": "Carta Acquisti"
     },
     "acquisti_importo": {
-      "value": "Carta prepagata ricaricata ogni due mesi"
+      "value": "প্রিপেইড কার্ড, প্রতি দুই মাসে টাকা ভরা হয়"
     },
     "acquisti_nota": {
-      "value": "Per bambini sotto i 3 anni e persone dai 65 anni in su, con limiti anche di reddito. Soglia 2026, rivalutata ogni anno."
+      "value": "3 বছরের কম বয়সী শিশু এবং 65 বছর বা তার বেশি বয়সীদের জন্য, আয়েরও সীমা আছে। 2026 সালের সীমা, প্রতি বছর হালনাগাদ হয়।"
     },
     "acquisti_soglia": {
-      "value": "ISEE fino a {amount}"
+      "value": "ISEE {amount} পর্যন্ত"
     },
     "acquisti_offerta": {
-      "value": "Bambini sotto i 3 anni e persone da 65 anni"
+      "value": "3 বছরের কম বয়সী শিশু এবং 65 বছর বা তার বেশি বয়সী মানুষ"
     },
     "acquisti_stato": {
-      "value": "Valore 2026, rivalutato ogni anno"
+      "value": "2026 সালের মান, প্রতি বছর হালনাগাদ হয়"
     },
     "nido_nome": {
-      "value": "Bonus asilo nido"
+      "value": "Bonus asilo nido (ডে-কেয়ার বোনাস)"
     },
     "nido_nota": {
-      "value": "Si usa l'ISEE minorenni al netto dell'Assegno Unico. Importi 2026, da confermare per il 2027."
+      "value": "এখানে শিশুদের ISEE (ISEE minorenni) ব্যবহার হয়, Assegno Unico বাদ দিয়ে। 2026 সালের অঙ্ক, 2027-এর জন্য এখনো নিশ্চিত নয়।"
     },
     "nido_soglia": {
-      "value": "Importo pieno con ISEE minorenni fino a {amount}"
+      "value": "শিশুদের ISEE {amount} পর্যন্ত হলে পুরো অঙ্ক"
     },
     "nido_offerta": {
-      "value": "3.600 € per i nati dal 2024; 3.000/2.500/1.500 € per i nati prima",
+      "value": "2024 থেকে জন্ম নেওয়া শিশুর জন্য 3,600 €; আগে জন্ম নেওয়া শিশুর জন্য 3,000/2,500/1,500 €",
       "note": "Importi ufficiali: non modificarli."
     },
+    "nido_importo_alto": {
+      "value": "{a} (2024 থেকে জন্ম নেওয়া) অথবা {b}/{c} (আগে জন্ম নেওয়া) বছরে",
+      "note": "Importo più alto del bonus nido in /risultati. {a} {b} {c} sono già formattati."
+    },
+    "nido_importo_basso": {
+      "value": "বছরে {amount}",
+      "note": "Importo più basso del bonus nido in /risultati. {amount} è già formattato."
+    },
     "nuovinati_nome": {
-      "value": "Bonus nuovi nati"
+      "value": "Bonus nuovi nati (নবজাতক বোনাস)"
     },
     "nuovinati_nota": {
-      "value": "Domanda entro 120 giorni dalla nascita o adozione. Confermato per i nati nel 2026: per il 2027 da confermare."
+      "value": "জন্ম বা দত্তক নেওয়ার 120 দিনের মধ্যে আবেদন করুন। 2026 সালে জন্ম নেওয়া শিশুদের জন্য নিশ্চিত: 2027-এর জন্য এখনো নিশ্চিত নয়।"
     },
     "nuovinati_soglia": {
-      "value": "ISEE fino a {amount}"
+      "value": "ISEE {amount} পর্যন্ত"
     },
     "nuovinati_offerta": {
-      "value": "{amount} una tantum"
+      "value": "এককালীন {amount}"
     },
     "nuovinati_stato": {
-      "value": "Confermato per il 2026, da confermare per il 2027"
+      "value": "2026-এর জন্য নিশ্চিত, 2027-এর জন্য এখনো নিশ্চিত নয়"
     },
     "affitto_nome": {
-      "value": "Contributo affitto (Comune o Regione)"
+      "value": "বাড়িভাড়ার সহায়তা (পৌরসভা বা রিজিওন থেকে)"
     },
     "affitto_soglia": {
-      "value": "Soglie diverse in ogni bando"
+      "value": "প্রতিটি আবেদন-বিজ্ঞপ্তিতে আলাদা সীমা"
     },
     "affitto_importo": {
-      "value": "Rimborso parziale del canone"
+      "value": "ভাড়ার একটি অংশ ফেরত"
     },
     "affitto_nota": {
-      "value": "Serve un contratto registrato. In Veneto il Fondo affitti passa dai bandi dei Comuni: controlla requisiti e scadenze sul sito del tuo Comune."
+      "value": "নিবন্ধিত চুক্তি লাগবে। ভেনেতোতে Fondo affitti (বাড়িভাড়া তহবিল) প্রতিটি পৌরসভা (Comune)-র আবেদন-বিজ্ঞপ্তির মাধ্যমে দেওয়া হয়: আপনার পৌরসভার ওয়েবসাইটে শর্ত আর শেষ তারিখ দেখে নিন।"
     },
     "affitto_offerta": {
-      "value": "In Veneto: Fondo affitti tramite i bandi comunali"
+      "value": "ভেনেতোতে: পৌরসভার আবেদন-বিজ্ঞপ্তির মাধ্যমে Fondo affitti"
     },
     "affitto_stato": {
-      "value": "Da verificare nel bando"
+      "value": "আবেদন-বিজ্ঞপ্তিতে যাচাই করুন"
     },
     "thing_offer": {
-      "value": "Cosa offre:"
+      "value": "কী দেয়:"
     },
     "thing_who": {
-      "value": "Chi può chiederlo:"
+      "value": "কারা আবেদন করতে পারেন:"
     }
   },
   "docs": {
     "intro": {
-      "value": "Spunta quello che hai già. La lista resta salvata su questo dispositivo."
+      "value": "যা আগে থেকেই আছে তাতে টিক দিন। তালিকাটি এই ডিভাইসে সেভ থাকে।"
     },
     "h2_all": {
-      "value": "Per tutti"
+      "value": "সবার জন্য"
     },
     "h2_corrente": {
-      "value": "In più, per l'ISEE corrente"
+      "value": "চলতি ISEE-এর জন্য বাড়তি যা লাগে"
     },
     "outro": {
-      "value": "Puoi presentare la DSU da solo sul [portale ISEE dell'INPS]({portale}), con l'app INPS Mobile o gratis tramite un CAF. Prima puoi fare il [calcolo ISEE 2027](/stima) e vedere i [bonus e aiuti pubblici](/diritti-pa) collegati.",
+      "value": "DSU আপনি নিজেই জমা দিতে পারেন [INPS-এর ISEE ওয়েবসাইটে]({portale}), INPS Mobile অ্যাপে, অথবা বিনা খরচে কোনো CAF (কর সহায়তা কেন্দ্র)-এর মাধ্যমে। তার আগে করে নিতে পারেন [ISEE 2027-এর হিসাব](/stima) এবং দেখে নিতে পারেন সংশ্লিষ্ট [বোনাস ও সরকারি সহায়তা](/diritti-pa)।",
       "note": "{portale} viene sostituito con l'URL ufficiale INPS: lasciarlo."
     },
     "d1": {
-      "value": "Documenti d'identità e codici fiscali di tutti i componenti del nucleo"
+      "value": "পরিবারের সব সদস্যের পরিচয়পত্র ও ট্যাক্স কোড (codice fiscale)"
     },
     "d2": {
-      "value": "SPID, CIE o CNS di ogni maggiorenne, se vuoi usare la DSU precompilata"
+      "value": "প্রত্যেক প্রাপ্তবয়স্কের SPID, CIE বা CNS (ডিজিটাল পরিচয়), যদি আগে থেকে পূরণ করা DSU ব্যবহার করতে চান"
     },
     "d3": {
-      "value": "Contratto d'affitto registrato (estremi di registrazione) e canone annuo"
+      "value": "নিবন্ধিত বাড়িভাড়ার চুক্তি (নিবন্ধনের তথ্য) ও বছরের মোট ভাড়া"
     },
     "d4": {
-      "value": "Redditi 2025: Certificazione Unica 2026, modello 730/2026 o Redditi PF 2026 di ogni componente"
+      "value": "2025 সালের আয়: প্রত্যেক সদস্যের Certificazione Unica 2026, 730/2026 ফর্ম বা Redditi PF 2026"
     },
     "d5": {
-      "value": "Redditi 2025 non tassati o a imposta sostitutiva (es. borse di studio, redditi esteri, forfettari)"
+      "value": "2025 সালের করমুক্ত বা বিকল্প করের আওতার আয় (যেমন বৃত্তি, বিদেশের আয়, ফ্ল্যাট-রেট ব্যবস্থার আয়)"
     },
     "d6": {
-      "value": "Assegni di mantenimento ricevuti o versati nel 2025 (sentenza o accordo)"
+      "value": "2025 সালে পাওয়া বা দেওয়া ভরণপোষণের টাকা (আদালতের রায় বা চুক্তি)"
     },
     "d7": {
-      "value": "Saldo al 31/12/2025 e giacenza media 2025 di ogni conto, carta prepagata con IBAN e libretto"
+      "value": "প্রতিটি অ্যাকাউন্ট, IBAN-যুক্ত প্রিপেইড কার্ড ও সঞ্চয় বইয়ের 31/12/2025 তারিখের ব্যালান্স ও 2025 সালের গড় ব্যালান্স"
     },
     "d8": {
-      "value": "Valore al 31/12/2025 di titoli, buoni postali, fondi, azioni e polizze vita (estratti della banca o di Poste)"
+      "value": "31/12/2025 তারিখে বন্ড, পোস্টাল সঞ্চয় বন্ড, ফান্ড, শেয়ার ও জীবন বীমা পলিসির মূল্য (ব্যাংক বা Poste Italiane-এর স্টেটমেন্ট)"
     },
     "d9": {
-      "value": "Visure catastali o rendite di case e terreni posseduti al 31/12/2025"
+      "value": "31/12/2025 তারিখে মালিকানাধীন বাড়ি ও জমির ভূমি রেকর্ড (visure catastali) বা ক্যাডাস্ট্রাল আয়"
     },
     "d10": {
-      "value": "Certificato del mutuo residuo al 31/12/2025"
+      "value": "31/12/2025 তারিখে বাড়ির ঋণের বাকি টাকার সনদ"
     },
     "d11": {
-      "value": "Targhe di auto, moto e imbarcazioni intestate ai componenti"
+      "value": "পরিবারের সদস্যদের নামে থাকা গাড়ি, মোটরসাইকেল ও নৌযানের নম্বর প্লেট"
     },
     "d12": {
-      "value": "Verbali di disabilità o non autosufficienza"
+      "value": "প্রতিবন্ধিতা বা পরনির্ভরশীলতার সরকারি মূল্যায়নপত্র (verbali)"
     },
     "d13": {
-      "value": "ISEE ordinario già attestato (serve prima di chiedere il corrente)"
+      "value": "ইতিমধ্যে পাওয়া সাধারণ ISEE-এর সনদ (চলতি ISEE চাওয়ার আগে এটি লাগে)"
     },
     "d14": {
-      "value": "Lettera di licenziamento, fine contratto, chiusura della partita IVA o comunicazione di interruzione del sussidio"
+      "value": "চাকরিচ্যুতির চিঠি, চুক্তি শেষের কাগজ, partita IVA বন্ধের কাগজ, বা ভাতা বন্ধের নোটিশ"
     },
     "d15": {
-      "value": "Buste paga, cedolini e incassi degli ultimi 12 mesi (o degli ultimi 2 mesi, se ammesso)"
+      "value": "গত 12 মাসের (অনুমতি থাকলে গত 2 মাসের) বেতনের স্লিপ, পেনশনের স্লিপ ও পাওয়া টাকার হিসাব"
     },
     "d16": {
-      "value": "Importi di NASpI, cassa integrazione o altri sussidi degli ultimi 12 mesi"
+      "value": "গত 12 মাসের NASpI, cassa integrazione (বেতন সহায়তা) বা অন্যান্য ভাতার অঙ্ক"
     }
   },
   "ottimizzazione": {
     "h2_due": {
-      "value": "Residuo pratico e ISEE sono due cose diverse"
+      "value": "হাতে থাকা টাকা আর ISEE দুটি আলাদা বিষয়"
     },
     "p_due": {
-      "value": "Il residuo è quanto ti resta davvero ogni mese. L'ISEE invece guarda ai redditi 2025 e al patrimonio al 31/12/2025: bollette, trasporti, rate di prestiti e assicurazioni **non** lo abbassano."
+      "value": "হাতে থাকা টাকা হলো প্রতি মাসে সত্যিই আপনার কাছে যা থাকে। আর ISEE দেখে 2025 সালের আয় ও 31/12/2025 তারিখের সম্পদ: বিল, যাতায়াত, ঋণের কিস্তি আর বীমা ISEE **কমায় না**।"
     },
     "h2_scelte": {
-      "value": "Scelte permesse che contano"
+      "value": "যেসব বৈধ সিদ্ধান্ত কাজে আসে"
     },
     "t1": {
-      "value": "**Registra il contratto d'affitto** e tieni a portata gli estremi di registrazione: solo così il canone si sottrae dai redditi (fino a 7.000 € l'anno, +500 € per ogni figlio dopo il secondo)."
+      "value": "**বাড়িভাড়ার চুক্তি নিবন্ধন করুন** এবং নিবন্ধনের তথ্য হাতের কাছে রাখুন: শুধু তাহলেই ভাড়ার টাকা আয় থেকে বাদ যায় (বছরে 7,000 € পর্যন্ত, দ্বিতীয় সন্তানের পর প্রতিটি সন্তানের জন্য +500 €)।"
     },
     "t2": {
-      "value": "**Indica il mutuo residuo al 31/12/2025** per ogni immobile: si sottrae dal valore della casa. Chiedi alla banca la certificazione del debito residuo."
+      "value": "**31/12/2025 তারিখে বাড়ির ঋণের বাকি টাকা লিখুন**, প্রতিটি সম্পত্তির জন্য: এটি বাড়ির মূল্য থেকে বাদ যায়। বাকি ঋণের সনদ ব্যাংকের কাছে চেয়ে নিন।"
     },
     "t3": {
-      "value": "**Casa di proprietà**: nell'ISEE per prestazioni familiari e inclusione la franchigia è di 91.500 € (120.000 € nei capoluoghi delle città metropolitane), +2.500 € per ogni figlio convivente dopo il primo. Lo calcola l'INPS in automatico, non devi fare nulla."
+      "value": "**নিজের বাড়ি**: পারিবারিক ও অন্তর্ভুক্তি সুবিধার ISEE-তে ছাড় 91,500 € (মেট্রোপলিটন এলাকার প্রধান শহরে 120,000 €), আর প্রথম সন্তানের পর একসঙ্গে থাকা প্রতিটি সন্তানের জন্য +2,500 €। INPS এটি নিজে থেকেই হিসাব করে, আপনাকে কিছু করতে হবে না।"
     },
     "t4": {
-      "value": "**Titoli di Stato, buoni fruttiferi e libretti postali** sono esclusi fino a 50.000 € in tutto per il nucleo (DPCM 13/2025). Dichiarali comunque: l'esclusione la applica il calcolo."
+      "value": "**সরকারি বন্ড, পোস্ট অফিসের সঞ্চয় বন্ড ও পোস্টাল সঞ্চয় বই** পরিবারের জন্য মোট 50,000 € পর্যন্ত বাদ যায় (DPCM 13/2025)। তবু এগুলো ঘোষণা করুন: হিসাবের সময় নিজে থেকেই বাদ দেওয়া হয়।"
     },
     "t5": {
-      "value": "**Conti correnti**: conta il valore più alto tra saldo al 31/12 e giacenza media annua. Controlla bene entrambi sull'estratto conto."
+      "value": "**ব্যাংক অ্যাকাউন্ট**: 31/12 তারিখের ব্যালান্স আর বছরের গড় ব্যালান্সের মধ্যে যেটি বেশি, সেটিই ধরা হয়। ব্যাংক স্টেটমেন্টে দুটোই ভালো করে মিলিয়ে নিন।"
     },
     "t6": {
-      "value": "**Disabilità**: dichiara le certificazioni di disabilità media, grave o non autosufficienza: ogni persona aggiunge 0,5 alla scala, e i trattamenti legati alla disabilità non tassati non contano nei redditi."
+      "value": "**প্রতিবন্ধিতা**: মাঝারি বা গুরুতর প্রতিবন্ধিতা বা পরনির্ভরশীলতার সনদ থাকলে ঘোষণা করুন। এমন প্রতিজন স্কেলে 0.5 যোগ করেন, আর প্রতিবন্ধিতার সঙ্গে যুক্ত করমুক্ত ভাতা আয় হিসেবে ধরা হয় না।"
     },
     "t7": {
-      "value": "**Usa la DSU precompilata** sul portale INPS: riduce gli errori e le difformità che bloccano gli aiuti."
+      "value": "**INPS-এর ওয়েবসাইটে আগে থেকে পূরণ করা DSU ব্যবহার করুন**: এতে ভুল আর তথ্যের অমিল কমে, যা সহায়তা আটকে দিতে পারে।"
     },
     "h2_corrente": {
-      "value": "Quando conviene l'ISEE corrente"
+      "value": "কখন চলতি ISEE সুবিধাজনক"
     },
     "c1": {
-      "value": "Hai perso o ridotto un lavoro a tempo indeterminato, ti è finito un contratto a termine (almeno 120 giorni negli ultimi 12 mesi) o hai chiuso un'attività autonoma."
+      "value": "আপনি স্থায়ী চাকরি হারিয়েছেন বা কাজের সময় কমেছে, নির্দিষ্ট মেয়াদের চুক্তি শেষ হয়েছে (গত 12 মাসে অন্তত 120 দিন), অথবা নিজের স্বাধীন ব্যবসা বন্ধ করেছেন।"
     },
     "c2": {
-      "value": "Si è interrotto un sussidio pubblico (per esempio la NASpI)."
+      "value": "কোনো সরকারি ভাতা বন্ধ হয়ে গেছে (যেমন NASpI, বেকার ভাতা)।"
     },
     "c3": {
-      "value": "Il tuo indicatore reddituale è calato di oltre il 25% rispetto a quello dell'ISEE ordinario."
+      "value": "আপনার আয়ের সূচক সাধারণ ISEE-এর সূচকের তুলনায় 25%-এর বেশি কমে গেছে।"
     },
     "c_note": {
-      "value": "Serve prima un ISEE ordinario valido. Se aggiorni solo i redditi, il corrente vale 6 mesi. Dal 1° aprile puoi aggiornare anche il patrimonio, se è cambiato di oltre il 20%."
+      "value": "আগে একটি বৈধ সাধারণ ISEE লাগবে। শুধু আয় হালনাগাদ করলে চলতি ISEE 6 মাস বৈধ থাকে। 1 এপ্রিল থেকে সম্পদও হালনাগাদ করা যায়, যদি তা 20%-এর বেশি বদলে থাকে।"
     },
     "h2_mai": {
-      "value": "Cosa non fare mai"
+      "value": "যা কখনো করবেন না"
     },
     "n1": {
-      "value": "Non omettere componenti del nucleo, conti, investimenti o immobili: i dati vengono incrociati con Agenzia delle Entrate e INPS."
+      "value": "পরিবারের কোনো সদস্য, অ্যাকাউন্ট, বিনিয়োগ বা সম্পত্তির কথা বাদ দেবেন না: তথ্যগুলো Agenzia delle Entrate (কর বিভাগ) ও INPS-এর তথ্যের সঙ্গে মিলিয়ে দেখা হয়।"
     },
     "n2": {
-      "value": "Non spostare la residenza in modo fittizio per dividere il nucleo."
+      "value": "পরিবারকে ভাগ করার জন্য শুধু কাগজে-কলমে ঠিকানা (residenza) বদলাবেন না।"
     },
     "n3": {
-      "value": "Non intestare beni ad altri o nascondere patrimonio: oltre a perdere gli aiuti, la DSU falsa ha conseguenze penali e si restituisce quanto ricevuto."
+      "value": "সম্পদ অন্যের নামে লিখে দেবেন না বা লুকাবেন না: সহায়তা তো হারাবেনই, মিথ্যা DSU ফৌজদারি অপরাধ, আর যা পেয়েছেন তা ফেরত দিতে হয়।"
     },
     "n_note": {
-      "value": "Per casi particolari (separazioni, figli non conviventi, eredità, imprese) rivolgiti a un CAF o a un patronato."
+      "value": "বিশেষ ক্ষেত্রে (বিচ্ছেদ, আলাদা থাকা সন্তান, উত্তরাধিকার, ব্যবসা) কোনো CAF বা patronato (শ্রমিক ও পরিবারের জন্য বিনা খরচের পরামর্শ অফিস)-তে যান।"
     },
     "see_also": {
-      "value": "Vedi anche gli [aiuti pubblici legati all'ISEE](/diritti-pa), la [checklist dei documenti](/checklist-dsu) e le [fonti usate](/fonti)."
+      "value": "আরও দেখুন: [ISEE-এর সঙ্গে যুক্ত সরকারি সহায়তা](/diritti-pa), [কাগজপত্রের চেকলিস্ট](/checklist-dsu) এবং [ব্যবহৃত উৎস](/fonti)।"
     }
   },
   "diritti": {
     "intro": {
-      "value": "Ogni aiuto ha altri requisiti (residenza, cittadinanza, età, patrimonio). Apri la fonte ufficiale prima di fare domanda. Come verifichiamo i valori è spiegato in [Fonti e regole usate](/fonti) e in [Metodo e fonti](/metodo)."
+      "value": "প্রতিটি সহায়তার অন্য শর্তও আছে (বসবাস, নাগরিকত্ব, বয়স, সম্পদ)। আবেদন করার আগে সরকারি উৎসটি খুলে দেখুন। আমরা কীভাবে মান যাচাই করি, তা বুঝিয়ে বলা আছে [উৎস ও ব্যবহৃত নিয়ম](/fonti) এবং [পদ্ধতি ও উৎস](/metodo) পাতায়।"
     },
     "h2_auu": {
-      "value": "Quale ISEE serve per l'Assegno Unico",
+      "value": "Assegno Unico-র জন্য কোন ISEE লাগে",
       "note": "H2 richiesto; la FAQ visibile deve usare lo stesso testo della domanda faq.quale_q oppure questa sezione deve contenere la risposta."
     },
     "p_auu1": {
-      "value": "Per l'Assegno Unico si usa l'**ISEE per prestazioni familiari e inclusione**, non l'ISEE ordinario. È lo stesso indicatore previsto dalla L. 199/2025, in genere più favorevole se hai casa di proprietà o almeno due figli. Vale anche, al netto dell'Assegno Unico già percepito, per il bonus nido e il bonus nuovi nati."
+      "value": "Assegno Unico-র জন্য সাধারণ ISEE নয়, **পারিবারিক ও অন্তর্ভুক্তি সুবিধার ISEE** ব্যবহার হয়। এটি L. 199/2025-এ নির্ধারিত সূচক, আর নিজের বাড়ি থাকলে বা অন্তত দুটি সন্তান থাকলে সাধারণত বেশি সুবিধাজনক। আগে পাওয়া Assegno Unico বাদ দিয়ে এটি bonus nido ও bonus nuovi nati-এর জন্যও ব্যবহার হয়।"
     },
     "p_auu2": {
-      "value": "Dal 2026 l'INPS calcola questo ISEE in automatico. Si usa solo per ADI, Supporto per la formazione e il lavoro, Assegno Unico, bonus nido e bonus nuovi nati. Per tutto il resto (bonus sociali, Carta «Dedicata a te», molti servizi comunali) vale l'ISEE ordinario."
+      "value": "2026 থেকে INPS এই ISEE নিজে থেকেই হিসাব করে। এটি শুধু ADI, Supporto per la formazione e il lavoro, Assegno Unico, bonus nido আর bonus nuovi nati-এর জন্য ব্যবহার হয়। বাকি সব কিছুর জন্য (bonus sociali, Carta «Dedicata a te», পৌরসভার অনেক সেবা) সাধারণ ISEE প্রযোজ্য।"
     },
     "cta_stima": {
-      "value": "Calcola il tuo ISEE"
+      "value": "আপনার ISEE হিসাব করুন"
     },
     "h2_manovra": {
-      "value": "Manovra 2027 (in discussione)"
+      "value": "2027 সালের বাজেট (আলোচনা চলছে)"
     },
     "p_manovra": {
-      "value": "Il disegno di legge di bilancio 2027 (A.C. 3174) è all'esame del Parlamento e **non è ancora legge**. Alcune misure e soglie legate all'ISEE potrebbero cambiare: le ricontrolleremo quando il testo diventerà legge."
+      "value": "2027 সালের বাজেট বিল (A.C. 3174) সংসদে পর্যালোচনা চলছে এবং **এখনো আইন হয়নি**। ISEE-এর সঙ্গে যুক্ত কিছু ব্যবস্থা ও সীমা বদলাতে পারে: বিলটি আইন হলে আমরা আবার মিলিয়ে দেখব।"
     },
     "manovra_fonte": {
-      "value": "[Fonte ufficiale: scheda A.C. 3174 sul sito del Senato](https://www.senato.it/leggi-e-documenti/disegni-di-legge/scheda-ddl?did=60577)."
+      "value": "[সরকারি উৎস: সিনেটের ওয়েবসাইটে A.C. 3174-এর পাতা](https://www.senato.it/leggi-e-documenti/disegni-di-legge/scheda-ddl?did=60577)।"
     }
   },
   "fonti": {
     "intro": {
-      "value": "Ogni valore usato nel simulatore ha uno stato (verificato, valore 2026 da confermare per il 2027, oppure da confermare) e un collegamento alla fonte. Il metodo è spiegato in [Metodo e fonti](/metodo)."
+      "value": "ক্যালকুলেটরে ব্যবহৃত প্রতিটি মানের একটি অবস্থা আছে (যাচাই করা, 2026 সালের মান যা 2027-এর জন্য এখনো নিশ্চিত নয়, অথবা এখনো নিশ্চিত নয়) আর উৎসের লিংক আছে। পদ্ধতি বুঝিয়ে বলা আছে [পদ্ধতি ও উৎস](/metodo) পাতায়।"
     },
     "h2_norme": {
-      "value": "Norme e istruzioni"
+      "value": "আইন ও নির্দেশনা"
     },
     "h2_aiuti": {
-      "value": "Schede e delibere sugli aiuti"
+      "value": "সহায়তা নিয়ে তথ্যপাতা ও সিদ্ধান্ত"
     },
     "lead": {
-      "value": "Regole e fonti ufficiali usate da DirittiOk per la stima ISEE 2027, il residuo per vivere e gli aiuti pubblici."
+      "value": "ISEE 2027-এর হিসাব, হাতে থাকা টাকা আর সরকারি সহায়তার জন্য DirittiOk যে নিয়ম ও সরকারি উৎস ব্যবহার করে।"
     },
     "src_dpcm159": {
-      "value": "DPCM 5 dicembre 2013, n. 159 (testo vigente, Normattiva)",
+      "value": "DPCM 5 dicembre 2013, n. 159 (বর্তমানে কার্যকর পাঠ, Normattiva)",
       "note": "Titolo ufficiale di un documento o di una scheda istituzionale italiana. Lasciare il titolo in italiano; si può aggiungere una breve spiegazione nella lingua di arrivo."
     },
     "src_inps102": {
@@ -1468,11 +1499,11 @@
       "note": "Titolo ufficiale di un documento o di una scheda istituzionale italiana. Lasciare il titolo in italiano; si può aggiungere una breve spiegazione nella lingua di arrivo."
     },
     "src_dsu2026": {
-      "value": "Ministero del Lavoro, Decreto direttoriale n. 3 del 02/03/2026 (modelli DSU)",
+      "value": "Ministero del Lavoro, Decreto direttoriale n. 3 del 02/03/2026 (DSU-এর ফর্ম)",
       "note": "Titolo ufficiale di un documento o di una scheda istituzionale italiana. Lasciare il titolo in italiano; si può aggiungere una breve spiegazione nella lingua di arrivo."
     },
     "src_adi": {
-      "value": "INPS, scheda Assegno di Inclusione",
+      "value": "INPS, scheda Assegno di Inclusione (তথ্যপাতা)",
       "note": "Titolo ufficiale di un documento o di una scheda istituzionale italiana. Lasciare il titolo in italiano; si può aggiungere una breve spiegazione nella lingua di arrivo."
     },
     "src_auu": {
@@ -1488,7 +1519,7 @@
       "note": "Titolo ufficiale di un documento o di una scheda istituzionale italiana. Lasciare il titolo in italiano; si può aggiungere una breve spiegazione nella lingua di arrivo."
     },
     "src_cartaAcquisti": {
-      "value": "MEF, Carta Acquisti: limiti 2026",
+      "value": "MEF, Carta Acquisti: 2026 সালের সীমা",
       "note": "Titolo ufficiale di un documento o di una scheda istituzionale italiana. Lasciare il titolo in italiano; si può aggiungere una breve spiegazione nella lingua di arrivo."
     },
     "src_nido": {
@@ -1496,161 +1527,161 @@
       "note": "Titolo ufficiale di un documento o di una scheda istituzionale italiana. Lasciare il titolo in italiano; si può aggiungere una breve spiegazione nella lingua di arrivo."
     },
     "src_nuoviNati": {
-      "value": "INPS, scheda Bonus nuovi nati",
+      "value": "INPS, scheda Bonus nuovi nati (তথ্যপাতা)",
       "note": "Titolo ufficiale di un documento o di una scheda istituzionale italiana. Lasciare il titolo in italiano; si può aggiungere una breve spiegazione nella lingua di arrivo."
     },
     "src_venetoAffitti": {
-      "value": "Regione del Veneto, Fondo affitti",
+      "value": "Regione del Veneto, Fondo affitti (বাড়িভাড়া তহবিল)",
       "note": "Titolo ufficiale di un documento o di una scheda istituzionale italiana. Lasciare il titolo in italiano; si può aggiungere una breve spiegazione nella lingua di arrivo."
     },
     "src_portaleIsee": {
-      "value": "INPS, Portale unico ISEE",
+      "value": "INPS, Portale unico ISEE (ISEE-এর সরকারি ওয়েবসাইট)",
       "note": "Titolo ufficiale di un documento o di una scheda istituzionale italiana. Lasciare il titolo in italiano; si può aggiungere una breve spiegazione nella lingua di arrivo."
     }
   },
   "metodo": {
     "p1": {
-      "value": "DirittiOk (DirittiChiari 2027) è un servizio di **Pi.Gi Service**. Offre una stima orientativa dell'ISEE, di quanto ti resta per vivere e degli aiuti pubblici, per capirli con calma prima di andare al CAF o sul portale INPS."
+      "value": "DirittiOk (DirittiChiari 2027) **Pi.Gi Service**-এর একটি সেবা। এটি ISEE, সংসার চালাতে হাতে কত থাকে এবং সরকারি সহায়তার একটি আনুমানিক হিসাব দেয়, যাতে CAF-এ বা INPS-এর ওয়েবসাইটে যাওয়ার আগে ধীরে-সুস্থে বিষয়গুলো বুঝতে পারেন।"
     },
     "h2_come": {
-      "value": "Come facciamo la stima"
+      "value": "আমরা কীভাবে হিসাব করি"
     },
     "p_come1": {
-      "value": "I calcoli seguono le regole del DPCM 159/2013 e gli aggiornamenti successivi, tra cui la legge 199/2025 sull'ISEE per prestazioni familiari e inclusione. Le soglie e i parametri arrivano da fonti ufficiali: INPS, ARERA, Ministero del Lavoro, Ministero dell'Economia e delle Finanze, Normattiva."
+      "value": "হিসাবগুলো DPCM 159/2013-এর নিয়ম এবং পরের হালনাগাদ মেনে করা হয়, যার মধ্যে আছে পারিবারিক ও অন্তর্ভুক্তি সুবিধার ISEE নিয়ে আইন 199/2025। সীমা ও মানগুলো নেওয়া হয়েছে সরকারি উৎস থেকে: INPS, ARERA, Ministero del Lavoro (শ্রম মন্ত্রণালয়), Ministero dell'Economia e delle Finanze (অর্থ মন্ত্রণালয়), Normattiva।"
     },
     "p_come2": {
-      "value": "Ogni valore usato nel simulatore ha uno stato: verificato, valore 2026 da confermare per il 2027, oppure da confermare. L'elenco completo, con il collegamento a ogni fonte, è nella pagina [Fonti e regole usate](/fonti)."
+      "value": "ক্যালকুলেটরে ব্যবহৃত প্রতিটি মানের একটি অবস্থা আছে: যাচাই করা, 2026 সালের মান যা 2027-এর জন্য এখনো নিশ্চিত নয়, অথবা এখনো নিশ্চিত নয়। প্রতিটি উৎসের লিংকসহ পুরো তালিকা আছে [উৎস ও ব্যবহৃত নিয়ম](/fonti) পাতায়।"
     },
     "h2_non": {
-      "value": "Cosa non è questa stima"
+      "value": "এই হিসাব কী নয়"
     },
     "p_non": {
-      "value": "Non è una DSU e non sostituisce l'attestazione INPS, il CAF o una consulenza. I calcoli restano solo sul tuo dispositivo. Quando una norma è ancora in discussione in Parlamento, lo indichiamo in pagina e la ricontrolliamo quando diventa legge."
+      "value": "এটি DSU নয়, আর এটি INPS-এর সরকারি সনদ, CAF বা পেশাদার পরামর্শের বিকল্প নয়। হিসাব শুধু আপনার ডিভাইসেই থাকে। কোনো আইন এখনো সংসদে আলোচনাধীন থাকলে আমরা পাতায় তা জানিয়ে দিই, আর আইন হলে আবার মিলিয়ে দেখি।"
     },
     "h2_chi": {
-      "value": "Chi la cura"
+      "value": "কে দেখাশোনা করে"
     },
     "p_chi": {
-      "value": "Autore del servizio: **Pi.Gi Service**. Per una domanda: [modulo contatti](/contatti) oppure [info@pigiservice.com](mailto:info@pigiservice.com)."
+      "value": "সেবাটির নির্মাতা: **Pi.Gi Service**। কোনো প্রশ্ন থাকলে: [যোগাযোগ ফর্ম](/contatti) অথবা [info@pigiservice.com](mailto:info@pigiservice.com)।"
     }
   },
   "privacy": {
     "p_titolare": {
-      "value": "DirittiOk (DirittiChiari 2027) è un servizio di **Pi.Gi Service di Gheoca Paula** (titolare del trattamento). Per qualsiasi domanda: [info@pigiservice.com](mailto:info@pigiservice.com).",
+      "value": "DirittiOk (DirittiChiari 2027) **Pi.Gi Service di Gheoca Paula**-র একটি সেবা (ব্যক্তিগত তথ্যের নিয়ন্ত্রক)। যেকোনো প্রশ্নে: [info@pigiservice.com](mailto:info@pigiservice.com)।",
       "note": "Il nome del titolare e «Pi.Gi Service di Gheoca Paula» non si traducono."
     },
     "h2_local": {
-      "value": "I calcoli restano sul tuo dispositivo"
+      "value": "হিসাব আপনার ডিভাইসেই থাকে"
     },
     "p_local": {
-      "value": "La stima ISEE, il residuo per vivere, gli aiuti e la checklist si calcolano e si salvano solo su questo telefono o computer, in locale. Non li inviamo a nessun server, non chiediamo una registrazione, non facciamo tracciamento e non usiamo intelligenza artificiale."
+      "value": "ISEE-এর হিসাব, হাতে থাকা টাকা, সহায়তার তালিকা আর চেকলিস্ট শুধু এই ফোন বা কম্পিউটারেই হিসাব ও সেভ হয়। আমরা এগুলো কোনো সার্ভারে পাঠাই না, রেজিস্ট্রেশন করতে বলি না, ট্র্যাকিং করি না এবং কৃত্রিম বুদ্ধিমত্তা (AI) ব্যবহার করি না।"
     },
     "p_delete": {
-      "value": "Puoi cancellare tutto in qualsiasi momento con «Cancella i miei dati», in fondo alla pagina."
+      "value": "পাতার একেবারে নিচে «আমার তথ্য মুছে দিন» দিয়ে যেকোনো সময় সব মুছে ফেলতে পারেন।"
     },
     "h2_form": {
-      "value": "Modulo contatti"
+      "value": "যোগাযোগ ফর্ম"
     },
     "p_form": {
-      "value": "Se ci scrivi dal [modulo contatti](/contatti), inviamo soltanto quello che inserisci tu: nome, email, eventuale telefono o attività, il messaggio, il consenso e la pagina da cui scrivi. Questi dati servono solo per risponderti. Non viene mai incluso nessun dato della stima ISEE o del percorso guidato."
+      "value": "[যোগাযোগ ফর্ম](/contatti) থেকে লিখলে শুধু আপনার দেওয়া তথ্যই আমাদের কাছে আসে: নাম, ইমেইল, ফোন বা ব্যবসার নাম (যদি দেন), বার্তা, আপনার সম্মতি আর কোন পাতা থেকে লিখছেন। এই তথ্য শুধু আপনাকে উত্তর দেওয়ার জন্য ব্যবহার হয়। ISEE-এর হিসাব বা ধাপগুলোর কোনো তথ্য কখনো এতে থাকে না।"
     },
     "p_retention": {
-      "value": "Il messaggio arriva a [info@pigiservice.com](mailto:info@pigiservice.com). Lo conserviamo il tempo necessario per darti una risposta e per eventuali obblighi di legge."
+      "value": "বার্তাটি যায় [info@pigiservice.com](mailto:info@pigiservice.com) ঠিকানায়। উত্তর দিতে এবং আইনি বাধ্যবাধকতা থাকলে তা মানতে যতদিন দরকার, ততদিন আমরা এটি রাখি।"
     }
   },
   "contatti": {
     "intro": {
-      "value": "Una domanda su DirittiOk? Scrivici: ti rispondiamo via email."
+      "value": "DirittiOk নিয়ে কোনো প্রশ্ন? আমাদের লিখুন, আমরা ইমেইলে উত্তর দেব।"
     },
     "form_title": {
-      "value": "Scrivici"
+      "value": "আমাদের লিখুন"
     },
     "form_intro": {
-      "value": "Compila il modulo: ti rispondiamo via email, in genere entro un giorno lavorativo. Partono soltanto le informazioni che scrivi tu: i dati della stima ISEE restano sul tuo dispositivo."
+      "value": "ফর্মটি পূরণ করুন, আমরা ইমেইলে উত্তর দেব, সাধারণত এক কর্মদিবসের মধ্যে। শুধু আপনার লেখা তথ্যই আমাদের কাছে আসে: ISEE-এর হিসাবের তথ্য আপনার ডিভাইসেই থাকে।"
     },
     "nome": {
-      "value": "Nome e cognome"
+      "value": "পুরো নাম"
     },
     "email": {
-      "value": "Email"
+      "value": "ইমেইল"
     },
     "telefono": {
-      "value": "Telefono"
+      "value": "ফোন"
     },
     "azienda": {
-      "value": "Azienda o attività"
+      "value": "প্রতিষ্ঠান বা ব্যবসা"
     },
     "messaggio": {
-      "value": "Messaggio"
+      "value": "বার্তা"
     },
     "messaggio_aiuto": {
-      "value": "Raccontaci in poche righe di cosa hai bisogno."
+      "value": "কয়েক লাইনে লিখুন, আপনার কী দরকার।"
     },
     "consenso_prima": {
-      "value": "Ho letto l'"
+      "value": "আমি "
     },
     "consenso_link": {
-      "value": "informativa privacy"
+      "value": "গোপনীয়তা নীতি"
     },
     "consenso_dopo": {
-      "value": " e acconsento all'uso dei miei dati per ricevere una risposta."
+      "value": " পড়েছি এবং উত্তর পাওয়ার জন্য আমার তথ্য ব্যবহারে সম্মতি দিচ্ছি।"
     },
     "invia": {
-      "value": "Invia il messaggio"
+      "value": "বার্তা পাঠান"
     },
     "invio": {
-      "value": "Invio in corso…"
+      "value": "পাঠানো হচ্ছে…"
     },
     "ok": {
-      "value": "Messaggio inviato. Grazie!"
+      "value": "বার্তা পাঠানো হয়েছে। ধন্যবাদ!"
     },
     "ok_dettaglio": {
-      "value": "Ti risponderemo all'indirizzo email che hai indicato."
+      "value": "আপনার দেওয়া ইমেইল ঠিকানায় আমরা উত্তর দেব।"
     },
     "altro": {
-      "value": "Scrivi un altro messaggio"
+      "value": "আরেকটি বার্তা লিখুন"
     },
     "err_nome": {
-      "value": "Scrivi il tuo nome."
+      "value": "আপনার নাম লিখুন।"
     },
     "err_email": {
-      "value": "Controlla l'indirizzo email."
+      "value": "ইমেইল ঠিকানাটি একবার দেখে নিন।"
     },
     "err_messaggio": {
-      "value": "Scrivi un messaggio di almeno qualche parola."
+      "value": "অন্তত কয়েকটি শব্দে একটি বার্তা লিখুন।"
     },
     "err_consenso": {
-      "value": "Per inviare il messaggio serve il consenso alla privacy."
+      "value": "বার্তা পাঠাতে গোপনীয়তা নীতিতে সম্মতি দিতে হবে।"
     },
     "err_troppi": {
-      "value": "Hai inviato diversi messaggi in poco tempo. Riprova tra qualche minuto."
+      "value": "অল্প সময়ের মধ্যে আপনি অনেকগুলো বার্তা পাঠিয়েছেন। কয়েক মিনিট পরে আবার চেষ্টা করুন।"
     },
     "err_rete": {
-      "value": "Sei offline o la connessione è instabile. Riprova quando sei di nuovo online."
+      "value": "আপনি অফলাইনে আছেন বা সংযোগ দুর্বল। আবার অনলাইনে এলে চেষ্টা করুন।"
     },
     "err_generico": {
-      "value": "Il messaggio non è partito. Riprova tra poco oppure scrivi a"
+      "value": "বার্তাটি যায়নি। একটু পরে আবার চেষ্টা করুন, অথবা এই ঠিকানায় লিখুন:"
     },
     "oppure": {
-      "value": "Preferisci l'email? Scrivi a"
+      "value": "ইমেইলে লিখতে চান? এই ঠিকানায় লিখুন:"
     },
     "hp": {
-      "value": "Lascia vuoto",
+      "value": "এই ঘরটি খালি রাখুন",
       "note": "Campo trappola antispam, nascosto: tradurre in modo naturale."
     }
   },
   "notfound": {
     "p": {
-      "value": "Questo indirizzo non corrisponde a una pagina di DirittiOk. Puoi tornare all'inizio o proseguire da qui:"
+      "value": "এই ঠিকানায় DirittiOk-এর কোনো পাতা নেই। শুরুর পাতায় ফিরে যেতে পারেন, অথবা এখান থেকে এগোতে পারেন:"
     },
     "cta_stima": {
-      "value": "Calcolo ISEE 2027"
+      "value": "ISEE 2027 হিসাব"
     },
     "cta_docs": {
-      "value": "Checklist documenti DSU"
+      "value": "DSU-এর কাগজপত্রের চেকলিস্ট"
     },
     "back_home": {
-      "value": "Torna all'inizio"
+      "value": "শুরুর পাতায় ফিরে যান"
     }
   },
   "schema": {
@@ -1667,14 +1698,14 @@
       "note": "Nome dello schema.org WebApplication. Non tradurre."
     },
     "crumb_home": {
-      "value": "Home",
+      "value": "শুরু",
       "note": "Etichetta del primo elemento del breadcrumb. In inglese va bene Home; in bengalese tradurre."
     },
     "crumb_stima": {
-      "value": "Calcolo ISEE 2027"
+      "value": "ISEE 2027 হিসাব"
     },
     "crumb_risultati": {
-      "value": "Risultati"
+      "value": "ফলাফল"
     }
   }
 }
