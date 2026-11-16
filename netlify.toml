@@ -1,14 +1,14 @@
-# Sito statico: nessuna build, si pubblica la cartella così com'è.
+# Sito statico: le pagine HTML si generano con `python3 scripts/build-pages.py`.
 [build]
   publish = "."
-  command = ""
+  command = "python3 scripts/build-pages.py"
 
 [[headers]]
   for = "/*"
   [headers.values]
     Content-Security-Policy = "default-src 'self'; img-src 'self' data:; style-src 'self'; script-src 'self'; connect-src 'self'; manifest-src 'self'; worker-src 'self'; frame-ancestors 'none'; base-uri 'self'; form-action 'none'"
     X-Content-Type-Options = "nosniff"
-    Referrer-Policy = "no-referrer"
+    Referrer-Policy = "strict-origin-when-cross-origin"
     Permissions-Policy = "camera=(), microphone=(), geolocation=(), interest-cohort=()"
     X-Frame-Options = "DENY"
 
@@ -19,7 +19,7 @@
     Service-Worker-Allowed = "/"
 
 [[headers]]
-  for = "/index.html"
+  for = "/*.html"
   [headers.values]
     Cache-Control = "no-cache"
 
@@ -29,7 +29,7 @@
     Content-Type = "application/manifest+json"
     Cache-Control = "no-cache"
 
-# /index.html non deve restare visibile; le pagine pulite servono lo stesso guscio.
+# Redirect e riscritture: prima i 301 (slash, file grezzi), poi le 200 sulle URL pulite.
 [[redirects]]
   from = "/index.html"
   to = "/"
@@ -37,34 +37,156 @@
   force = true
 
 [[redirects]]
+  from = "/tests/*"
+  to = "/404.html"
+  status = 404
+  force = true
+[[redirects]]
+  from = "/scripts/*"
+  to = "/404.html"
+  status = 404
+  force = true
+[[redirects]]
+  from = "/templates/*"
+  to = "/404.html"
+  status = 404
+  force = true
+[[redirects]]
+  from = "/lovable/*"
+  to = "/404.html"
+  status = 404
+  force = true
+[[redirects]]
+  from = "/docs/*"
+  to = "/404.html"
+  status = 404
+  force = true
+
+[[redirects]]
+  from = "/pages/stima.html"
+  to = "/stima"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/pages/risultati.html"
+  to = "/risultati"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/pages/ottimizzazione.html"
+  to = "/ottimizzazione"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/pages/checklist-dsu.html"
+  to = "/checklist-dsu"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/pages/diritti-pa.html"
+  to = "/diritti-pa"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/pages/fonti.html"
+  to = "/fonti"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/pages/metodo.html"
+  to = "/metodo"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/pages/contatti.html"
+  to = "/contatti"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/pages/privacy.html"
+  to = "/privacy"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/stima/"
+  to = "/stima"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/risultati/"
+  to = "/risultati"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/ottimizzazione/"
+  to = "/ottimizzazione"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/checklist-dsu/"
+  to = "/checklist-dsu"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/diritti-pa/"
+  to = "/diritti-pa"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/fonti/"
+  to = "/fonti"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/metodo/"
+  to = "/metodo"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/contatti/"
+  to = "/contatti"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/privacy/"
+  to = "/privacy"
+  status = 301
+  force = true
+
+[[redirects]]
   from = "/stima"
-  to = "/"
+  to = "/pages/stima.html"
   status = 200
 [[redirects]]
   from = "/risultati"
-  to = "/"
+  to = "/pages/risultati.html"
   status = 200
 [[redirects]]
   from = "/ottimizzazione"
-  to = "/"
+  to = "/pages/ottimizzazione.html"
   status = 200
 [[redirects]]
   from = "/checklist-dsu"
-  to = "/"
+  to = "/pages/checklist-dsu.html"
   status = 200
 [[redirects]]
   from = "/diritti-pa"
-  to = "/"
+  to = "/pages/diritti-pa.html"
   status = 200
 [[redirects]]
   from = "/fonti"
-  to = "/"
+  to = "/pages/fonti.html"
+  status = 200
+[[redirects]]
+  from = "/metodo"
+  to = "/pages/metodo.html"
   status = 200
 [[redirects]]
   from = "/contatti"
-  to = "/"
+  to = "/pages/contatti.html"
   status = 200
 [[redirects]]
   from = "/privacy"
-  to = "/"
+  to = "/pages/privacy.html"
   status = 200

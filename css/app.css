@@ -156,3 +156,9 @@ footer.site a, footer.site .btn { font-weight: 600; display: inline-flex; align-
 [hidden]{display:none !important}
 table.calc.fonti td:last-child { white-space: normal; width: 38%; }
 table.calc td { overflow-wrap: anywhere; }
+
+/* Il badge "Edit with Lovable" copriva la barra in basso sui telefoni. */
+#lovable-badge,
+aside#lovable-badge,
+#lovable-badge-cta,
+[aria-label="Edit with Lovable"] { display: none !important; }

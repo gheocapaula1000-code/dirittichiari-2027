@@ -131,7 +131,7 @@ def run_flow(browser, width):
     no_hscroll(page, f'{tag} risultati'); nav_visible(page, f'{tag} risultati')
     check(page.locator('[data-action=print]').count() == 1, f'{tag}: pulsante stampa')
     # Pagine secondarie
-    slugs = {'consigli': 'ottimizzazione', 'documenti': 'checklist-dsu', 'diritti': 'diritti-pa', 'fonti': 'fonti', 'contatti': 'contatti', 'privacy': 'privacy'}
+    slugs = {'consigli': 'ottimizzazione', 'documenti': 'checklist-dsu', 'diritti': 'diritti-pa', 'fonti': 'fonti', 'metodo': 'metodo', 'contatti': 'contatti', 'privacy': 'privacy'}
     for r, slug in slugs.items():
         page.goto(BASE + '/' + slug); page.wait_for_selector('h1')
         check(page.url.rstrip('/').endswith('/' + slug), f'{tag}: url {r} {page.url}')
@@ -174,7 +174,7 @@ def run_flow(browser, width):
     reloaded = poll(page, '() => window.__marker === undefined', 8)
     check(reloaded, f'{tag}: pull-to-refresh non ricarica')
     page.wait_for_selector('h1')
-    check('ottimizzare' in page.inner_text('h1'), f'{tag}: dopo il refresh resta sulla stessa pagina')
+    check('abbassare' in page.inner_text('h1') or 'legale' in page.inner_text('h1'), f'{tag}: dopo il refresh resta sulla stessa pagina')
     # cancella dati
     page.on('dialog', lambda d: d.accept())
     page.click('footer [data-action=clear]')
@@ -188,7 +188,24 @@ def run_flow(browser, width):
         r = page.request.get(BASE + '/robots.txt')
         check(r.ok and 'Sitemap: https://dirittiok.com/sitemap.xml' in r.text(), f'{tag}: robots.txt {r.status} {r.text()[:120]!r}')
         s = page.request.get(BASE + '/sitemap.xml')
-        check(s.ok and 'https://dirittiok.com/contatti' in s.text() and '#/' not in s.text() and 'index.html' not in s.text() and 'lovable.app' not in s.text() and 'netlify' not in s.text(), f'{tag}: sitemap.xml')
+        check(s.ok and 'https://dirittiok.com/contatti' in s.text() and 'https://dirittiok.com/metodo' in s.text() and '/risultati' not in s.text() and '#/' not in s.text() and 'index.html' not in s.text() and 'lovable.app' not in s.text() and 'netlify' not in s.text(), f'{tag}: sitemap.xml')
+        # HTML statico, 301, 404, noindex (una volta per browser)
+        raw = page.request.get(BASE + '/stima')
+        check(raw.ok and 'Simulatore ISEE 2027' in raw.text() and 'https://dirittiok.com/stima' in raw.text() and 'Calcolo ISEE 2027: simulatore online gratuito' in raw.text(), f'{tag}: HTML statico /stima')
+        ris = page.request.get(BASE + '/risultati')
+        check(ris.ok and 'noindex,follow' in ris.text(), f'{tag}: /risultati noindex')
+        try:
+            sl = page.request.get(BASE + '/stima/', max_redirects=0)
+            sl_ok = sl.status == 301
+        except Exception as e:
+            sl_ok = '301' in str(e) or 'redirect' in str(e).lower()
+        check(sl_ok, f'{tag}: /stima/ deve reindirizzare con 301')
+        nf = page.request.get(BASE + '/pagina-inesistente-xyz')
+        check(nf.status == 404 and 'Pagina non trovata' in nf.text() and '/stima' in nf.text(), f'{tag}: 404 italiana')
+        check(page.locator('footer a[href="/diritti-pa"]').count() >= 1, f'{tag}: /diritti-pa nel footer')
+        page.goto(BASE + '/stima'); page.wait_for_selector('#wizard, #f-componenti, h2')
+        check(page.locator('h1').count() == 1 and 'Calcolo ISEE 2027' in page.inner_text('h1'), f'{tag}: H1 fisso /stima')
+        check(page.locator('#step-title').evaluate('e => e.tagName') == 'H2', f'{tag}: passo del wizard come H2')
     ctx.close()
 
 def sw_and_banner(browser, base_dir):
@@ -206,9 +223,14 @@ def sw_and_banner(browser, base_dir):
     if base_dir is None:
         ctx.close(); return
     # pubblica una "nuova versione" nella copia temporanea
-    sw = os.path.join(base_dir, 'sw.js')
-    src = open(sw).read()
-    open(sw, 'w').write(re.sub(r"const VERSION = '[^']+'", "const VERSION = '9.9.9-test'", src, count=1))
+    originals = {}
+    swp = os.path.join(base_dir, 'sw.js')
+    verp = os.path.join(base_dir, 'js/version.js')
+    originals['sw'] = open(swp).read()
+    originals['ver'] = open(verp).read()
+    open(swp, 'w').write(re.sub(r"dc-version:[^*]+", "dc-version:9.9.9-test", originals['sw'], count=1))
+    open(swp, 'w').write(re.sub(r"const VERSION = '[^']+'", "const VERSION = '9.9.9-test'", open(swp).read(), count=1))
+    open(verp, 'w').write(re.sub(r'DC_VERSION = "[^"]+"', 'DC_VERSION = "9.9.9-test"', originals['ver'], count=1))
     try:
         page.reload(); page.wait_for_selector('h1')
         try:
@@ -216,11 +238,13 @@ def sw_and_banner(browser, base_dir):
         except Exception:
             shown = False
         check(shown, f'{tag}: banner non mostrato per la nuova versione')
-        page.click('#update-dismiss')
-        page.reload(); page.wait_for_selector('h1'); time.sleep(2.5)
-        check(not page.is_visible('#update-banner'), f'{tag}: banner mostrato due volte per la stessa versione')
+        if shown:
+            page.click('#update-dismiss')
+            page.reload(); page.wait_for_selector('h1'); time.sleep(2.5)
+            check(not page.is_visible('#update-banner'), f'{tag}: banner mostrato due volte per la stessa versione')
     finally:
-        open(sw, 'w').write(src)
+        open(os.path.join(base_dir, 'sw.js'), 'w').write(originals['sw'])
+        open(os.path.join(base_dir, 'js/version.js'), 'w').write(originals['ver'])
     ctx.close()
 
 def main():

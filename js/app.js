@@ -4,7 +4,7 @@
  */
 (function () {
   'use strict';
-  const APP_VERSION = '1.3.0';             // tenere allineato con VERSION in sw.js
+  const APP_VERSION = window.DC_VERSION || '1.4.0'; // unica fonte: js/version.js
   const STORE_KEY = 'dc2027:dati';
   const STEP_KEY = 'dc2027:passo';
   const CHECK_KEY = 'dc2027:checklist';
@@ -17,8 +17,8 @@
   const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 
   const SITE = 'https://dirittiok.com/';
-  const SLUG_BY_ROUTE = { '': '', stima: 'stima', risultati: 'risultati', consigli: 'ottimizzazione', documenti: 'checklist-dsu', diritti: 'diritti-pa', fonti: 'fonti', contatti: 'contatti', privacy: 'privacy' };
-  const ROUTE_BY_SLUG = { '': '', stima: 'stima', risultati: 'risultati', ottimizzazione: 'consigli', 'checklist-dsu': 'documenti', 'diritti-pa': 'diritti', fonti: 'fonti', contatti: 'contatti', privacy: 'privacy' };
+  const SLUG_BY_ROUTE = { '': '', stima: 'stima', risultati: 'risultati', consigli: 'ottimizzazione', documenti: 'checklist-dsu', diritti: 'diritti-pa', fonti: 'fonti', metodo: 'metodo', contatti: 'contatti', privacy: 'privacy' };
+  const ROUTE_BY_SLUG = { '': '', stima: 'stima', risultati: 'risultati', ottimizzazione: 'consigli', 'checklist-dsu': 'documenti', 'diritti-pa': 'diritti', fonti: 'fonti', metodo: 'metodo', contatti: 'contatti', privacy: 'privacy' };
   function pathFromRoute(r) {
     const slug = Object.prototype.hasOwnProperty.call(SLUG_BY_ROUTE, r) ? SLUG_BY_ROUTE[r] : '';
     return slug ? '/' + slug : '/';
@@ -31,8 +31,7 @@
   function route() {
     const fromHash = (location.hash || '').replace(/^#\/?/, '').split('?')[0].toLowerCase();
     if (location.hash && (fromHash === '' || Object.prototype.hasOwnProperty.call(SLUG_BY_ROUTE, fromHash))) return fromHash;
-    const r = routeFromPath(location.pathname);
-    return r === null ? '' : r;
+    return routeFromPath(location.pathname);
   }
   function go(path, replace) {
     if (replace || location.pathname + location.search !== path) {
@@ -53,53 +52,11 @@
     }
   }
 
-  const SEO = {
-    '': {
-      title: 'DirittiChiari 2027 · Stima ISEE, residuo per vivere e aiuti',
-      desc: 'Stima orientativa dell\'ISEE 2027, di quanto ti resta per vivere e degli aiuti pubblici. Gratis, senza registrazione. I calcoli restano sul tuo telefono.',
-      url: SITE
-    },
-    stima: {
-      title: 'Stima ISEE 2027 · DirittiChiari',
-      desc: 'Percorso guidato in 5 passi per stimare l\'ISEE ordinario, familiare e corrente, con redditi 2025 e patrimonio al 31/12/2025.',
-      url: SITE + 'stima'
-    },
-    risultati: {
-      title: 'Risultati della stima ISEE · DirittiChiari',
-      desc: 'Vedi la stima del tuo ISEE 2027, il residuo mensile per vivere e gli aiuti pubblici da valutare, con le fonti di ogni soglia.',
-      url: SITE + 'risultati'
-    },
-    consigli: {
-      title: 'Come ottimizzare legalmente l\'ISEE · DirittiChiari',
-      desc: 'Cosa conta davvero nell\'ISEE, le scelte permesse che possono abbassarlo e cosa non fare mai. Spiegato con calma, prima del CAF.',
-      url: SITE + 'ottimizzazione'
-    },
-    documenti: {
-      title: 'Documenti per la DSU 2027 · DirittiChiari',
-      desc: 'Checklist dei documenti per la DSU 2027, da spuntare e stampare prima di andare al CAF o sul portale ISEE dell\'INPS.',
-      url: SITE + 'checklist-dsu'
-    },
-    diritti: {
-      title: 'Diritti e aiuti pubblici legati all\'ISEE · DirittiChiari',
-      desc: 'Assegno di Inclusione, Assegno Unico, bonus sociali e altri aiuti legati all\'ISEE, con le soglie e le fonti ufficiali.',
-      url: SITE + 'diritti-pa'
-    },
-    fonti: {
-      title: 'Fonti e regole usate · DirittiChiari',
-      desc: 'Regole e fonti ufficiali usate da DirittiChiari per la stima ISEE 2027, con lo stato di ogni valore.',
-      url: SITE + 'fonti'
-    },
-    contatti: {
-      title: 'Contatti · DirittiChiari 2027',
-      desc: 'Scrivi a DirittiChiari: ti rispondiamo via email. Dal modulo partono solo le informazioni che inserisci tu, non i dati della stima.',
-      url: SITE + 'contatti'
-    },
-    privacy: {
-      title: 'Privacy · DirittiChiari 2027',
-      desc: 'Come trattiamo i dati su DirittiChiari 2027: i calcoli restano sul tuo dispositivo. Il modulo contatti serve solo per risponderti.',
-      url: SITE + 'privacy'
-    }
-  };
+  function pageSeo(route) {
+    const pages = window.DC_PAGES || {};
+    if (route === null) return pages['404'] || pages[''];
+    return pages[route] || pages[''];
+  }
   function setMeta(key, value, attr) {
     attr = attr || 'name';
     let el = document.querySelector('meta[' + attr + '="' + key + '"]');
@@ -112,20 +69,38 @@
     el.setAttribute('href', href);
   }
   function applySeo(route) {
-    const s = SEO[route] || SEO[''];
+    const s = pageSeo(route);
+    if (!s) return;
     document.title = s.title;
     document.documentElement.lang = 'it';
     setMeta('description', s.desc);
     setMeta('og:title', s.title, 'property');
     setMeta('og:description', s.desc, 'property');
-    setMeta('og:url', s.url, 'property');
     setMeta('og:image', SITE + 'og-image.png', 'property');
     setMeta('twitter:title', s.title);
     setMeta('twitter:description', s.desc);
     setMeta('twitter:image', SITE + 'og-image.png');
-    setLinkRel('canonical', s.url === SITE ? SITE : s.url);
+    if (s.url) {
+      setMeta('og:url', s.url, 'property');
+      setLinkRel('canonical', s.url === SITE ? SITE : s.url);
+    } else {
+      const canon = document.querySelector('link[rel="canonical"]');
+      if (canon) canon.remove();
+    }
+    if (s.robots) setMeta('robots', s.robots);
+    else {
+      const robots = document.querySelector('meta[name="robots"]');
+      if (robots) robots.remove();
+    }
+    const node = document.querySelector('script[type="application/ld+json"]');
+    if (node && s.jsonLdText) node.textContent = s.jsonLdText;
   }
-
+  function updatedLine(route) {
+    const s = pageSeo(route) || {};
+    const d = s.dateLabel || '16 novembre 2026';
+    const extra = s.showSources ? ' · fonti verificate su INPS, ARERA, MEF' : '';
+    return '<p class="small muted aggiornamento">Ultimo aggiornamento: ' + esc(d) + extra + '.</p>';
+  }
 
   /* ---------------- Dati locali ---------------- */
   function load() {
@@ -235,10 +210,10 @@
   ];
 
   /* ---------------- Router ---------------- */
-  const ROUTES = { '': viewHome, stima: viewStima, risultati: viewRisultati, consigli: viewConsigli, documenti: viewDocumenti, diritti: viewDiritti, fonti: viewFonti, contatti: viewContatti, privacy: viewPrivacy };
+  const ROUTES = { '': viewHome, stima: viewStima, risultati: viewRisultati, consigli: viewConsigli, documenti: viewDocumenti, diritti: viewDiritti, fonti: viewFonti, metodo: viewMetodo, contatti: viewContatti, privacy: viewPrivacy };
   function render() {
     const r = route();
-    const view = ROUTES[r] || viewHome;
+    const view = (r === null) ? view404 : (ROUTES[r] || viewHome);
     $app.innerHTML = view();
     document.querySelectorAll('[data-nav]').forEach((a) => {
       const key = a.getAttribute('data-nav');
@@ -261,7 +236,7 @@
     return `
       <section class="card hero">
         <h1>Capisci il tuo ISEE 2027 prima di andare al CAF</h1>
-        <p>In 5 passi stimi l'ISEE ordinario, quello per le prestazioni familiari e l'eventuale ISEE corrente, scopri quanto ti resta ogni mese per vivere e quali aiuti puoi chiedere.</p>
+        <p>Con il calcolo ISEE in 5 passi stimi l'ISEE ordinario, quello per le prestazioni familiari e l'eventuale ISEE corrente, scopri quanto ti resta ogni mese per vivere e quali aiuti puoi chiedere.</p>
         <p class="muted">Gratis, senza registrazione, facile da utilizzare. I calcoli restano solo sul tuo telefono. Se ci scrivi dal modulo contatti, partono soltanto le informazioni che inserisci tu.</p>
         <div class="btn-row">
           <a class="btn btn-primary" href="/stima">${ripresa ? 'Riprendi la stima' : 'Inizia la stima'}</a>
@@ -269,6 +244,7 @@
         </div>
       </section>
       ${DISCLAIMER}
+      ${updatedLine('')}
       <h2>Da dove vuoi partire?</h2>
       <div class="paths">
         <a class="path" href="/stima"><span class="ico" aria-hidden="true">🧭</span><span><strong>Stima ISEE e residuo</strong><span class="muted">Nucleo, redditi 2025, spese, patrimonio al 31/12/2025.</span></span></a>
@@ -285,7 +261,7 @@
         </ul>
         <p class="small muted">Lo prevede il DPCM 159/2013 (artt. 4 e 5): si guarda al secondo anno prima della DSU.</p>
       </section>
-      <p class="small">Una domanda su DirittiChiari? <a href="/contatti">Scrivici dal modulo contatti</a>.</p>`;
+      <p class="small">Una domanda su DirittiChiari? <a href="/contatti">Scrivici dal modulo contatti</a>. Come facciamo le stime lo spieghiamo in <a href="/metodo">Metodo e fonti</a>.</p>`;
   }
 
   /* -------- Wizard -------- */
@@ -328,10 +304,13 @@
     const s = STEPS[i];
     const pct = Math.round(((i + 1) / STEPS.length) * 100);
     return `
-      <section class="card">
+      <h1>Calcolo ISEE 2027: simulatore online gratuito</h1>
+      ${DISCLAIMER}
+      ${updatedLine('stima')}
+      <section class="card" id="wizard-start">
         <div class="steps-label">Passo ${i + 1} di ${STEPS.length}</div>
         <div class="progress" role="progressbar" aria-valuemin="1" aria-valuemax="${STEPS.length}" aria-valuenow="${i + 1}" aria-label="Avanzamento"><span data-pct="${pct}"></span></div>
-        <h1 id="step-title">${esc(s.titolo)}</h1>
+        <h2 id="step-title">${esc(s.titolo)}</h2>
         <p class="muted">${esc(s.intro)}</p>
         <form id="wizard" novalidate>
           ${s.campi.map((f) => fieldHtml(f, d, errors)).join('')}
@@ -341,7 +320,7 @@
           </div>
         </form>
       </section>
-      <p class="small muted">I dati della stima vengono salvati solo su questo dispositivo mentre scrivi.</p>`;
+      <p class="small muted">I dati della stima vengono salvati solo su questo dispositivo mentre scrivi. Prima del CAF puoi vedere la <a href="/checklist-dsu">checklist dei documenti</a> e i <a href="/diritti-pa">bonus e aiuti pubblici</a>.</p>`;
   }
 
   /** Legge i campi visibili del passo corrente e li salva. */
@@ -459,7 +438,7 @@
   }
 
   function viewRisultati() {
-    if (!hasData()) return `<section class="card"><h1>Risultati</h1><p>Non hai ancora inserito dati. Ci vogliono pochi minuti.</p><a class="btn btn-primary" href="/stima">Inizia la stima</a></section>${DISCLAIMER}`;
+    if (!hasData()) return `<section class="card"><h1>Risultati</h1><p>Non hai ancora inserito dati. Ci vogliono pochi minuti.</p><p>Dopo il percorso guidato trovi qui la stima dell'ISEE, il residuo per vivere e gli <a href="/diritti-pa">aiuti a cui puoi avere diritto</a>.</p><a class="btn btn-primary" href="/stima">Inizia la stima</a></section>${DISCLAIMER}${updatedLine('risultati')}`;
     const ris = D.calcolaTutto(load());
     const d = ris.input;
     const res = ris.residuo;
@@ -489,6 +468,7 @@
     return `
       <h1>I tuoi risultati</h1>
       ${DISCLAIMER}
+      ${updatedLine('risultati')}
       <section class="big-result${neg ? ' neg' : ''}" aria-labelledby="res-title">
         <span id="res-title">${neg ? 'Ogni mese ti mancano circa' : 'Ti rimangono circa'}</span>
         <span class="value">${eur(Math.abs(res.mensile))} al mese</span>
@@ -536,6 +516,7 @@
         <div class="paths">
           <a class="path" href="/checklist-dsu"><span class="ico" aria-hidden="true">📄</span><span><strong>Prepara i documenti</strong><span class="muted">Checklist DSU 2027${c ? ' e ISEE corrente' : ''}.</span></span></a>
           <a class="path" href="/ottimizzazione"><span class="ico" aria-hidden="true">💡</span><span><strong>Come ottimizzare legalmente</strong><span class="muted">Le scelte permesse che abbassano l'ISEE.</span></span></a>
+          <a class="path" href="/diritti-pa"><span class="ico" aria-hidden="true">🏛️</span><span><strong>Aiuti a cui puoi avere diritto</strong><span class="muted">Bonus e prestazioni pubbliche legate all'ISEE, con le fonti.</span></span></a>
         </div>
         <div class="btn-row">
           <button type="button" class="btn btn-primary" data-action="print">Stampa o salva in PDF</button>
@@ -547,8 +528,9 @@
   /* -------- Consigli -------- */
   function viewConsigli() {
     return `
-      <h1>Come ottimizzare legalmente</h1>
+      <h1>Come abbassare l'ISEE in modo legale: cosa conta davvero</h1>
       ${DISCLAIMER}
+      ${updatedLine('consigli')}
       <section class="card"><h2>Residuo pratico e ISEE sono due cose diverse</h2>
         <p>Il residuo è quanto ti resta davvero ogni mese. L'ISEE invece guarda ai redditi 2025 e al patrimonio al 31/12/2025: bollette, trasporti, rate di prestiti e assicurazioni <strong>non</strong> lo abbassano.</p></section>
       <section class="card"><h2>Scelte permesse che contano</h2>
@@ -574,7 +556,8 @@
           <li>Non spostare la residenza in modo fittizio per dividere il nucleo.</li>
           <li>Non intestare beni ad altri o nascondere patrimonio: oltre a perdere gli aiuti, la DSU falsa ha conseguenze penali e si restituisce quanto ricevuto.</li>
         </ul>
-        <p class="small muted">Per casi particolari (separazioni, figli non conviventi, eredità, imprese) rivolgiti a un CAF o a un patronato.</p></section>`;
+        <p class="small muted">Per casi particolari (separazioni, figli non conviventi, eredità, imprese) rivolgiti a un CAF o a un patronato.</p></section>
+      <p class="small">Vedi anche gli <a href="/diritti-pa">aiuti pubblici legati all'ISEE</a>, la <a href="/checklist-dsu">checklist dei documenti</a> e le <a href="/fonti">fonti usate</a>.</p>`;
   }
 
   /* -------- Documenti -------- */
@@ -603,12 +586,13 @@
     const base = DOCS.filter((x) => x[1] === 'base');
     const corr = DOCS.filter((x) => x[1] === 'corrente');
     return `
-      <h1>Documenti per la DSU 2027</h1>
+      <h1>Documenti necessari per la DSU e l'ISEE 2027</h1>
       <p class="muted">Spunta quello che hai già. La lista resta salvata su questo dispositivo.</p>
+      ${updatedLine('documenti')}
       <section class="card"><h2>Per tutti</h2><ul class="checklist">${li(base)}</ul></section>
       <section class="card"><h2>In più, per l'ISEE corrente</h2><ul class="checklist">${li(corr)}</ul></section>
       <section class="card no-print">
-        <p>Puoi presentare la DSU da solo sul <a href="${R.fonti.portaleIsee.url}" target="_blank" rel="noopener">portale ISEE dell'INPS</a>, con l'app INPS Mobile o gratis tramite un CAF.</p>
+        <p>Puoi presentare la DSU da solo sul <a href="${R.fonti.portaleIsee.url}" target="_blank" rel="noopener">portale ISEE dell'INPS</a>, con l'app INPS Mobile o gratis tramite un CAF. Prima puoi fare il <a href="/stima">calcolo ISEE 2027</a> e vedere i <a href="/diritti-pa">bonus e aiuti pubblici</a> collegati.</p>
         <button type="button" class="btn btn-primary btn-block" data-action="print">Stampa la lista o salvala in PDF</button>
       </section>
       ${DISCLAIMER}`;
@@ -626,7 +610,7 @@
   function viewDiritti() {
     const f = R.fonti;
     const rows = [
-      ['Assegno di Inclusione (ADI)', `ISEE per prestazioni familiari fino a ${eur(R.adi.isee)}`, 'Nuclei con minori, persone con disabilità, over 60 o in carico ai servizi', f.adi, 'Verificato'],
+      ['Assegno di Inclusione (ADI)', `ISEE per prestazioni familiari fino a ${eur(R.adi.isee)}`, 'Integra il reddito familiare fino a 6.500 € l\'anno × scala ADI (8.190 € se il nucleo è composto da persone di almeno 67 anni, o da over 67 e familiari con disabilità grave o non autosufficienza), più fino a 3.640 € l\'anno se in affitto (1.950 € negli stessi nuclei).', f.adi, 'Verificato', 'Nuclei con almeno un minorenne, una persona con disabilità, una persona di almeno 60 anni o in carico ai servizi socio-sanitari.'],
       ['Assegno Unico per i figli', `Importo pieno fino a ${eur2(R.auu.iseeMin)}; minimo da ${eur2(R.auu.iseeMax)}`, `Da ${eur2(R.auu.importoMin)} a ${eur2(R.auu.importoMax)} al mese per figlio minorenne`, f.auu, 'Valori 2026, da confermare per il 2027'],
       ['Bonus sociali luce, gas, acqua, TARI', `ISEE fino a ${eur(R.bonusSociali.isee)} (${eur(R.bonusSociali.iseeFamNumerose)} con 4+ figli a carico)`, 'Automatici con la DSU', f.arera, 'Verificato (aggiornamento triennale dal 2026)'],
       ['Carta "Dedicata a te"', `ISEE ordinario fino a ${eur(R.cartaDedicata.isee)}`, `${eur(R.cartaDedicata.importo)} l'anno, lista unica 2026-2027`, f.dedicata, 'Verificato'],
@@ -636,15 +620,20 @@
       ['Contributo affitto (Comuni e Regioni)', 'Soglie del singolo bando', 'In Veneto: Fondo affitti tramite i bandi comunali', f.venetoAffitti, 'Da verificare nel bando']
     ];
     return `
-      <h1>Diritti e aiuti pubblici legati all'ISEE</h1>
+      <h1>Bonus ISEE 2027: aiuti pubblici, soglie e fonti</h1>
       ${DISCLAIMER}
-      <p class="muted">Ogni aiuto ha altri requisiti (residenza, cittadinanza, età, patrimonio). Apri la fonte ufficiale prima di fare domanda.</p>
-      ${rows.map(([n, s, q, fo, st]) => `<article class="benefit forse"><h3>${esc(n)}</h3><span class="badge stato">${esc(st)}</span>
-        <p class="small"><strong>Soglia:</strong> ${esc(s)}<br><strong>Cosa offre:</strong> ${esc(q)}</p>
+      ${updatedLine('diritti')}
+      <p class="muted">Ogni aiuto ha altri requisiti (residenza, cittadinanza, età, patrimonio). Apri la fonte ufficiale prima di fare domanda. Come verifichiamo i valori è spiegato in <a href="/fonti">Fonti e regole usate</a> e in <a href="/metodo">Metodo e fonti</a>.</p>
+      ${rows.map(([n, s, q, fo, st, chi]) => `<article class="benefit forse"><h3>${esc(n)}</h3><span class="badge stato"><a href="/fonti">${esc(st)}</a></span>
+        <p class="small"><strong>Soglia:</strong> ${esc(s)}<br><strong>Cosa offre:</strong> ${esc(q)}${chi ? `<br><strong>Chi può chiederlo:</strong> ${esc(chi)}` : ''}</p>
         <a class="small" href="${fo.url}" target="_blank" rel="noopener">Fonte: ${esc(fo.titolo)}</a></article>`).join('')}
-      <section class="card"><h2>Quale ISEE si usa?</h2>
-        <p>Dal 2026 l'INPS calcola anche l'<strong>ISEE per prestazioni familiari e inclusione</strong> (L. 199/2025), più favorevole per chi ha casa di proprietà o almeno 2 figli. Si usa solo per ADI, Supporto formazione e lavoro, Assegno Unico, bonus nido e bonus nuovi nati. Per tutto il resto vale l'ISEE ordinario.</p>
-        <a class="btn btn-primary btn-block" href="/stima">Stima il tuo ISEE</a></section>`;
+      <section class="card"><h2>Quale ISEE serve per l'Assegno Unico</h2>
+        <p>Per l'Assegno Unico si usa l'<strong>ISEE per prestazioni familiari e inclusione</strong>, non l'ISEE ordinario. È lo stesso indicatore previsto dalla L. 199/2025, in genere più favorevole se hai casa di proprietà o almeno due figli. Vale anche, al netto dell'Assegno Unico già percepito, per il bonus nido e il bonus nuovi nati.</p>
+        <p>Dal 2026 l'INPS calcola questo ISEE in automatico. Si usa solo per ADI, Supporto per la formazione e il lavoro, Assegno Unico, bonus nido e bonus nuovi nati. Per tutto il resto (bonus sociali, Carta «Dedicata a te», molti servizi comunali) vale l'ISEE ordinario.</p>
+        <a class="btn btn-primary btn-block" href="/stima">Calcola il tuo ISEE</a></section>
+      <section class="card"><h2>Manovra 2027 (in discussione)</h2>
+        <p>Il disegno di legge di bilancio 2027 (A.C. 3174) è all'esame del Parlamento e <strong>non è ancora legge</strong>. Alcune misure e soglie legate all'ISEE potrebbero cambiare: le ricontrolleremo quando il testo diventerà legge.</p>
+        <p class="small"><a href="https://www.senato.it/leggi-e-documenti/disegni-di-legge/scheda-ddl?did=60577" target="_blank" rel="noopener">Fonte ufficiale: scheda A.C. 3174 sul sito del Senato</a>.</p></section>`;
   }
 
   /* -------- Fonti -------- */
@@ -664,7 +653,8 @@
       ['Soglia ADI 10.140 €', R.adi], ['Assegno Unico 2026', R.auu], ['Bonus sociali 9.796 € / 20.000 €', R.bonusSociali],
       ['Carta "Dedicata a te" 15.000 €', R.cartaDedicata], ['Carta Acquisti 8.230,81 €', R.cartaAcquisti], ['Bonus nido', R.nido], ['Bonus nuovi nati', R.nuoviNati]
     ];
-    return `<h1>Fonti e regole usate</h1>${DISCLAIMER}
+    return `<h1>Fonti e regole usate</h1>${DISCLAIMER}${updatedLine('fonti')}
+      <p>Ogni soglia e ogni regola usata nel simulatore ha uno stato e un collegamento alla fonte ufficiale. Come facciamo le stime è spiegato in <a href="/metodo">Metodo e fonti</a>.</p>
       <section class="card"><table class="calc fonti">${items.map(([l, x]) => riga(esc(l), `<a href="${R.fonti[x.fonte].url}" target="_blank" rel="noopener">${st[x.stato]}</a>`)).join('')}</table></section>
       <section class="card"><h2>Semplificazioni di questa stima</h2><ul class="tips small">
         <li>Le quote del 20% su lavoro e pensione sono calcolate sul totale del nucleo, con il tetto moltiplicato per il numero di persone.</li>
@@ -684,6 +674,7 @@
         <h1>Contatti</h1>
         <p>Una domanda su DirittiChiari? Scrivici: ti rispondiamo via email.</p>
         <p class="small muted">I calcoli della stima restano sul tuo dispositivo. Da questo modulo partono soltanto le informazioni che scrivi tu, e le usiamo solo per risponderti. Non viene mai inviato nessun dato del percorso ISEE.</p>
+        ${updatedLine('contatti')}
         <div data-modulo-contatti data-privacy="/privacy" data-titolo="h2">
           <p>Per usare il modulo serve JavaScript. In alternativa scrivi a <a href="mailto:info@pigiservice.com">info@pigiservice.com</a>.</p>
         </div>
@@ -707,9 +698,38 @@
         <h2>Modulo contatti</h2>
         <p>Se ci scrivi dal <a href="/contatti">modulo contatti</a>, inviamo soltanto quello che inserisci tu: nome, email, eventuale telefono o attività, il messaggio, il consenso e la pagina da cui scrivi. Questi dati servono solo per risponderti. Non viene mai incluso nessun dato della stima ISEE o del percorso guidato.</p>
         <p>Il messaggio arriva a <a href="mailto:info@pigiservice.com">info@pigiservice.com</a>. Lo conserviamo il tempo necessario per darti una risposta e per eventuali obblighi di legge.</p>
-        <p class="small muted">Aggiornata il 15 novembre 2026.</p>
+        ${updatedLine('privacy')}
       </section>
       ${DISCLAIMER}`;
+  }
+
+  function viewMetodo() {
+    return `
+      <section class="card">
+        <h1>Metodo e fonti</h1>
+        <p>DirittiChiari 2027 è un servizio di <strong>Pi.Gi Service</strong>. Offre una stima orientativa dell'ISEE, di quanto ti resta per vivere e degli aiuti pubblici, per capirli con calma prima di andare al CAF o sul portale INPS.</p>
+        <h2>Come facciamo la stima</h2>
+        <p>I calcoli seguono le regole del DPCM 159/2013 e gli aggiornamenti successivi, tra cui la legge 199/2025 sull'ISEE per prestazioni familiari e inclusione. Le soglie e i parametri arrivano da fonti ufficiali: INPS, ARERA, Ministero del Lavoro, Ministero dell'Economia e delle Finanze, Normattiva.</p>
+        <p>Ogni valore usato nel simulatore ha uno stato: verificato, valore 2026 da confermare per il 2027, oppure da confermare. L'elenco completo, con il collegamento a ogni fonte, è nella pagina <a href="/fonti">Fonti e regole usate</a>.</p>
+        <h2>Cosa non è questa stima</h2>
+        <p>Non è una DSU e non sostituisce l'attestazione INPS, il CAF o una consulenza. I calcoli restano solo sul tuo dispositivo. Quando una norma è ancora in discussione in Parlamento, lo indichiamo in pagina e la ricontrolliamo quando diventa legge.</p>
+        <h2>Chi la cura</h2>
+        <p>Autore del servizio: <strong>Pi.Gi Service</strong>. Per una domanda: <a href="/contatti">modulo contatti</a> oppure <a href="mailto:info@pigiservice.com">info@pigiservice.com</a>.</p>
+        ${updatedLine('metodo')}
+      </section>
+      ${DISCLAIMER}`;
+  }
+  function view404() {
+    return `
+      <section class="card">
+        <h1>Pagina non trovata</h1>
+        <p>Questo indirizzo non corrisponde a una pagina di DirittiChiari. Puoi tornare all'inizio o proseguire da qui:</p>
+        <div class="btn-row">
+          <a class="btn btn-primary" href="/stima">Calcolo ISEE 2027</a>
+          <a class="btn btn-ghost" href="/checklist-dsu">Checklist documenti DSU</a>
+        </div>
+        <p class="small"><a href="/">Torna all'inizio</a></p>
+      </section>`;
   }
 
   /* ---------------- Azioni globali ---------------- */
@@ -789,37 +809,73 @@
     const hadController = !!navigator.serviceWorker.controller; // false alla prima visita → mai banner
     const banner = document.getElementById('update-banner');
     let refreshing = false, userAccepted = false;
+    function ricaricaTutti() {
+      if (refreshing) return;
+      refreshing = true;
+      try { const bc = new BroadcastChannel('dc2027-update'); bc.postMessage({ type: 'RELOAD' }); bc.close(); } catch (e) { /* non disponibile */ }
+      location.reload();
+    }
+    try {
+      const bc = new BroadcastChannel('dc2027-update');
+      bc.onmessage = (e) => { if (e.data && e.data.type === 'RELOAD') ricaricaTutti(); };
+    } catch (e) { /* non disponibile */ }
+    navigator.serviceWorker.addEventListener('message', (e) => { if (e.data && e.data.type === 'RELOAD') ricaricaTutti(); });
     // ricarica solo dopo che l'utente ha toccato "Aggiorna" (alla prima visita clients.claim() non deve ricaricare)
-    navigator.serviceWorker.addEventListener('controllerchange', () => { if (refreshing || !userAccepted) return; refreshing = true; location.reload(); });
+    navigator.serviceWorker.addEventListener('controllerchange', () => { if (!userAccepted) return; ricaricaTutti(); });
 
     function askVersion(worker) {
       return new Promise((resolve) => {
+        let done = false;
+        const finish = (v) => { if (done) return; done = true; resolve(v || null); };
         const ch = new MessageChannel();
-        ch.port1.onmessage = (e) => resolve(e.data && e.data.version);
-        worker.postMessage({ type: 'GET_VERSION' }, [ch.port2]);
-        setTimeout(() => resolve(null), 1500);
+        ch.port1.onmessage = (ev) => finish(ev.data && ev.data.version);
+        try { worker.postMessage({ type: 'GET_VERSION' }, [ch.port2]); } catch (err) { finish(null); return; }
+        setTimeout(() => finish(null), 1500);
       });
+    }
+    function bindBanner(worker, ver) {
+      banner.hidden = false;
+      document.getElementById('update-apply').onclick = () => {
+        banner.hidden = true;
+        userAccepted = true;
+        if (ver) try { localStorage.setItem(BANNER_KEY, ver); } catch (e) { /* privato */ }
+        worker.postMessage({ type: 'SKIP_WAITING' });
+        // se lo SW è già attivo, ricarica comunque le schede
+        setTimeout(() => { if (userAccepted) ricaricaTutti(); }, 800);
+      };
+      document.getElementById('update-dismiss').onclick = () => { banner.hidden = true; };
     }
     function offer(worker) {
       if (!hadController || !worker) return;
+      function once(v) {
+        if (!v) {
+          // timeout: non scrivere "nuova"; se il banner è già stato offerto in questa scheda, non ripeterlo
+          try { if (sessionStorage.getItem('dc2027:banner-offerto')) return; } catch (e) { /* privato */ }
+        } else if (localStorage.getItem(BANNER_KEY) === v) {
+          return; // una sola volta per versione pubblicata
+        }
+        if (v) { try { localStorage.setItem(BANNER_KEY, v); } catch (e) { /* privato */ } }
+        try { sessionStorage.setItem('dc2027:banner-offerto', '1'); } catch (e) { /* privato */ }
+        bindBanner(worker, v);
+      }
       askVersion(worker).then((v) => {
-        const ver = v || 'nuova';
-        if (localStorage.getItem(BANNER_KEY) === ver) return; // una sola volta per versione pubblicata
-        localStorage.setItem(BANNER_KEY, ver);
-        banner.hidden = false;
-        document.getElementById('update-apply').onclick = () => { banner.hidden = true; userAccepted = true; worker.postMessage({ type: 'SKIP_WAITING' }); };
-        document.getElementById('update-dismiss').onclick = () => { banner.hidden = true; };
+        if (v) { once(v); return; }
+        // una seconda prova prima di mostrare senza versione
+        askVersion(worker).then(once);
       });
     }
     window.addEventListener('load', () => {
-      navigator.serviceWorker.register('/sw.js').then((reg) => {
+      navigator.serviceWorker.register('/sw.js', { updateViaCache: 'none' }).then((reg) => {
         if (reg.waiting) offer(reg.waiting);
         reg.addEventListener('updatefound', () => {
           const nw = reg.installing;
           if (!nw) return;
           nw.addEventListener('statechange', () => { if (nw.state === 'installed' && navigator.serviceWorker.controller) offer(nw); });
         });
-        if (!hadController) localStorage.setItem(BANNER_KEY, APP_VERSION); // prima visita: segna la versione corrente come vista
+        // solo alla prima visita (chiave ancora vuota): una ricarica forzata non deve nascondere il banner di questa pubblicazione
+        if (!hadController && !localStorage.getItem(BANNER_KEY)) {
+          try { localStorage.setItem(BANNER_KEY, APP_VERSION); } catch (e) { /* privato */ }
+        }
       }).catch(() => { /* senza SW l'app funziona lo stesso */ });
     });
   })();

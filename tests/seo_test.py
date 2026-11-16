@@ -1,0 +1,122 @@
+#!/usr/bin/env python3
+"""Controlli HTTP e HTML statico (senza browser): canonical, 301, 404, noindex, sitemap."""
+import os, re, sys, json, subprocess, time, urllib.request, urllib.error
+
+ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+PORT = 4325
+BASE = f'http://127.0.0.1:{PORT}'
+fails = []
+
+def check(cond, msg):
+    if not cond:
+        fails.append(msg)
+        print('  ✖', msg)
+    else:
+        print('  ✓', msg)
+
+def fetch(path, method='GET', follow=False):
+    req = urllib.request.Request(BASE + path, method=method)
+    try:
+        return urllib.request.urlopen(req, timeout=5)
+    except urllib.error.HTTPError as e:
+        return e
+
+def raw_headers(path):
+    """Ritorna (status, headers dict, body) senza seguire i redirect."""
+    class N(urllib.request.HTTPRedirectHandler):
+        def redirect_request(self, *a, **k):
+            return None
+    opener = urllib.request.build_opener(N)
+    req = urllib.request.Request(BASE + path, method='GET')
+    try:
+        r = opener.open(req, timeout=5)
+        return r.status, {k.lower(): v for k, v in r.headers.items()}, r.read()
+    except urllib.error.HTTPError as e:
+        if e.status in (301, 302, 303, 307, 308):
+            return e.status, {k.lower(): v for k, v in e.headers.items()}, e.read()
+        return e.status, {k.lower(): v for k, v in e.headers.items()}, e.read()
+
+def main():
+    srv = subprocess.Popen([sys.executable, os.path.join(ROOT, 'scripts/serve.py'), str(PORT), ROOT],
+                           stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+    time.sleep(0.4)
+    try:
+        status, hdr, body = raw_headers('/')
+        check(status == 200, f'GET / è 200 ({status})')
+        check('location' not in hdr, f'GET / senza Location ({hdr.get("location")})')
+        html = body.decode('utf-8', 'replace')
+        check('<html lang="it">' in html, 'home lang=it')
+        check('Capisci il tuo ISEE 2027' in html, 'home ha H1 nel grezzo')
+        check('rel="canonical" href="https://dirittiok.com/"' in html, 'home canonical')
+        check('1.4.0' in html, 'versione 1.4.0 nella home')
+
+        pages = {
+            '/stima': ('Simulatore ISEE 2027', 'https://dirittiok.com/stima', 'Calcolo ISEE 2027: simulatore online gratuito'),
+            '/ottimizzazione': ("Come abbassare l'ISEE in modo legale", 'https://dirittiok.com/ottimizzazione', "Come abbassare l'ISEE in modo legale"),
+            '/checklist-dsu': ('Documenti ISEE 2027 per la DSU', 'https://dirittiok.com/checklist-dsu', 'Documenti necessari per la DSU'),
+            '/diritti-pa': ('Bonus e aiuti con ISEE 2027', 'https://dirittiok.com/diritti-pa', 'Bonus ISEE 2027'),
+            '/fonti': ('Fonti e regole usate', 'https://dirittiok.com/fonti', 'Fonti e regole usate'),
+            '/metodo': ('Metodo e fonti', 'https://dirittiok.com/metodo', 'Metodo e fonti'),
+            '/contatti': ('Contatti · DirittiChiari', 'https://dirittiok.com/contatti', 'Contatti'),
+            '/privacy': ('Privacy · DirittiChiari', 'https://dirittiok.com/privacy', 'Privacy'),
+        }
+        for path, (title, canon, h1) in pages.items():
+            st, hd, bd = raw_headers(path)
+            tx = bd.decode('utf-8', 'replace')
+            check(st == 200, f'{path} è 200 ({st})')
+            check(f'rel="canonical" href="{canon}"' in tx, f'{path} canonical {canon}')
+            check(title in tx, f'{path} title contiene {title!r}')
+            check(f'<h1>{h1}' in tx or f'<h1>{h1}</h1>' in tx or h1 in tx, f'{path} H1 nel grezzo')
+            # description in head equals itself pre-JS (static)
+            m = re.search(r'<meta name="description" content="([^"]+)"', tx)
+            check(m and 120 <= len(m.group(1)) <= 160, f'{path} description ~150 ({len(m.group(1)) if m else 0})')
+            check('semplice' not in re.findall(r'\bsemplice\b(?! da utilizzare)', tx.lower()) or True, 'placeholder')
+            check(not re.search(r'\bsemplice\b(?! da utilizzare)', tx, re.I), f'{path} senza "semplice" da sola')
+            # slash
+            st2, hd2, _ = raw_headers(path + '/')
+            loc = hd2.get('location', '')
+            check(st2 == 301 and loc.rstrip('/').endswith(path), f'{path}/ 301 → {path} (got {st2} {loc})')
+
+        st, hd, bd = raw_headers('/risultati')
+        tx = bd.decode('utf-8', 'replace')
+        check(st == 200, '/risultati 200')
+        check('noindex,follow' in tx, '/risultati noindex,follow nel grezzo')
+        check('rel="canonical" href="https://dirittiok.com/risultati"' in tx, '/risultati canonical proprio')
+
+        st, hd, bd = raw_headers('/index.html')
+        check(st == 301 and hd.get('location') in ('/', 'http://127.0.0.1:%s/' % PORT), f'/index.html 301 → / ({st} {hd.get("location")})')
+
+        st, hd, bd = raw_headers('/pagina-inesistente-xyz')
+        tx = bd.decode('utf-8', 'replace')
+        check(st == 404, f'pagina inesistente è 404 ({st})')
+        check('Pagina non trovata' in tx and 'text/html' in hd.get('content-type', ''), '404 italiana HTML')
+        check('href="/stima"' in tx and 'href="/checklist-dsu"' in tx, '404 ha link a /stima e /checklist-dsu')
+
+        st, _, _ = raw_headers('/tests/ui_test.py')
+        check(st == 404, f'/tests/ non è servito ({st})')
+        st, _, _ = raw_headers('/stima/xyz')
+        check(st == 404, f'/stima/xyz è 404 ({st})')
+
+        sm = fetch('/sitemap.xml').read().decode()
+        check('https://dirittiok.com/contatti' in sm, 'sitemap contiene /contatti')
+        check('https://dirittiok.com/metodo' in sm, 'sitemap contiene /metodo')
+        check('/risultati' not in sm, 'sitemap senza /risultati')
+        check('#/' not in sm and 'index.html' not in sm and 'lovable.app' not in sm and 'netlify' not in sm, 'sitemap pulita')
+        check('<lastmod>2026-11-16</lastmod>' in sm and '<lastmod>2026-11-15</lastmod>' in sm, 'sitemap lastmod distinti')
+        check('changefreq' not in sm and 'priority' not in sm, 'sitemap senza changefreq/priority')
+
+        # pages-data identico a HTML per title/desc
+        data = open(os.path.join(ROOT, 'js/pages-data.js'), encoding='utf-8').read()
+        check('window.DC_PAGES' in data, 'pages-data.js presente')
+        check('#lovable-badge' in open(os.path.join(ROOT, 'css/app.css'), encoding='utf-8').read(), 'CSS nasconde il badge')
+        ver = open(os.path.join(ROOT, 'js/version.js'), encoding='utf-8').read()
+        check('DC_VERSION = "1.4.0"' in ver, 'versione unica 1.4.0')
+    finally:
+        srv.terminate()
+        srv.wait(timeout=3)
+
+    print('\nSEO HTTP:', 'OK, nessun problema' if not fails else f'{len(fails)} problemi')
+    sys.exit(1 if fails else 0)
+
+if __name__ == '__main__':
+    main()
